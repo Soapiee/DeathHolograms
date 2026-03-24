@@ -11,7 +11,7 @@ api-version: 1.13
 commands:
   adeathholos:
     description: 'DeathHolos admin commands'
-    aliases: [ "adh", "adeathholos", "admindh" ]
+    aliases: [ "adh", "admindh" ]
     usage: 'adh help'
     permission: deathholos.admin
 
