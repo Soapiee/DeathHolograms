@@ -1,0 +1,24 @@
+name: DeathHolos
+main: me.soapiee.deathholos.DeathHolos
+version: 1.0.0
+author: Soapiee
+prefix: DeathHolos
+
+dependencies: [ ]
+softdepend: [ "PlaceholderAPI" ]
+api-version: 1.13
+
+commands:
+  adeathholos:
+    description: 'DeathHolos admin commands'
+    aliases: [ "adh", "adeathholos", "admindh" ]
+    usage: 'adh help'
+    permission: deathholos.admin
+
+permissions:
+  deathholos.admin:
+    default: op
+  deathholos.admin.reload:
+    default: false
+  deathholos.silentdeath:
+    default: false

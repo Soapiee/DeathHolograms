@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>deathholos-internals</artifactId>
+    <packaging>pom</packaging>
+
+    <parent>
+        <groupId>me.soapiee</groupId>
+        <artifactId>deathholos-parent</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <modules>
+        <module>internals_1_19_4</module>
+    </modules>
+</project>

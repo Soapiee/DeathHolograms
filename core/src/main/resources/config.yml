@@ -1,0 +1,77 @@
+settings:
+  # Do you want there to be a notification given in console and to admins when there is an update available
+  # Default: true
+  update_notification: true
+
+  # Choose which language file you want to use
+  # Options: lang_en, lang_es, lang_de, lang_fr, lang_nl
+  # Default: lang_en
+  language: lang_en
+
+  # How long the hologram should last for (in seconds)
+  # Default: 20
+  despawn_time: 20
+
+  # The amount of blocks above the players death location. Can be a decimal
+  # Default: 0.5
+  height_above_death_location: 1
+
+  # Do you want holograms to only appear when the player dies to another player?
+  # Set to true if you only want death holograms when a player dies as a direct result of another player
+  # Set to false if you want environment and entity kills to also create death holograms
+  # Default: false
+  hologram_on_player_kill_only: false
+
+  # How many death holograms will spawn per player, in case they continuously die in a short span of time.
+  # The lower the number the better, for performance reasons
+  # Default: 5
+  max_hologram_per_player: 5
+
+
+hologram_groups:
+  # Valid placeholders to use inside the hologram design
+  #
+  # %player% -> Returns the name of the player who died
+  #
+  # %killer% -> Returns the name of the player who killed the one who died. Will be blank if the player who died, didn't die due to another player
+  #
+  # %cause% -> Returns the minecraft cause of death (You can edit these in your language file). Will be blank if the player was killed by another player
+  #
+  # Any PlaceholderAPI placeholder - https://wiki.placeholderapi.com/users/placeholder-list/minecraft/
+
+  # If a player doesnt have a deathholos.group.{group} permission, the hologram with the lowest priority (higher number) will be used.
+  # If a player has multiple permissions, the one with the highest priority (lower number) will be used.
+  # 1 being the highest priority. 100 being a low priority number.
+  # Give the permission "deathholo.silentdeath" to a player, for no hologram to be spawned on their death.
+  donator:
+    priority: 1
+    permission: deathholos.group.donator
+    design:
+      - "&a★ ★ ★ ★ ★"
+      - "%player% died to %killer%%cause%"
+      - "example line 2"
+      - "&a★ ★ ★ ★ ★"
+  default:
+    priority: 10
+    design:
+      - "&a------"
+      - "%player% died to %killer%%cause%"
+      - "example line 2"
+      - "&a-----"
+
+
+
+
+#designs:
+#  cross_hologram:
+#    design:
+#      - "&a× × × × ×"
+#      - "%player% died"
+#      - " "
+#      - "&a× × × × ×"
+#  star_hologram:
+#    design:
+#      - "&a★ ★ ★ ★ ★"
+#      - "%player% died to %killer%%cause%"
+#      - "example line 2"
+#      - "&a★ ★ ★ ★ ★"
