@@ -1,4 +1,4 @@
-# **DeathHolos**
+# **DeathHolograms**
 <p align="center">
   <img width="256" height="256" alt="DH logo" src="https://github.com/user-attachments/assets/5e0bc842-c6d5-4611-829f-c177a070dd8b" /></p>  
 
