@@ -15,7 +15,7 @@ There is one **OPTIONAL** dependency
 1. [Placeholder API](https://www.spigotmc.org/resources/placeholderapi.6245/)
 
 ## Installation
-1. [Download](https://www.spigotmc.org/resources/) the plugin.
+1. [Download](https://www.spigotmc.org/resources/death-holograms-1-16-26-1.133766/) the plugin.
 2. Place the .jar file inside your "/Plugins" folder on your Minecraft server.
 3. Start the server.
 4. Edit the "config.yml" to set how the holograms look, and add new ones!
@@ -27,4 +27,4 @@ There is one **OPTIONAL** dependency
 
 ## Documentation
 - [Wiki](https://github.com/Soapiee/DeathHolos/wiki)  
-- [Spigot Page](https://www.spigotmc.org/resources/)
+- [Spigot Page](https://www.spigotmc.org/resources/death-holograms-1-16-26-1.133766/)
