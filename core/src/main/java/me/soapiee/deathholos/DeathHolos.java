@@ -12,6 +12,7 @@ import me.soapiee.deathholos.managers.MessageManager;
 import me.soapiee.deathholos.utils.CustomLogger;
 import me.soapiee.deathholos.utils.Message;
 import me.soapiee.deathholos.utils.Utils;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class DeathHolos extends JavaPlugin {
@@ -29,6 +30,7 @@ public final class DeathHolos extends JavaPlugin {
         saveDefaultConfig();
         messageManager = new MessageManager(this);
         customLogger = new CustomLogger(this);
+        new Metrics(this, 30432);
 
         initiateManagers();
         registerHooks();
