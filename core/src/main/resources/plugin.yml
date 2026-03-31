@@ -21,7 +21,7 @@ permissions:
     children:
       deathholos.admin.updatenotif: true
   deathholos.admin.reload:
-    default: false
+    default: op
   deathholos.silentdeath:
     default: false
   deathholos.admin.updatenotif:

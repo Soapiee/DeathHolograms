@@ -90,7 +90,7 @@ public class MessageManager {
                 || messageEnum == Message.VOID || messageEnum == Message.WITHER
                 || messageEnum == Message.FREEZE || messageEnum == Message.SONIC_BOOM
                 || messageEnum == Message.KILL || messageEnum == Message.WORLD_BORDER
-//                || messageEnum == Message.CMDHOLOCAUSE || messageEnum == Message.CMDHOLOKILLER
+                || messageEnum == Message.CMDHOLOCAUSE || messageEnum == Message.CMDHOLOKILLER
                 || messageEnum == Message.CAMPFIRE || messageEnum == Message.DEATHCAUSEERROR
                 || messageEnum == Message.HOOKEDPLACEHOLDERAPI || messageEnum == Message.NOPERMISSION
                 || messageEnum == Message.ADMINHELP
