@@ -20,6 +20,7 @@ public class HologramHandler_1_19_4 implements HologramHandler {
             text.setBillboard(Display.Billboard.CENTER);
             text.getPersistentDataContainer().set(Keys.HOLOGRAMKEY, PersistentDataType.STRING, holo.getKeyID());
             text.setText(Utils.addColour(line));
+            text.setLineWidth(1000);
             location.subtract(0, 0.25, 0);
         }
     }

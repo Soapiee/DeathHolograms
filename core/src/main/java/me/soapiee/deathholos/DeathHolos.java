@@ -36,7 +36,6 @@ public final class DeathHolos extends JavaPlugin {
         new Metrics(this, 30432);
 
         registerManagers();
-//        registerHooks(); // Moved to registerManagers() method
         registerListeners();
         registerCommands();
 
