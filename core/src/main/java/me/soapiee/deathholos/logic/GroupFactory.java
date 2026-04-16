@@ -4,6 +4,7 @@ import me.soapiee.deathholos.DeathHolos;
 import me.soapiee.deathholos.managers.MessageManager;
 import me.soapiee.deathholos.utils.CustomLogger;
 import me.soapiee.deathholos.utils.Message;
+import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 
@@ -20,7 +21,12 @@ public class GroupFactory {
         customLogger = main.getCustomLogger();
     }
 
-    public HologramGroup create(CommandSender sender, String name, String inputPriority, String inputPermission, List<String> inputList) {
+    public HologramGroup create(CommandSender sender,
+                                String name,
+                                String inputPriority,
+                                String inputPermission,
+                                List<String> inputList,
+                                String inputSound) {
         int priority = validatePriority(sender, inputPriority, name);
         if (priority <= -1) return null;
 
@@ -33,7 +39,10 @@ public class GroupFactory {
         List<String> text = validateText(sender, inputList, name);
         if (text == null) return null;
 
-        return new HologramGroup(name, priority, permission, text);
+//        Particle particle = validateParticle(sender, inputParticle, name);
+        Sound sound = validateSound(sender, inputSound, name);
+
+        return new HologramGroup(name, priority, permission, text, sound);
     }
 
     private int validatePriority(CommandSender sender, String priorityInput, String groupName) {
@@ -72,6 +81,32 @@ public class GroupFactory {
         if (list != null) list = checkNewLineFunction(list);
 
         return list;
+    }
+
+//    private Particle validateParticle(CommandSender sender, String inputParticle, String groupName) {
+//        if (inputParticle == null || inputParticle.equalsIgnoreCase("null")) return null;
+//
+//        Particle particle = null;
+//        try {
+//            particle = Particle.valueOf(inputParticle.toUpperCase());
+//        } catch (IllegalArgumentException ex) {
+//            customLogger.logToPlayer(sender, null, messageManager.getWithPlaceholder(Message.GROUPPARTICLEERROR, groupName, (sender instanceof ConsoleCommandSender)));
+//        }
+//
+//        return particle;
+//    }
+
+    private Sound validateSound(CommandSender sender, String inputSound, String groupName) {
+        if (inputSound == null || inputSound.equalsIgnoreCase("null")) return null;
+
+        Sound sound = null;
+        try {
+            sound = Sound.valueOf(inputSound.toUpperCase());
+        } catch (IllegalArgumentException ex) {
+            customLogger.logToPlayer(sender, null, messageManager.getWithPlaceholder(Message.GROUPSOUNDERROR, groupName, (sender instanceof ConsoleCommandSender)));
+        }
+
+        return sound;
     }
 
     private List<String> checkNewLineFunction(List<String> list) {

@@ -91,7 +91,7 @@ public class DeathListener implements Listener {
 
     private void handleKillerDeath(Player whoDied, Entity killer, String keyID) {
         HologramGroup group = getGroup(whoDied);
-        Hologram holo = new Hologram(keyID, getLocation(whoDied.getLocation()), getText(group.getText(), whoDied, killer));
+        Hologram holo = new Hologram(keyID, getLocation(whoDied.getLocation()), getText(group.getText(), whoDied, killer), group);
         hologramManager.registerHolo(holo);
         hologramHandler.spawn(holo);
     }
@@ -100,7 +100,7 @@ public class DeathListener implements Listener {
         EntityDamageEvent.DamageCause cause = whoDied.getLastDamageCause().getCause();
 
         HologramGroup group = getGroup(whoDied);
-        Hologram holo = new Hologram(keyID, getLocation(whoDied.getLocation()), getText(group.getText(), whoDied, cause));
+        Hologram holo = new Hologram(keyID, getLocation(whoDied.getLocation()), getText(group.getText(), whoDied, cause), group);
         hologramManager.registerHolo(holo);
         hologramHandler.spawn(holo);
     }

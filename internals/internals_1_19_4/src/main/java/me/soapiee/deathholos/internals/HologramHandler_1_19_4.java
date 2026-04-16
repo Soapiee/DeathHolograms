@@ -11,7 +11,7 @@ import org.bukkit.persistence.PersistentDataType;
 
 public class HologramHandler_1_19_4 implements HologramHandler {
 
-    @Override public void spawn(Hologram holo) {
+    @Override public void spawnHologram(Hologram holo) {
         Location location = holo.getLocation().clone();
         location.setY((location.getY() - 0.25));
 

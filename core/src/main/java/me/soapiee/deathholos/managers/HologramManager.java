@@ -56,7 +56,8 @@ public class HologramManager {
                 String priority = configManager.getStringAndReplace(ConfigPath.HOLOGRAM_PRIORITY, key);
                 String permission = configManager.getStringAndReplace(ConfigPath.HOLOGRAM_PERMISSION, key);
                 List<String> list = configManager.getListAndReplace(ConfigPath.HOLOGRAM_DESIGN, key);
-                HologramGroup group = groupFactory.create(sender, key, priority, permission, list);
+                String sound = configManager.getStringAndReplace(ConfigPath.HOLOGRAM_SOUND, key);
+                HologramGroup group = groupFactory.create(sender, key, priority, permission, list, sound);
 
                 if (group == null) continue;
 

@@ -3,6 +3,8 @@ package me.soapiee.deathholos.logic;
 import me.soapiee.deathholos.DeathHolos;
 import me.soapiee.deathholos.managers.MessageManager;
 import me.soapiee.deathholos.utils.CustomLogger;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,6 +25,8 @@ class GroupFactoryTest {
     private final String VALID_PRIORITY = "10";
     private final int VALID_PRIORITY_INT = 10;
     private final String VALID_PERMISSION = "deathholos.group.test";
+    private final String VALID_SOUND_STRING = "BLOCK_ANVIL_PLACE";
+    private final Sound VALID_SOUND = Sound.BLOCK_ANVIL_PLACE;
     private final List<String> VALID_DESIGN = new ArrayList<>();
 
     @BeforeEach
@@ -53,7 +57,8 @@ class GroupFactoryTest {
                 VALID_NAME,
                 VALID_PRIORITY,
                 VALID_PERMISSION,
-                VALID_DESIGN);
+                VALID_DESIGN,
+                VALID_SOUND_STRING);
 
         assertNotNull(outcomeGroup);
         assertEquals(VALID_NAME, outcomeGroup.getName());
@@ -69,7 +74,8 @@ class GroupFactoryTest {
                 VALID_NAME,
                 "a",
                 VALID_PERMISSION,
-                VALID_DESIGN);
+                VALID_DESIGN,
+                VALID_SOUND_STRING);
 
         assertNull(outcomeGroup);
     }
@@ -81,7 +87,8 @@ class GroupFactoryTest {
                 VALID_NAME,
                 "-50",
                 VALID_PERMISSION,
-                VALID_DESIGN);
+                VALID_DESIGN,
+                VALID_SOUND_STRING);
 
         assertNull(outcomeGroup);
     }
@@ -93,7 +100,8 @@ class GroupFactoryTest {
                 VALID_NAME,
                 "200",
                 VALID_PERMISSION,
-                VALID_DESIGN);
+                VALID_DESIGN,
+                VALID_SOUND_STRING);
 
         assertNotNull(outcomeGroup);
         assertEquals(VALID_NAME, outcomeGroup.getName());
@@ -109,7 +117,8 @@ class GroupFactoryTest {
                 VALID_NAME,
                 VALID_PRIORITY,
                 "deathholos.group.f4u7",
-                VALID_DESIGN);
+                VALID_DESIGN,
+                VALID_SOUND_STRING);
 
         assertNull(outcomeGroup);
     }
@@ -121,7 +130,8 @@ class GroupFactoryTest {
                 VALID_NAME,
                 VALID_PRIORITY,
                 "death.holos.group",
-                VALID_DESIGN);
+                VALID_DESIGN,
+                VALID_SOUND_STRING);
 
         assertNull(outcomeGroup);
     }
@@ -133,7 +143,8 @@ class GroupFactoryTest {
                 VALID_NAME,
                 VALID_PRIORITY,
                 "deathholos.testing",
-                VALID_DESIGN);
+                VALID_DESIGN,
+                VALID_SOUND_STRING);
 
         assertNotNull(outcomeGroup);
         assertEquals(VALID_NAME, outcomeGroup.getName());
@@ -149,7 +160,8 @@ class GroupFactoryTest {
                 VALID_NAME,
                 VALID_PRIORITY,
                 VALID_PERMISSION,
-                null);
+                null,
+                VALID_SOUND_STRING);
 
         assertNull(outcomeGroup);
     }
@@ -161,7 +173,8 @@ class GroupFactoryTest {
                 VALID_NAME,
                 VALID_PRIORITY,
                 VALID_PERMISSION,
-                new ArrayList<>());
+                new ArrayList<>(),
+                VALID_SOUND_STRING);
 
         assertNull(outcomeGroup);
     }
@@ -178,7 +191,8 @@ class GroupFactoryTest {
                 VALID_NAME,
                 VALID_PRIORITY,
                 VALID_PERMISSION,
-                design);
+                design,
+                VALID_SOUND_STRING);
 
         assertNotNull(outcomeGroup);
         assertEquals(VALID_NAME, outcomeGroup.getName());
@@ -194,7 +208,8 @@ class GroupFactoryTest {
                 "nu-.12er",
                 VALID_PRIORITY,
                 VALID_PERMISSION,
-                VALID_DESIGN);
+                VALID_DESIGN,
+                VALID_SOUND_STRING);
 
         assertNotNull(outcomeGroup);
         assertEquals("nu-.12er", outcomeGroup.getName());
@@ -204,13 +219,14 @@ class GroupFactoryTest {
     }
 
     @Test
-    void givenNamesymbols_whenCreate_thenReturnValidName() {
+    void givenNameSymbols_whenCreate_thenReturnValidName() {
         HologramGroup outcomeGroup = groupFactory.create(
                 mockSender,
                 "na&me",
                 VALID_PRIORITY,
                 VALID_PERMISSION,
-                VALID_DESIGN);
+                VALID_DESIGN,
+                VALID_SOUND_STRING);
 
         assertNotNull(outcomeGroup);
         assertEquals("na&me", outcomeGroup.getName());
@@ -218,4 +234,157 @@ class GroupFactoryTest {
         assertEquals(VALID_PERMISSION, outcomeGroup.getPermission());
         assertEquals(VALID_DESIGN, outcomeGroup.getText());
     }
+
+//    @Test
+//    void givenParticle_whenCreate_thenReturnValidParticle() {
+//        HologramGroup outcomeGroup = groupFactory.create(
+//                mockSender,
+//                VALID_NAME,
+//                VALID_PRIORITY,
+//                VALID_PERMISSION,
+//                VALID_DESIGN,
+//                VALID_PARTICLE_STRING,
+//                VALID_SOUND_STRING);
+//
+//        assertNotNull(outcomeGroup);
+//        assertEquals(VALID_NAME, outcomeGroup.getName());
+//        assertEquals(VALID_PRIORITY_INT, outcomeGroup.getPriority());
+//        assertEquals(VALID_PERMISSION, outcomeGroup.getPermission());
+//        assertEquals(VALID_DESIGN, outcomeGroup.getText());
+//        assertEquals(VALID_PARTICLE, outcomeGroup.getParticle());
+//        assertEquals(VALID_SOUND, outcomeGroup.getSound());
+//    }
+//
+//    @Test
+//    void givenParticle_whenCreate_thenReturnNullParticle() {
+//        HologramGroup outcomeGroup = groupFactory.create(
+//                mockSender,
+//                VALID_NAME,
+//                VALID_PRIORITY,
+//                VALID_PERMISSION,
+//                VALID_DESIGN,
+//                "invalid",
+//                VALID_SOUND_STRING);
+//
+//        assertNotNull(outcomeGroup);
+//        assertEquals(VALID_NAME, outcomeGroup.getName());
+//        assertEquals(VALID_PRIORITY_INT, outcomeGroup.getPriority());
+//        assertEquals(VALID_PERMISSION, outcomeGroup.getPermission());
+//        assertEquals(VALID_DESIGN, outcomeGroup.getText());
+//        assertNull(outcomeGroup.getParticle());
+//        assertEquals(VALID_SOUND, outcomeGroup.getSound());
+//    }
+//
+//    @Test
+//    void givenNullString_whenCreate_thenReturnNullParticle() {
+//        HologramGroup outcomeGroup = groupFactory.create(
+//                mockSender,
+//                VALID_NAME,
+//                VALID_PRIORITY,
+//                VALID_PERMISSION,
+//                VALID_DESIGN,
+//                "null",
+//                VALID_SOUND_STRING);
+//
+//        assertNotNull(outcomeGroup);
+//        assertEquals(VALID_NAME, outcomeGroup.getName());
+//        assertEquals(VALID_PRIORITY_INT, outcomeGroup.getPriority());
+//        assertEquals(VALID_PERMISSION, outcomeGroup.getPermission());
+//        assertEquals(VALID_DESIGN, outcomeGroup.getText());
+//        assertNull(outcomeGroup.getParticle());
+//        assertEquals(VALID_SOUND, outcomeGroup.getSound());
+//    }
+//
+//    @Test
+//    void givenNull_whenCreate_thenReturnNullParticle() {
+//        HologramGroup outcomeGroup = groupFactory.create(
+//                mockSender,
+//                VALID_NAME,
+//                VALID_PRIORITY,
+//                VALID_PERMISSION,
+//                VALID_DESIGN,
+//                null,
+//                VALID_SOUND_STRING);
+//
+//        assertNotNull(outcomeGroup);
+//        assertEquals(VALID_NAME, outcomeGroup.getName());
+//        assertEquals(VALID_PRIORITY_INT, outcomeGroup.getPriority());
+//        assertEquals(VALID_PERMISSION, outcomeGroup.getPermission());
+//        assertEquals(VALID_DESIGN, outcomeGroup.getText());
+//        assertNull(outcomeGroup.getParticle());
+//        assertEquals(VALID_SOUND, outcomeGroup.getSound());
+//    }
+
+    @Test
+    void givenSound_whenCreate_thenReturnValidSound() {
+        HologramGroup outcomeGroup = groupFactory.create(
+                mockSender,
+                VALID_NAME,
+                VALID_PRIORITY,
+                VALID_PERMISSION,
+                VALID_DESIGN,
+                VALID_SOUND_STRING);
+
+        assertNotNull(outcomeGroup);
+        assertEquals(VALID_NAME, outcomeGroup.getName());
+        assertEquals(VALID_PRIORITY_INT, outcomeGroup.getPriority());
+        assertEquals(VALID_PERMISSION, outcomeGroup.getPermission());
+        assertEquals(VALID_DESIGN, outcomeGroup.getText());
+        assertEquals(VALID_SOUND, outcomeGroup.getSound());
+    }
+
+    @Test
+    void givenInvalidSound_whenCreate_thenReturnNullSound() {
+        HologramGroup outcomeGroup = groupFactory.create(
+                mockSender,
+                VALID_NAME,
+                VALID_PRIORITY,
+                VALID_PERMISSION,
+                VALID_DESIGN,
+                "invalidSound");
+
+        assertNotNull(outcomeGroup);
+        assertEquals(VALID_NAME, outcomeGroup.getName());
+        assertEquals(VALID_PRIORITY_INT, outcomeGroup.getPriority());
+        assertEquals(VALID_PERMISSION, outcomeGroup.getPermission());
+        assertEquals(VALID_DESIGN, outcomeGroup.getText());
+        assertNull(outcomeGroup.getSound());
+    }
+
+    @Test
+    void givenNullString_whenCreate_thenReturnNullSound() {
+        HologramGroup outcomeGroup = groupFactory.create(
+                mockSender,
+                VALID_NAME,
+                VALID_PRIORITY,
+                VALID_PERMISSION,
+                VALID_DESIGN,
+                "null");
+
+        assertNotNull(outcomeGroup);
+        assertEquals(VALID_NAME, outcomeGroup.getName());
+        assertEquals(VALID_PRIORITY_INT, outcomeGroup.getPriority());
+        assertEquals(VALID_PERMISSION, outcomeGroup.getPermission());
+        assertEquals(VALID_DESIGN, outcomeGroup.getText());
+        assertNull(outcomeGroup.getSound());
+    }
+
+    @Test
+    void givenNull_whenCreate_thenReturnNullSound() {
+        HologramGroup outcomeGroup = groupFactory.create(
+                mockSender,
+                VALID_NAME,
+                VALID_PRIORITY,
+                VALID_PERMISSION,
+                VALID_DESIGN,
+                null);
+
+        assertNotNull(outcomeGroup);
+        assertEquals(VALID_NAME, outcomeGroup.getName());
+        assertEquals(VALID_PRIORITY_INT, outcomeGroup.getPriority());
+        assertEquals(VALID_PERMISSION, outcomeGroup.getPermission());
+        assertEquals(VALID_DESIGN, outcomeGroup.getText());
+        assertNull(outcomeGroup.getSound());
+    }
+
 }

@@ -60,7 +60,7 @@ public class SpawnHoloSub extends AbstractAdminSub {
         }
 
         Location newLocation = player.getLocation().clone().add(0, heightOffset, 0);
-        Hologram holo = new Hologram(keyID, newLocation, getText(group.getText(), player));
+        Hologram holo = new Hologram(keyID, newLocation, getText(group.getText(), player), group);
         hologramHandler.spawn(holo);
         hologramManager.registerHolo(holo);
 

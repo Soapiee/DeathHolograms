@@ -5,7 +5,7 @@ import me.soapiee.deathholos.logic.Hologram;
 
 public class HologramHandler_DecentHolograms implements HologramHandler {
 
-    @Override public void spawn(Hologram holo) {
+    @Override public void spawnHologram(Hologram holo) {
         DHAPI.createHologram(holo.getKeyID(), holo.getLocation(), holo.getText());
     }
 

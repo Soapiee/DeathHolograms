@@ -17,6 +17,7 @@ public enum Message {
     GROUPPRIORITYERROR("invalid_group_priority", "&cInvalid priority for hologram group &e%group_identifier%"),
     GROUPPRIORITYDUPE("duplicate_group_priority", "&cThe priority set for hologram group &e%group_identifier% already exists"),
     GROUPPERMISSIONERROR("invalid_group_permission", "&cInvalid permission for hologram group &e%group_identifier%"),
+    GROUPSOUNDERROR("invalid_group_sound", "&cInvalid sound for hologram group &e%group_identifier%"),
     GROUPDESIGNERROR("invalid_group_design", "&cInvalid design for hologram group &e%group_identifier%"),
     GROUPCREATED("group_created", "&aGroup &e%group_identifier% &awas successfully created"),
     LEGACYHOLOGRAMS("legacy_holograms_enabled", "&aYour version is below 1.19.4 and no hologram dependency was found, so the legacy hologram system has been enabled"),
