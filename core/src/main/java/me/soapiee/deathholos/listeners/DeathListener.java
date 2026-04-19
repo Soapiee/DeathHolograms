@@ -124,6 +124,11 @@ public class DeathListener implements Listener {
 
         while (location.getBlock().isLiquid()) {
             location.add(0, 1, 0);
+
+            if (location.getY() == 320) {
+                location.setY(deathLoc.getY());
+                break;
+            }
         }
 
         double heightOffset = configManager.getHeightOffset();
