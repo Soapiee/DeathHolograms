@@ -10,7 +10,7 @@ import org.bukkit.persistence.PersistentDataType;
 
 public class HologramHandler_Legacy implements HologramHandler {
 
-    @Override public void spawn(Hologram holo) {
+    @Override public void spawnHologram(Hologram holo) {
         Location location = holo.getLocation().clone();
         location.setY((location.getY() - 2.5)); // Only needed for amrour stands
 

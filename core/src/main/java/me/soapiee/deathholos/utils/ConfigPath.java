@@ -15,6 +15,8 @@ public enum ConfigPath {
     HOLOGRAM_SECTION("hologram_groups", "hologram_groups"),
     HOLOGRAM_PRIORITY("hologram_groups.{KEY}.priority", "-1"),
     HOLOGRAM_PERMISSION("hologram_groups.{KEY}.permission", null),
+    HOLOGRAM_PARTICLE("hologram_groups.{KEY}.particle", null),
+    HOLOGRAM_SOUND("hologram_groups.{KEY}.sound", null),
     HOLOGRAM_DESIGN("hologram_groups.{KEY}.design", null);
 
     @Getter private final String path;

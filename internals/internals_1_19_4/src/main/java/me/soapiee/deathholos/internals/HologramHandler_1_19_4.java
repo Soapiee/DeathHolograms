@@ -11,7 +11,7 @@ import org.bukkit.persistence.PersistentDataType;
 
 public class HologramHandler_1_19_4 implements HologramHandler {
 
-    @Override public void spawn(Hologram holo) {
+    @Override public void spawnHologram(Hologram holo) {
         Location location = holo.getLocation().clone();
         location.setY((location.getY() - 0.25));
 
@@ -20,6 +20,7 @@ public class HologramHandler_1_19_4 implements HologramHandler {
             text.setBillboard(Display.Billboard.CENTER);
             text.getPersistentDataContainer().set(Keys.HOLOGRAMKEY, PersistentDataType.STRING, holo.getKeyID());
             text.setText(Utils.addColour(line));
+            text.setLineWidth(1000);
             location.subtract(0, 0.25, 0);
         }
     }

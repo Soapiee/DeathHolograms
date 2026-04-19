@@ -91,7 +91,7 @@ public class DeathListener implements Listener {
 
     private void handleKillerDeath(Player whoDied, Entity killer, String keyID) {
         HologramGroup group = getGroup(whoDied);
-        Hologram holo = new Hologram(keyID, getLocation(whoDied.getLocation()), getText(group.getText(), whoDied, killer));
+        Hologram holo = new Hologram(keyID, getLocation(whoDied.getLocation()), getText(group.getText(), whoDied, killer), group);
         hologramManager.registerHolo(holo);
         hologramHandler.spawn(holo);
     }
@@ -100,7 +100,7 @@ public class DeathListener implements Listener {
         EntityDamageEvent.DamageCause cause = whoDied.getLastDamageCause().getCause();
 
         HologramGroup group = getGroup(whoDied);
-        Hologram holo = new Hologram(keyID, getLocation(whoDied.getLocation()), getText(group.getText(), whoDied, cause));
+        Hologram holo = new Hologram(keyID, getLocation(whoDied.getLocation()), getText(group.getText(), whoDied, cause), group);
         hologramManager.registerHolo(holo);
         hologramHandler.spawn(holo);
     }
@@ -120,8 +120,19 @@ public class DeathListener implements Listener {
     }
 
     private Location getLocation(Location deathLoc) {
+        Location location = deathLoc.clone();
+
+        while (location.getBlock().isLiquid()) {
+            location.add(0, 1, 0);
+
+            if (location.getY() == 320) {
+                location.setY(deathLoc.getY());
+                break;
+            }
+        }
+
         double heightOffset = configManager.getHeightOffset();
-        return deathLoc.clone().add(0, heightOffset, 0);
+        return location.add(0, heightOffset, 0);
     }
 
     private List<String> getText(List<String> defaultText, Player died, Entity killer) {
