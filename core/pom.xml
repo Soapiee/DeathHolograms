@@ -17,7 +17,10 @@
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <mc.version>1.9-R0.1-SNAPSHOT</mc.version>
-        <dh.version>2.9.9</dh.version>
+        <bstats.version>3.2.1</bstats.version> <!-- Updated: 26/06/26 -->
+        <papi.version>2.12.2</papi.version> <!-- Updated: 26/06/26 -->
+        <decentholos.version>2.10.0</decentholos.version> <!-- Updated: 26/06/26 -->
+        <fancyholos.version>2.10.0</fancyholos.version> <!-- Updated: 26/06/26 -->
         <mockito.version>5.19.0</mockito.version>
         <lombok.version>1.18.42</lombok.version>
     </properties>
@@ -104,6 +107,11 @@
             <id>codemc</id>
             <url>https://repo.codemc.io/repository/maven-public/</url>
         </repository>
+        <repository>
+            <id>fancyinnovations-releases</id>
+            <name>FancyInnovations Repository</name>
+            <url>https://repo.fancyinnovations.com/releases</url>
+        </repository>
     </repositories>
 
     <dependencyManagement>
@@ -164,19 +172,25 @@
         <dependency>
             <groupId>org.bstats</groupId>
             <artifactId>bstats-bukkit</artifactId>
-            <version>3.2.1</version>
+            <version>${bstats.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>me.clip</groupId>
             <artifactId>placeholderapi</artifactId>
-            <version>2.11.6</version>
+            <version>${papi.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.github.decentsoftware-eu</groupId>
             <artifactId>decentholograms</artifactId>
-            <version>${dh.version}</version>
+            <version>${decentholos.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>de.oliver</groupId>
+            <artifactId>FancyHolograms</artifactId>
+            <version>${fancyholos.version}</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

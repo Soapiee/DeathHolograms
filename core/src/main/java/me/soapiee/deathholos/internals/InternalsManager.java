@@ -17,11 +17,13 @@ public class InternalsManager {
     private final MessageManager messageManager;
     private final ConfigManager configManager;
     private final boolean decentHologramsHook;
+    private final boolean fancyHologramsHook;
 
     public InternalsManager(DeathHolos main) {
         customLogger = main.getCustomLogger();
         messageManager = main.getMessageManager();
         decentHologramsHook = main.isDecentHologramsHooked();
+        fancyHologramsHook = main.isFancyHologramsHooked();
         configManager = main.getConfigManager();
 
         hologramHandler = initialiseHologramHandler();
@@ -51,6 +53,7 @@ public class InternalsManager {
         int minorVersion = Utils.getMinorVersion();
 
         if (decentHologramsHook) return "HologramHandler_DecentHolograms";
+        if (fancyHologramsHook) return "HologramHandler_FancyHolograms";
         if (majorVersion > 19) return "HologramHandler_1_19_4";
         if (majorVersion == 19 && minorVersion > 3) return "HologramHandler_1_19_4";
 

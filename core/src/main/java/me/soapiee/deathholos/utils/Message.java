@@ -10,6 +10,7 @@ public enum Message {
     INVALIDLANGUAGE("invalid_language", "&cAn invalid language has been configured. Defaulting to \"lang_en\""),
     HOOKEDPLACEHOLDERAPI("hooked_placeholderapi", "&aHooked into PlaceholderAPI"),
     HOOKEDDECENTHOLOGRAMS("hooked_decentholograms", "&aHooked into DecentHolograms"),
+    HOOKEDFANCYHOLOGRAMS("hooked_fancyholograms", "&aHooked into FancyHolograms"),
     LOGGERFILEERROR("logger_file_error", "&cThe logger.log file could not be created"),
     LOGGERLOGSUCCESS("logger_log_success", "&cAn error was added to the logger.log file"),
     LOGGERLOGERROR("logger_log_error", "&cA new error log failed to be saved"),
