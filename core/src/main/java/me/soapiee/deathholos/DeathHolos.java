@@ -26,6 +26,7 @@ public final class DeathHolos extends JavaPlugin {
     @Getter private HologramManager holoManager;
     @Getter private boolean placeholderAPIHooked;
     @Getter private boolean decentHologramsHooked;
+    @Getter private boolean fancyHologramsHooked;
     @Getter private UpdateManager updateManager;
 
     @Override
@@ -70,6 +71,14 @@ public final class DeathHolos extends JavaPlugin {
             if (!configManager.isPrioritiseHook()) return;
             decentHologramsHooked = true;
             Utils.consoleMsg(messageManager.get(Message.HOOKEDDECENTHOLOGRAMS));
+        }
+
+        fancyHologramsHooked = false;
+        if (getServer().getPluginManager().getPlugin("FancyHolograms") != null) {
+            if (!getServer().getPluginManager().getPlugin("FancyHolograms").isEnabled()) return;
+            if (!configManager.isPrioritiseHook()) return;
+            fancyHologramsHooked = true;
+            Utils.consoleMsg(messageManager.get(Message.HOOKEDFANCYHOLOGRAMS));
         }
     }
 

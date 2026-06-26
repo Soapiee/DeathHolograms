@@ -6,6 +6,7 @@ language_field_error: "&cNeue felder konnten der sprachdatei nicht hinzugefügt 
 invalid_language: "&cEine ungültige sprache wurde konfiguriert. Standardeinstellung \"lang_en\" wird verwendet"
 hooked_placeholderapi: "&aVerbindung zu PlaceholderAPI hergestellt"
 hooked_decentholograms: "&aVerbindung zu DecentHolograms hergestellt"
+hooked_fancyholograms: "&aVerbindung zu FancyHolograms hergestellt"
 logger_file_error: "&cDie datei logger.log konnte nicht erstellt werden"
 logger_log_success: "&cEin fehler wurde in die datei logger.log eingetragen"
 logger_log_error: "&cEin neuer fehlerlog konnte nicht gespeichert werden"

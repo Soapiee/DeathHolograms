@@ -62,6 +62,7 @@ hologram_groups:
   donator:
     priority: 1
     permission: deathholos.group.donator
+    sound: ENTITY_SHULKER_SHOOT
     design:
       - "&a★ ★ ★ ★ ★"
       - "%player% died to %killer%%cause%"
