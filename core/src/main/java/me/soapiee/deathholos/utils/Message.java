@@ -26,6 +26,7 @@ public enum Message {
 
     //                    --->    ADMIN MESSAGES    <---
     UPDATEAVAILABLE("update_available", "&aThere is an update available for DeathHolos"),
+    ADMINVERSION("admin_version", "&cCurrent version: %version%"),
     RELOADSUCCESS("reload_success", "&aSuccessfully reloaded DeathHolos"),
     RELOADINPROGRESS("reload_inprogress", "&eReloading configuration..."),
     RELOADERROR("reload_error", "&cError reloading DeathHolos"),
