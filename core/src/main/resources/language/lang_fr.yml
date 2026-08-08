@@ -22,6 +22,7 @@ death_cause_error: "&cUne erreur est survenue avec la cause de la mort du joueur
 
 #                    --->    MESSAGES ADMIN    <---
 update_available: "&aUne mise à jour est disponible pour DeathHolos"
+admin_version: "&cVersion actuelle : %version%"
 reload_success: "&aDeathHolos a été rechargé avec succès"
 reload_inprogress: "&eRechargement de la configuration..."
 reload_error: "&cErreur lors du rechargement de DeathHolos"
