@@ -153,6 +153,7 @@ public class MessageManager {
 
         if (message.contains("%group_identifier%")) message = message.replace("%group_identifier%", string);
         if (message.contains("%cmd_label%")) message = message.replace("%cmd_label%", string);
+        if (message.contains("%version%")) message = message.replace("%version%", string);
 
         return message;
     }

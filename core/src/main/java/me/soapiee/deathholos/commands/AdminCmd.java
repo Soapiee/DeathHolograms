@@ -3,6 +3,7 @@ package me.soapiee.deathholos.commands;
 import me.soapiee.deathholos.DeathHolos;
 import me.soapiee.deathholos.commands.adminCmds.ReloadSub;
 import me.soapiee.deathholos.commands.adminCmds.SpawnHoloSub;
+import me.soapiee.deathholos.commands.adminCmds.VersionSub;
 import me.soapiee.deathholos.managers.HologramManager;
 import me.soapiee.deathholos.managers.MessageManager;
 import me.soapiee.deathholos.utils.Message;
@@ -32,6 +33,7 @@ public class AdminCmd implements CommandExecutor, TabCompleter {
 
         register(new ReloadSub(main));
         register(new SpawnHoloSub(main));
+        register(new VersionSub(main));
     }
 
     private void register(SubCmd cmd) {
@@ -83,6 +85,7 @@ public class AdminCmd implements CommandExecutor, TabCompleter {
             case 1:
                 results.add("help");
                 results.add("spawn");
+                results.add("version");
 
                 if (sender instanceof Player && sender.hasPermission("deathholos.admin.reload")) {
                     results.add("reload");

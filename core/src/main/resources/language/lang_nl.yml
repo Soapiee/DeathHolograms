@@ -22,6 +22,7 @@ death_cause_error: "&cer is een fout opgetreden bij de doodsoorzaak van de spele
 
 #                    --->    ADMIN BERICHTEN    <---
 update_available: "&cer is een update beschikbaar voor DeathHolos"
+admin_version: "&cHuidige versie: %version%"
 reload_success: "&aDeathHolos succesvol herladen"
 reload_inprogress: "&econfiguratie aan het herladen..."
 reload_error: "&cfout bij het herladen van DeathHolos"
