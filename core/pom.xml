@@ -19,8 +19,8 @@
         <mc.version>1.9-R0.1-SNAPSHOT</mc.version>
         <bstats.version>3.2.1</bstats.version> <!-- Updated: 26/06/26 -->
         <papi.version>2.12.2</papi.version> <!-- Updated: 26/06/26 -->
-        <decentholos.version>2.10.0</decentholos.version> <!-- Updated: 26/06/26 -->
-        <fancyholos.version>2.10.0</fancyholos.version> <!-- Updated: 26/06/26 -->
+        <decentholos.version>2.10.2</decentholos.version> <!-- Updated: 18/10/26 -->
+        <fancyholos.version>2.12.0</fancyholos.version> <!-- Updated: 18/10/26 -->
         <mockito.version>5.19.0</mockito.version>
         <lombok.version>1.18.42</lombok.version>
     </properties>
