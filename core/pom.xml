@@ -22,7 +22,7 @@
         <decentholos.version>2.10.2</decentholos.version> <!-- Updated: 18/10/26 -->
         <fancyholos.version>2.10.0</fancyholos.version> <!-- Updated: 18/10/26 -->
         <mockito.version>5.19.0</mockito.version>
-        <lombok.version>1.18.42</lombok.version>
+        <lombok.version>1.18.48</lombok.version> <!-- Updated: 19/10/26 -->
     </properties>
 
     <build>
