@@ -1,7 +1,6 @@
 package me.soapiee.deathholos.logic;
 
 import lombok.Getter;
-import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.jetbrains.annotations.Nullable;
 
