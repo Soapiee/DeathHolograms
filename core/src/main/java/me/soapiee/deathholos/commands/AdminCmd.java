@@ -4,7 +4,7 @@ import me.soapiee.deathholos.DeathHolos;
 import me.soapiee.deathholos.commands.adminCmds.ReloadSub;
 import me.soapiee.deathholos.commands.adminCmds.SpawnHoloSub;
 import me.soapiee.deathholos.commands.adminCmds.VersionSub;
-import me.soapiee.deathholos.managers.PriorityHologramManager;
+import me.soapiee.deathholos.managers.HologramManager;
 import me.soapiee.deathholos.managers.MessageManager;
 import me.soapiee.deathholos.utils.Message;
 import me.soapiee.deathholos.utils.Utils;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public class AdminCmd implements CommandExecutor, TabCompleter {
 
     private final MessageManager messageManager;
-    private final PriorityHologramManager hologramManager;
+    private final HologramManager hologramManager;
 
     private final String PERMISSION = "deathholos.admin";
     private final Map<String, SubCmd> subCommands = new HashMap<>();

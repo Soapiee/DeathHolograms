@@ -1,14 +1,9 @@
 package me.soapiee.deathholos.managers;
 
-import lombok.Getter;
 import me.soapiee.deathholos.DeathHolos;
-import me.soapiee.deathholos.internals.HologramHandler;
-import me.soapiee.deathholos.logic.DespawnTask;
 import me.soapiee.deathholos.logic.GroupFactory;
-import me.soapiee.deathholos.logic.Hologram;
 import me.soapiee.deathholos.logic.HologramGroup;
 import me.soapiee.deathholos.utils.ConfigPath;
-import me.soapiee.deathholos.utils.CustomLogger;
 import me.soapiee.deathholos.utils.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -16,29 +11,13 @@ import org.bukkit.command.ConsoleCommandSender;
 
 import java.util.*;
 
-public class PriorityHologramManager implements HologramManager {
+public class PriorityHologramManager extends HologramManager {
 
-    private final DeathHolos main;
-    private final CustomLogger customLogger;
-    private final MessageManager messageManager;
-    private final HologramHandler hologramHandler;
-    private final ConfigManager configManager;
-    private final GroupFactory groupFactory;
-
-    @Getter private HologramGroup defaultGroup = null;
-    private final Map<String, DespawnTask> activeHolos = new HashMap<>();
-//
-//    // HoloGroups stored via priority
+    // HoloGroups stored via priority
     private final Map<Integer, HologramGroup> groups = new HashMap<>();
 
-
     public PriorityHologramManager(DeathHolos main, GroupFactory groupFactory) {
-        this.main = main;
-        customLogger = main.getCustomLogger();
-        messageManager = main.getMessageManager();
-        hologramHandler = main.getInternalsManager().getHologramHandler();
-        configManager = main.getConfigManager();
-        this.groupFactory = groupFactory;
+        super(main, groupFactory);
         load(Bukkit.getConsoleSender());
     }
 
@@ -49,22 +28,17 @@ public class PriorityHologramManager implements HologramManager {
         load(sender);
     }
 
-//    private void load(CommandSender sender) {
-//        loadGroups(sender);
-//        loadDefaultGroup(sender);
-//    }
-
-    public void loadDefaultGroup(CommandSender sender) {
+    protected void loadDefaultGroup(CommandSender sender) {
         int i = 0;
 
         for (int priority : groups.keySet()) {
             if (priority > i) i = priority;
         }
 
-        defaultGroup = groups.get(i);
+        setDefaultGroup(groups.get(i));
     }
 
-    public void loadGroups(CommandSender sender) {
+    protected void loadGroups(CommandSender sender) {
         Set<String> keys = configManager.getGroupKeys();
 
         if (keys != null)
@@ -89,18 +63,9 @@ public class PriorityHologramManager implements HologramManager {
             }
     }
 
-    public void registerHolo(Hologram holo) {
-        DespawnTask despawnTask = new DespawnTask(main, holo);
-        activeHolos.put(holo.getKeyID(), despawnTask);
-    }
-
-    public void unregister(String keyID) {
-        activeHolos.remove(keyID);
-    }
-
+    @Override
     public HologramGroup getGroup(int priority) {
         return groups.get(priority);
-
     }
 
     public HologramGroup getGroup(String name) {
@@ -113,16 +78,5 @@ public class PriorityHologramManager implements HologramManager {
 
     public Collection<HologramGroup> getGroups() {
         return groups.values();
-    }
-
-    public boolean exists(String keyID) {
-        return activeHolos.containsKey(keyID);
-    }
-
-    public void clearAllHolos() {
-        for (DespawnTask task : activeHolos.values()) {
-            hologramHandler.despawn(task.getHolo());
-            task.cancel();
-        }
     }
 }

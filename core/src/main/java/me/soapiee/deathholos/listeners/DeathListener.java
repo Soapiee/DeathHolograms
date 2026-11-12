@@ -6,8 +6,8 @@ import me.soapiee.deathholos.internals.HologramHandler;
 import me.soapiee.deathholos.logic.Hologram;
 import me.soapiee.deathholos.logic.HologramGroup;
 import me.soapiee.deathholos.managers.ConfigManager;
+import me.soapiee.deathholos.managers.HologramManager;
 import me.soapiee.deathholos.managers.MessageManager;
-import me.soapiee.deathholos.managers.PriorityHologramManager;
 import org.bukkit.Location;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -26,7 +26,7 @@ public class DeathListener implements Listener {
     private final MessageManager messageManager;
     private final ConfigManager configManager;
     private final HologramHandler hologramHandler;
-    private final PriorityHologramManager hologramManager;
+    private final HologramManager hologramManager;
     private final boolean placeholderAPIEnabled;
 
     public DeathListener(DeathHolos main) {
@@ -37,21 +37,9 @@ public class DeathListener implements Listener {
         placeholderAPIEnabled = main.isPlaceholderAPIHooked();
     }
 
-//    @EventHandler
-//    public void onDeath(PlayerDeathEvent event) {
-//        Player whoDied = event.getEntity();
-//        if (whoDied.hasPermission("deathholos.silentdeath")) return;
-//
-//        String keyID = createKeyID(whoDied.getUniqueId());
-//        if (keyID == null) return;
-//
-//        LivingEntity killer = getKiller(whoDied);
-//        if (killer != null) handleKillerDeath(whoDied, killer, keyID);
-//        if (killer == null && !configManager.isPlayerKillsOnly()) handleEnvironmentDeath(whoDied, keyID);
-//    }
-
     @EventHandler
     public void onDeath(EntityDeathEvent event) {
+//        Player whoDied = event.getEntity();
         LivingEntity entity = event.getEntity();
         if (!(entity instanceof Player)) return;
 
@@ -121,6 +109,11 @@ public class DeathListener implements Listener {
         hologramHandler.spawn(holo);
     }
 
+    private HologramGroup getGroup(Player player) {
+        if (configManager.isPrioritySystem()) return getPriorityGroup(player);
+        else return getSelectorGroup(player);
+    }
+
     private HologramGroup getPriorityGroup(Player player) {
         HologramGroup group = hologramManager.getDefaultGroup();
         int lowestPriority = group.getPriority();
@@ -135,16 +128,10 @@ public class DeathListener implements Listener {
         return group;
     }
 
+    //TODO:
     private HologramGroup getSelectorGroup(Player player) {
         HologramGroup group = hologramManager.getDefaultGroup();
-        int lowestPriority = group.getPriority();
 
-        for (int i = 0; i < lowestPriority; i++) {
-            HologramGroup holoGroup = hologramManager.getGroup(i);
-            if (holoGroup == null) continue;
-
-            if (player.hasPermission(holoGroup.getPermission())) return holoGroup;
-        }
 
         return group;
     }
