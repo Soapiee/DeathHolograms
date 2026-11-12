@@ -27,6 +27,7 @@ public class GroupFactory {
                                 String inputPermission,
                                 List<String> inputList,
                                 String inputSound) {
+
         int priority = validatePriority(sender, inputPriority, name);
         if (priority <= -1) return null;
 
@@ -43,6 +44,27 @@ public class GroupFactory {
         Sound sound = validateSound(sender, inputSound, name);
 
         return new HologramGroup(name, priority, permission, text, sound);
+    }
+
+    public HologramGroup create(CommandSender sender,
+                                String name,
+                                String inputPermission,
+                                List<String> inputList,
+                                String inputSound) {
+
+        String permission = validatePermission(inputPermission, name);
+        if (permission == null) {
+            customLogger.logToPlayer(sender, null, messageManager.getWithPlaceholder(Message.GROUPPERMISSIONERROR, name, (sender instanceof ConsoleCommandSender)));
+            return null;
+        }
+
+        List<String> text = validateText(sender, inputList, name);
+        if (text == null) return null;
+
+//        Particle particle = validateParticle(sender, inputParticle, name);
+        Sound sound = validateSound(sender, inputSound, name);
+
+        return new HologramGroup(name, permission, text, sound);
     }
 
     private int validatePriority(CommandSender sender, String priorityInput, String groupName) {

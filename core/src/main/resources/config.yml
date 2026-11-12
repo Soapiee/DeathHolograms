@@ -6,6 +6,8 @@
 ##                        discord.com/users/152044111153594369                       ##
 ## -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ##
 
+
+## -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- SETTINGS --=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- ##
 settings:
   # Do you want there to be a notification given in console and to admins when there is an update available
   # Default: true
@@ -15,6 +17,24 @@ settings:
   # Options: lang_en, lang_es, lang_de, lang_fr, lang_nl
   # Default: lang_en
   language: lang_en
+
+  # Which spawning system do you want the plugin to use?
+  # Priority -> If a player has multiple hologram permissions, the one with the highest priority will be used as their death-hologram.
+  #          -> Each hologram group (see bottom of this file), must have a priority set for it.
+  #
+  # Selector -> The player must select which hologram they want as their death-hologram.
+  #          -> Using the command /dh select [deathhologram_id]
+  #          -> A player can only select holograms that they have permissions for.
+  #
+  # Default: priority
+  hologram_spawning_system: priority
+
+  # Define which hologram should be the default one
+  # The name must match one that is in the "hologram_groups" list at the bottom of this file
+  #
+  # Set to "null" for no default hologram. This will mean no deathhologram
+  # will be spawned on a players death, if they only have access to the "default" hologram.
+  default_hologram: "rainbow"
 
   # How long the hologram should last for (in seconds)
   # Default: 20
@@ -27,16 +47,18 @@ settings:
   # Do you want holograms to only appear when the player dies to another player?
   # Set to true if you only want death holograms when a player dies as a direct result of another player
   # Set to false if you want environment and entity kills to also create death holograms
+  #
   # Default: false
   hologram_on_player_kill_only: false
 
   # How many death holograms will spawn per player, in case they continuously die in a short span of time.
   # The lower the number the better, for performance reasons
+  #
   # Default: 5
   max_hologram_per_player: 5
 
-  # If you have "DecentHolograms" installed on your server, do you want this plugin to prioritize using that plugins hologram spawning system,
-  # or do you want this plugin to handle spawning holograms.
+  # If you have "DecentHolograms" or "FancyHolograms" installed on your server, do you want this plugin to prioritize using that plugins hologram spawning system,
+  # or do you want this plugin to handle spawning holograms?
   #
   # IMPORTANT: For versions 1.16 - 1.19.3, it is highly recommended that you use DecentHolograms to spawn the holograms.
   #
@@ -44,7 +66,8 @@ settings:
   prioritize_hologram_hook: true
 
 
-hologram_groups:
+  ## -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- HOLOGRAM GROUPS -=-=-=-=-=-=-=-=-=-=-=-=-=-=- ##
+
   # Valid placeholders to use inside the hologram design
   #
   # %player% -> Returns the name of the player who died
@@ -55,10 +78,18 @@ hologram_groups:
   #
   # Any PlaceholderAPI placeholder - https://wiki.placeholderapi.com/users/placeholder-list/minecraft/
 
-  # If a player doesnt have a deathholos.group.{group} permission, the hologram with the lowest priority (higher number) will be used.
-  # If a player has multiple permissions, the one with the highest priority (lower number) will be used.
-  # 1 being the highest priority. 100 being a low priority number.
+  # If a player doesn't have a deathholos.group.{group} permission, the default hologram will be used.
+  # If a default hologram isn't set, the FIRST hologram in the list below, will be set as the default hologram.
   # Give the permission "deathholos.silentdeath" to a player, for no hologram to be spawned on their death.
+
+hologram_groups:
+  rainbow:
+    priority: 10
+    design:
+      - "&a------"
+      - "%player% died to %killer%%cause%"
+      - "example line 2"
+      - "&a-----"
   donator:
     priority: 1
     permission: deathholos.group.donator
@@ -68,10 +99,3 @@ hologram_groups:
       - "%player% died to %killer%%cause%"
       - " "
       - "&a★ ★ ★ ★ ★"
-  default:
-    priority: 10
-    design:
-      - "&a------"
-      - "%player% died to %killer%%cause%"
-      - "example line 2"
-      - "&a-----"

@@ -7,7 +7,7 @@ import me.soapiee.deathholos.listeners.ConnectListener;
 import me.soapiee.deathholos.listeners.DeathListener;
 import me.soapiee.deathholos.logic.GroupFactory;
 import me.soapiee.deathholos.managers.ConfigManager;
-import me.soapiee.deathholos.managers.HologramManager;
+import me.soapiee.deathholos.managers.PriorityHologramManager;
 import me.soapiee.deathholos.managers.MessageManager;
 import me.soapiee.deathholos.managers.UpdateManager;
 import me.soapiee.deathholos.utils.CustomLogger;
@@ -23,7 +23,7 @@ public final class DeathHolos extends JavaPlugin {
     @Getter private CustomLogger customLogger;
     @Getter private InternalsManager internalsManager;
     @Getter private ConfigManager configManager;
-    @Getter private HologramManager holoManager;
+    @Getter private PriorityHologramManager holoManager;
     @Getter private boolean placeholderAPIHooked;
     @Getter private boolean decentHologramsHooked;
     @Getter private boolean fancyHologramsHooked;
@@ -54,7 +54,7 @@ public final class DeathHolos extends JavaPlugin {
         registerHooks();
         internalsManager = new InternalsManager(this);
         GroupFactory groupFactory = new GroupFactory(this);
-        holoManager = new HologramManager(this, groupFactory);
+        holoManager = new PriorityHologramManager(this, groupFactory);
     }
 
     private void registerHooks() {

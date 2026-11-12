@@ -22,4 +22,12 @@ public class HologramGroup {
         this.sound = sound;
     }
 
+    public HologramGroup(String name, String permission, List<String> text, @Nullable Sound sound) {
+        this.name = name;
+        this.priority = -1;
+        this.permission = permission;
+        this.text = text;
+        this.sound = sound;
+    }
+
 }

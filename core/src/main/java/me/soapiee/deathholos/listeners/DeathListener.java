@@ -6,8 +6,8 @@ import me.soapiee.deathholos.internals.HologramHandler;
 import me.soapiee.deathholos.logic.Hologram;
 import me.soapiee.deathholos.logic.HologramGroup;
 import me.soapiee.deathholos.managers.ConfigManager;
-import me.soapiee.deathholos.managers.HologramManager;
 import me.soapiee.deathholos.managers.MessageManager;
+import me.soapiee.deathholos.managers.PriorityHologramManager;
 import org.bukkit.Location;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -26,7 +26,7 @@ public class DeathListener implements Listener {
     private final MessageManager messageManager;
     private final ConfigManager configManager;
     private final HologramHandler hologramHandler;
-    private final HologramManager hologramManager;
+    private final PriorityHologramManager hologramManager;
     private final boolean placeholderAPIEnabled;
 
     public DeathListener(DeathHolos main) {
@@ -121,7 +121,21 @@ public class DeathListener implements Listener {
         hologramHandler.spawn(holo);
     }
 
-    private HologramGroup getGroup(Player player) {
+    private HologramGroup getPriorityGroup(Player player) {
+        HologramGroup group = hologramManager.getDefaultGroup();
+        int lowestPriority = group.getPriority();
+
+        for (int i = 0; i < lowestPriority; i++) {
+            HologramGroup holoGroup = hologramManager.getGroup(i);
+            if (holoGroup == null) continue;
+
+            if (player.hasPermission(holoGroup.getPermission())) return holoGroup;
+        }
+
+        return group;
+    }
+
+    private HologramGroup getSelectorGroup(Player player) {
         HologramGroup group = hologramManager.getDefaultGroup();
         int lowestPriority = group.getPriority();
 

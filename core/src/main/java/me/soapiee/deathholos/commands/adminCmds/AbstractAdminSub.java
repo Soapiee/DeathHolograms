@@ -4,7 +4,7 @@ import me.soapiee.deathholos.DeathHolos;
 import me.soapiee.deathholos.commands.SubCmd;
 import me.soapiee.deathholos.internals.HologramHandler;
 import me.soapiee.deathholos.managers.ConfigManager;
-import me.soapiee.deathholos.managers.HologramManager;
+import me.soapiee.deathholos.managers.PriorityHologramManager;
 import me.soapiee.deathholos.managers.MessageManager;
 import me.soapiee.deathholos.utils.Message;
 import me.soapiee.deathholos.utils.Utils;
@@ -18,7 +18,7 @@ public abstract class AbstractAdminSub implements SubCmd {
     protected final MessageManager messageManager;
     protected final HologramHandler hologramHandler;
     protected final ConfigManager configManager;
-    protected final HologramManager hologramManager;
+    protected final PriorityHologramManager hologramManager;
 
     protected final String PERMISSION;
     protected final int MIN_ARGS;

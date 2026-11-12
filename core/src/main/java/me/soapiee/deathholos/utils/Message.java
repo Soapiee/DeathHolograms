@@ -17,6 +17,7 @@ public enum Message {
     INVALIDHOLOGROUP("invalid_hologram", "&cA hologram with that identifier does not exist"),
     GROUPPRIORITYERROR("invalid_group_priority", "&cInvalid priority for hologram group &e%group_identifier%"),
     GROUPPRIORITYDUPE("duplicate_group_priority", "&cThe priority set for hologram group &e%group_identifier% already exists"),
+    GROUPIDDUPE("duplicate_group_id", "&cThe name set for hologram group &e%group_identifier% already exists"),
     GROUPPERMISSIONERROR("invalid_group_permission", "&cInvalid permission for hologram group &e%group_identifier%"),
     GROUPSOUNDERROR("invalid_group_sound", "&cInvalid sound for hologram group &e%group_identifier%"),
     GROUPDESIGNERROR("invalid_group_design", "&cInvalid design for hologram group &e%group_identifier%"),

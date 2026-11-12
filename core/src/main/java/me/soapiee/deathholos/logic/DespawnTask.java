@@ -4,7 +4,7 @@ import lombok.Getter;
 import me.soapiee.deathholos.DeathHolos;
 import me.soapiee.deathholos.internals.HologramHandler;
 import me.soapiee.deathholos.managers.ConfigManager;
-import me.soapiee.deathholos.managers.HologramManager;
+import me.soapiee.deathholos.managers.PriorityHologramManager;
 import me.soapiee.deathholos.utils.Utils;
 import org.bukkit.ChatColor;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -12,7 +12,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class DespawnTask extends BukkitRunnable {
 
     private final HologramHandler hologramHandler;
-    private final HologramManager hologramManager;
+    private final PriorityHologramManager hologramManager;
     private final ConfigManager configManager;
     @Getter private final String keyID;
     @Getter private final Hologram holo;
