@@ -2,9 +2,10 @@ package me.soapiee.deathholos.listeners;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import me.soapiee.deathholos.DeathHolos;
-import me.soapiee.deathholos.internals.HologramHandler;
+import me.soapiee.deathholos.internals.hologram.HologramHandler;
 import me.soapiee.deathholos.logic.Hologram;
 import me.soapiee.deathholos.logic.HologramGroup;
+import me.soapiee.deathholos.logic.SelectorCache;
 import me.soapiee.deathholos.managers.ConfigManager;
 import me.soapiee.deathholos.managers.HologramManager;
 import me.soapiee.deathholos.managers.MessageManager;
@@ -27,6 +28,7 @@ public class DeathListener implements Listener {
     private final ConfigManager configManager;
     private final HologramHandler hologramHandler;
     private final HologramManager hologramManager;
+    private final SelectorCache selectorCache;
     private final boolean placeholderAPIEnabled;
 
     public DeathListener(DeathHolos main) {
@@ -34,24 +36,13 @@ public class DeathListener implements Listener {
         hologramHandler = main.getInternalsManager().getHologramHandler();
         configManager = main.getConfigManager();
         hologramManager = main.getHoloManager();
+        selectorCache = main.getSelectorCache();
         placeholderAPIEnabled = main.isPlaceholderAPIHooked();
     }
 
-//    @EventHandler
-//    public void onDeath(PlayerDeathEvent event) {
-//        Player whoDied = event.getEntity();
-//        if (whoDied.hasPermission("deathholos.silentdeath")) return;
-//
-//        String keyID = createKeyID(whoDied.getUniqueId());
-//        if (keyID == null) return;
-//
-//        LivingEntity killer = getKiller(whoDied);
-//        if (killer != null) handleKillerDeath(whoDied, killer, keyID);
-//        if (killer == null && !configManager.isPlayerKillsOnly()) handleEnvironmentDeath(whoDied, keyID);
-//    }
-
     @EventHandler
     public void onDeath(EntityDeathEvent event) {
+//        Player whoDied = event.getEntity();
         LivingEntity entity = event.getEntity();
         if (!(entity instanceof Player)) return;
 
@@ -116,12 +107,19 @@ public class DeathListener implements Listener {
         EntityDamageEvent.DamageCause cause = whoDied.getLastDamageCause().getCause();
 
         HologramGroup group = getGroup(whoDied);
+        if (group == null) return;
+
         Hologram holo = new Hologram(keyID, getLocation(whoDied.getLocation()), getText(group.getText(), whoDied, cause), group);
         hologramManager.registerHolo(holo);
         hologramHandler.spawn(holo);
     }
 
     private HologramGroup getGroup(Player player) {
+        if (configManager.isPrioritySystem()) return getPriorityGroup(player);
+        else return getSelectorGroup(player);
+    }
+
+    private HologramGroup getPriorityGroup(Player player) {
         HologramGroup group = hologramManager.getDefaultGroup();
         int lowestPriority = group.getPriority();
 
@@ -133,6 +131,15 @@ public class DeathListener implements Listener {
         }
 
         return group;
+    }
+
+    private HologramGroup getSelectorGroup(Player player) {
+        HologramGroup defaultGroup = hologramManager.getDefaultGroup();
+        if (selectorCache == null) return defaultGroup;
+
+        HologramGroup playerGroup = selectorCache.getGroup(player.getUniqueId());
+
+        return playerGroup == null ? defaultGroup : playerGroup;
     }
 
     private Location getLocation(Location deathLoc) {

@@ -1,9 +1,8 @@
-package me.soapiee.deathholos.internals;
+package me.soapiee.deathholos.internals.hologram;
 
 import me.soapiee.deathholos.logic.Hologram;
 import org.bukkit.Location;
 import org.bukkit.Sound;
-import org.bukkit.World;
 
 public interface HologramHandler {
 

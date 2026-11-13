@@ -1,4 +1,4 @@
-package me.soapiee.deathholos.internals;
+package me.soapiee.deathholos.internals.hologram;
 
 import eu.decentsoftware.holograms.api.DHAPI;
 import me.soapiee.deathholos.logic.Hologram;

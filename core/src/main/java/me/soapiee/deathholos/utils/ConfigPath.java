@@ -7,6 +7,8 @@ public enum ConfigPath {
     DEBUG_MODE("debug_mode", false),
     PLUGIN_NOTIF("settings.update_notification", true),
     LANGUAGE("settings.language", "lang_en"),
+    SPAWN_SYSTEM("settings.hologram_spawning_system", "priority"),
+    DEFAULT_HOLO("settings.default_hologram", null),
     DESPAWN_TIME("settings.despawn_time", 10),
     HOLO_HEIGHT("settings.height_above_death_location", 0.5),
     PLAYER_KILL_ONLY("settings.hologram_on_player_kill_only", false),

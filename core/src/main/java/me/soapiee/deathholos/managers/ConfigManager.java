@@ -21,6 +21,8 @@ public class ConfigManager {
     @Getter private int maxHolos;
     @Getter private boolean prioritiseHook;
     @Getter private Set<String> groupKeys;
+    @Getter private boolean prioritySystem;
+    @Getter private String defaultHolo;
 
     public ConfigManager(DeathHolos main) {
         this.main = main;
@@ -38,6 +40,8 @@ public class ConfigManager {
         maxHolos = getInt(ConfigPath.MAX_HOLOS);
         prioritiseHook = getBoolean(ConfigPath.PRIORITISE_HOOK);
         groupKeys = config.getConfigurationSection(ConfigPath.HOLOGRAM_SECTION.getPath()).getKeys(false);
+        prioritySystem = (!getString(ConfigPath.SPAWN_SYSTEM).equalsIgnoreCase("selector"));
+        defaultHolo = getString(ConfigPath.DEFAULT_HOLO);
     }
 
     public void reload() {
@@ -51,6 +55,10 @@ public class ConfigManager {
 
     private int getInt(ConfigPath rawPath) {
         return config.getInt(rawPath.getPath(), (int) rawPath.getDefaultValue());
+    }
+
+    private String getString(ConfigPath rawPath) {
+        return config.getString(rawPath.getPath(), (String) rawPath.getDefaultValue());
     }
 
     private double getDouble(ConfigPath rawPath) {

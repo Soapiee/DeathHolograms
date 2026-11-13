@@ -2,7 +2,7 @@ package me.soapiee.deathholos.commands.adminCmds;
 
 import me.soapiee.deathholos.DeathHolos;
 import me.soapiee.deathholos.commands.SubCmd;
-import me.soapiee.deathholos.internals.HologramHandler;
+import me.soapiee.deathholos.internals.hologram.HologramHandler;
 import me.soapiee.deathholos.managers.ConfigManager;
 import me.soapiee.deathholos.managers.HologramManager;
 import me.soapiee.deathholos.managers.MessageManager;

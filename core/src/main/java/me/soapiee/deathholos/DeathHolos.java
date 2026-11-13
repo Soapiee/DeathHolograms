@@ -2,14 +2,13 @@ package me.soapiee.deathholos;
 
 import lombok.Getter;
 import me.soapiee.deathholos.commands.AdminCmd;
+import me.soapiee.deathholos.commands.PlayerCmd;
 import me.soapiee.deathholos.internals.InternalsManager;
 import me.soapiee.deathholos.listeners.ConnectListener;
 import me.soapiee.deathholos.listeners.DeathListener;
 import me.soapiee.deathholos.logic.GroupFactory;
-import me.soapiee.deathholos.managers.ConfigManager;
-import me.soapiee.deathholos.managers.HologramManager;
-import me.soapiee.deathholos.managers.MessageManager;
-import me.soapiee.deathholos.managers.UpdateManager;
+import me.soapiee.deathholos.logic.SelectorCache;
+import me.soapiee.deathholos.managers.*;
 import me.soapiee.deathholos.utils.CustomLogger;
 import me.soapiee.deathholos.utils.Message;
 import me.soapiee.deathholos.utils.Utils;
@@ -27,6 +26,7 @@ public final class DeathHolos extends JavaPlugin {
     @Getter private boolean placeholderAPIHooked;
     @Getter private boolean decentHologramsHooked;
     @Getter private boolean fancyHologramsHooked;
+    @Getter private SelectorCache selectorCache;
     @Getter private UpdateManager updateManager;
 
     @Override
@@ -54,7 +54,11 @@ public final class DeathHolos extends JavaPlugin {
         registerHooks();
         internalsManager = new InternalsManager(this);
         GroupFactory groupFactory = new GroupFactory(this);
-        holoManager = new HologramManager(this, groupFactory);
+
+        if (configManager.isPrioritySystem()) holoManager = new PriorityHologramManager(this, groupFactory);
+        else holoManager = new SelectorHologramManager(this, groupFactory);
+
+        selectorCache = (configManager.isPrioritySystem() ? null : new SelectorCache());
     }
 
     private void registerHooks() {
@@ -89,7 +93,6 @@ public final class DeathHolos extends JavaPlugin {
 
     private void registerCommands() {
         getCommand("adeathholos").setExecutor(new AdminCmd(this));
-        // TODO:
-//        getCommand("deathholos").setExecutor(new PlayerCmd(this));
+        getCommand("deathholos").setExecutor(new PlayerCmd(this));
     }
 }
