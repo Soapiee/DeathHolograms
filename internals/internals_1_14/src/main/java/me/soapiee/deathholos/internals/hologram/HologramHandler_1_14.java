@@ -1,9 +1,9 @@
-package me.soapiee.deathholos.internals;
+package me.soapiee.deathholos.internals.hologram;
 
+import me.soapiee.deathholos.internals.Keys;
 import me.soapiee.deathholos.logic.Hologram;
 import me.soapiee.deathholos.utils.Utils;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.persistence.PersistentDataType;

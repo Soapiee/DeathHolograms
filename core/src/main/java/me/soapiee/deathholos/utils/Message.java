@@ -5,6 +5,7 @@ public enum Message {
     //                    --->    GENERAL MESSAGES    <---
     PREFIX("prefix", "#17d5eb&l[DH]&r"), // Replace to "" if you want no prefix
     MUSTBEPLAYERERROR("must_be_player", "&cYou must be a player to use this command"),
+    PLAYERNOTFOUND("player_not_found", "&cPlayer not found"),
     NOPERMISSION("no_permission", "&cYou do not have permission to use this command"),
     LANGUAGEFIELDERROR("language_field_error", "&cCould not add new fields to the language file"),
     INVALIDLANGUAGE("invalid_language", "&cAn invalid language has been configured. Defaulting to \"lang_en\""),
@@ -24,6 +25,15 @@ public enum Message {
     GROUPCREATED("group_created", "&aGroup &e%group_identifier% &awas successfully created"),
     LEGACYHOLOGRAMS("legacy_holograms_enabled", "&aYour version is below 1.19.4 and no hologram dependency was found, so the legacy hologram system has been enabled"),
     DEATHCAUSEERROR("death_cause_error", "&cThere was an error with the players cause of death. Send the log to the developer"),
+    SUCCESSHOLOSELECTED("hologram_selected_success", "&aYou successfully changed your death hologram to &e%group_identifier%"),
+    NOPERMHOLOSELECTED("holo_selected_no_perm", "&cYou do not have permission to use this death hologram"),
+    VIEWHOLO("holo_view", "&e%player_name% is using the &a%group_identifier% &edeath hologram "),
+    ERRORVIEWHOLO("holo_view_error", "&cThe player is using the default death hologram"),
+//    OFFLINEVIEWHOLO("death", "&cThe player must be online"),
+    PLAYERHELP("player_help", "#17d5eb--------- Player Help ---------"
+        + "\n#17d5ebKey: < > = Optional | [ ] = Required"
+        + "\n#17d5eb/%cmd_label% view <player> &7- Returns which death hologram is active"
+        + "\n#17d5eb/%cmd_label% select <group id> &7- Selects which death hologram you want to use"),
 
     //                    --->    ADMIN MESSAGES    <---
     UPDATEAVAILABLE("update_available", "&aThere is an update available for DeathHolos"),

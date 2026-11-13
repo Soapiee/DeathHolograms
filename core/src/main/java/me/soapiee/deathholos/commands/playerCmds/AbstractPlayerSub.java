@@ -2,7 +2,8 @@ package me.soapiee.deathholos.commands.playerCmds;
 
 import me.soapiee.deathholos.DeathHolos;
 import me.soapiee.deathholos.commands.SubCmd;
-import me.soapiee.deathholos.internals.HologramHandler;
+import me.soapiee.deathholos.internals.hologram.HologramHandler;
+import me.soapiee.deathholos.logic.SelectorCache;
 import me.soapiee.deathholos.managers.ConfigManager;
 import me.soapiee.deathholos.managers.HologramManager;
 import me.soapiee.deathholos.managers.MessageManager;
@@ -19,6 +20,7 @@ public abstract class AbstractPlayerSub implements SubCmd {
     protected final HologramHandler hologramHandler;
     protected final ConfigManager configManager;
     protected final HologramManager hologramManager;
+    protected final SelectorCache selectorCache;
 
     protected final String PERMISSION;
     protected final int MIN_ARGS;
@@ -30,6 +32,7 @@ public abstract class AbstractPlayerSub implements SubCmd {
         hologramHandler = main.getInternalsManager().getHologramHandler();
         configManager = main.getConfigManager();
         hologramManager = main.getHoloManager();
+        selectorCache = main.getSelectorCache();
 
         this.PERMISSION = PERMISSION;
         this.MIN_ARGS = MIN_ARGS;

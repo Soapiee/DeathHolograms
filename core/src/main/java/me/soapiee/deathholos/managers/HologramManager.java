@@ -2,7 +2,7 @@ package me.soapiee.deathholos.managers;
 
 import lombok.Getter;
 import me.soapiee.deathholos.DeathHolos;
-import me.soapiee.deathholos.internals.HologramHandler;
+import me.soapiee.deathholos.internals.hologram.HologramHandler;
 import me.soapiee.deathholos.logic.DespawnTask;
 import me.soapiee.deathholos.logic.GroupFactory;
 import me.soapiee.deathholos.logic.Hologram;

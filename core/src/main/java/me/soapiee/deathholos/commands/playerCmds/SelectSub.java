@@ -2,7 +2,6 @@ package me.soapiee.deathholos.commands.playerCmds;
 
 import lombok.Getter;
 import me.soapiee.deathholos.DeathHolos;
-import me.soapiee.deathholos.commands.adminCmds.AbstractAdminSub;
 import me.soapiee.deathholos.logic.HologramGroup;
 import me.soapiee.deathholos.utils.Message;
 import me.soapiee.deathholos.utils.Utils;
@@ -13,7 +12,7 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SelectSub extends AbstractAdminSub {
+public class SelectSub extends AbstractPlayerSub {
 
     @Getter private final String IDENTIFIER = "select";
 
@@ -36,7 +35,8 @@ public class SelectSub extends AbstractAdminSub {
 
         if (!hasAccess(player, group)) return;
 
-        //TODO: Update the death hologram group to the player
+        selectorCache.addPlayer(player.getUniqueId(), group);
+        sendMessage(sender, messageManager.getWithPlaceholder(Message.SUCCESSHOLOSELECTED, group.getName(), false));
     }
 
     private HologramGroup validateGroup(CommandSender sender, String groupName) {
@@ -48,10 +48,10 @@ public class SelectSub extends AbstractAdminSub {
     }
 
     private boolean hasAccess(Player player, HologramGroup group) {
-        //TODO: If player has access to that group
-
-        sendMessage(player, Utils.addColour(messageManager.get(Message.NOPERMISSIONHOLO)));
-
+        if (!player.hasPermission(group.getPermission())){
+            sendMessage(player, Utils.addColour(messageManager.get(Message.NOPERMHOLOSELECTED)));
+            return false;
+        }
 
         return true;
     }

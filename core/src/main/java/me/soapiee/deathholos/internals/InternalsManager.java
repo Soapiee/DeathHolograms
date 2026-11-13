@@ -2,6 +2,10 @@ package me.soapiee.deathholos.internals;
 
 import lombok.Getter;
 import me.soapiee.deathholos.DeathHolos;
+import me.soapiee.deathholos.internals.data.SelectorDataHandler;
+import me.soapiee.deathholos.internals.data.SelectorDataHandler_Unsupported;
+import me.soapiee.deathholos.internals.hologram.HologramHandler;
+import me.soapiee.deathholos.internals.hologram.HologramHandler_Legacy;
 import me.soapiee.deathholos.managers.ConfigManager;
 import me.soapiee.deathholos.managers.MessageManager;
 import me.soapiee.deathholos.utils.CustomLogger;
@@ -12,6 +16,7 @@ import org.bukkit.ChatColor;
 public class InternalsManager {
 
     @Getter private final HologramHandler hologramHandler;
+    @Getter private final SelectorDataHandler selectorDataHandler;
 
     private final CustomLogger customLogger;
     private final MessageManager messageManager;
@@ -27,23 +32,24 @@ public class InternalsManager {
         configManager = main.getConfigManager();
 
         hologramHandler = initialiseHologramHandler();
+        selectorDataHandler = initialiseSelectorDataHandler();
     }
 
-    public InternalsManager(HologramHandler hologramHandler, CustomLogger customLogger, MessageManager messageManager, ConfigManager configManager, boolean decentHologramsHook, boolean fancyHologramsHook) {
-        this.hologramHandler = hologramHandler;
-        this.customLogger = customLogger;
-        this.messageManager = messageManager;
-        this.configManager = configManager;
-        this.decentHologramsHook = decentHologramsHook;
-        this.fancyHologramsHook = fancyHologramsHook;
-    }
+//    public InternalsManager(HologramHandler hologramHandler, CustomLogger customLogger, MessageManager messageManager, ConfigManager configManager, boolean decentHologramsHook, boolean fancyHologramsHook) {
+//        this.hologramHandler = hologramHandler;
+//        this.customLogger = customLogger;
+//        this.messageManager = messageManager;
+//        this.configManager = configManager;
+//        this.decentHologramsHook = decentHologramsHook;
+//        this.fancyHologramsHook = fancyHologramsHook;
+//    }
 
     private HologramHandler initialiseHologramHandler() {
         HologramHandler hologramHandler;
 
         try {
-            String packageName = InternalsManager.class.getPackage().getName();
-            String providerName = getProviderName();
+            String packageName = InternalsManager.class.getPackage().getName() + ".hologram";
+            String providerName = getHoloProviderName();
 
             if (configManager.isDebugMode()) Utils.consoleMsg(ChatColor.BLUE + providerName);
             hologramHandler = (HologramHandler) Class.forName(packageName + "." + providerName).newInstance();
@@ -57,7 +63,7 @@ public class InternalsManager {
         return hologramHandler;
     }
 
-    private String getProviderName() {
+    private String getHoloProviderName() {
         int majorVersion = Utils.getMajorVersion();
         int minorVersion = Utils.getMinorVersion();
 
@@ -77,5 +83,31 @@ public class InternalsManager {
         }
 
         return false;
+    }
+
+    private SelectorDataHandler initialiseSelectorDataHandler() {
+        SelectorDataHandler selectorDataHandler;
+
+        try {
+            String packageName = InternalsManager.class.getPackage().getName() + ".data";
+            String providerName = getDataProviderName();
+
+            if (configManager.isDebugMode()) Utils.consoleMsg(ChatColor.BLUE + providerName);
+            selectorDataHandler = (SelectorDataHandler) Class.forName(packageName + "." + providerName).newInstance();
+
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
+                 ClassCastException | IllegalArgumentException ex) {
+            //TODO:
+//            customLogger.logToFile(ex, messageManager.get(Message.UNSUPPORTSELECTOR));
+            selectorDataHandler = new SelectorDataHandler_Unsupported();
+        }
+
+        return selectorDataHandler;
+    }
+
+    private String getDataProviderName() {
+        int majorVersion = Utils.getMajorVersion();
+
+        return (majorVersion >= 14) ? "SelectorDataHandler_1_14" : "SelectorData_Unsupported";
     }
 }

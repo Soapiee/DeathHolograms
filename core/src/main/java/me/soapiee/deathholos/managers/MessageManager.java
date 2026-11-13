@@ -158,6 +158,15 @@ public class MessageManager {
         return message;
     }
 
+    public String getWithPlaceholder(Message messageEnum, String playerName, String groupName, boolean isConsole) {
+        String message = isConsole ? getWithoutPrefix(messageEnum) : get(messageEnum);
+
+        if (message.contains("%player_name%")) message = message.replace("%player_name%", playerName);
+        if (message.contains("%group_identifier%")) message = message.replace("%group_identifier%", groupName);
+
+        return message;
+    }
+
     public String getCause(EntityDamageEvent.DamageCause cause) {
         Message messageEnum;
 

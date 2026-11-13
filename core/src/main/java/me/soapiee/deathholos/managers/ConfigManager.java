@@ -40,7 +40,7 @@ public class ConfigManager {
         maxHolos = getInt(ConfigPath.MAX_HOLOS);
         prioritiseHook = getBoolean(ConfigPath.PRIORITISE_HOOK);
         groupKeys = config.getConfigurationSection(ConfigPath.HOLOGRAM_SECTION.getPath()).getKeys(false);
-        prioritySystem = getString(ConfigPath.SPAWN_SYSTEM).equalsIgnoreCase("priority");
+        prioritySystem = (!getString(ConfigPath.SPAWN_SYSTEM).equalsIgnoreCase("selector"));
         defaultHolo = getString(ConfigPath.DEFAULT_HOLO);
     }
 
