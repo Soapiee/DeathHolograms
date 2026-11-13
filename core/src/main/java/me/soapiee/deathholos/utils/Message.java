@@ -5,7 +5,7 @@ public enum Message {
     //                    --->    GENERAL MESSAGES    <---
     PREFIX("prefix", "#17d5eb&l[DH]&r"), // Replace to "" if you want no prefix
     MUSTBEPLAYERERROR("must_be_player", "&cYou must be a player to use this command"),
-    PLAYERNOTFOUND("player_not_found", "&cPlayer not found"),
+    PLAYERNOTFOUND("player_not_found", "&cThe player must be online"),
     NOPERMISSION("no_permission", "&cYou do not have permission to use this command"),
     LANGUAGEFIELDERROR("language_field_error", "&cCould not add new fields to the language file"),
     INVALIDLANGUAGE("invalid_language", "&cAn invalid language has been configured. Defaulting to \"lang_en\""),
