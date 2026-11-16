@@ -11,12 +11,12 @@ api-version: 1.13
 commands:
   adeathholos:
     description: 'DeathHolos admin commands'
-    aliases: [ "adh", "admindh" ]
+    aliases: [ "adh", "admindh", "ADH" ]
     usage: 'adh help'
     permission: deathholos.admin
   deathholos:
     description: 'DeathHolos admin commands'
-    aliases: [ "dh" ]
+    aliases: [ "dh", "DH" ]
     usage: 'dh help'
     permission: deathholos.player
 

@@ -2,10 +2,10 @@ package me.soapiee.deathholos.internals;
 
 import lombok.Getter;
 import me.soapiee.deathholos.DeathHolos;
-import me.soapiee.deathholos.internals.data.SelectorDataHandler;
-import me.soapiee.deathholos.internals.data.SelectorDataHandler_Unsupported;
-import me.soapiee.deathholos.internals.hologram.HologramHandler;
-import me.soapiee.deathholos.internals.hologram.HologramHandler_Legacy;
+import me.soapiee.deathholos.internals.data.HoloDataHandler;
+import me.soapiee.deathholos.internals.data.HoloDataHandler_Priority;
+import me.soapiee.deathholos.internals.spawning.HologramHandler;
+import me.soapiee.deathholos.internals.spawning.HologramHandler_Legacy;
 import me.soapiee.deathholos.managers.ConfigManager;
 import me.soapiee.deathholos.managers.MessageManager;
 import me.soapiee.deathholos.utils.CustomLogger;
@@ -16,7 +16,7 @@ import org.bukkit.ChatColor;
 public class InternalsManager {
 
     @Getter private final HologramHandler hologramHandler;
-    @Getter private final SelectorDataHandler selectorDataHandler;
+    @Getter private final HoloDataHandler holoDataHandler;
 
     private final CustomLogger customLogger;
     private final MessageManager messageManager;
@@ -32,23 +32,14 @@ public class InternalsManager {
         configManager = main.getConfigManager();
 
         hologramHandler = initialiseHologramHandler();
-        selectorDataHandler = initialiseSelectorDataHandler();
+        holoDataHandler = initialiseDataHandler();
     }
-
-//    public InternalsManager(HologramHandler hologramHandler, CustomLogger customLogger, MessageManager messageManager, ConfigManager configManager, boolean decentHologramsHook, boolean fancyHologramsHook) {
-//        this.hologramHandler = hologramHandler;
-//        this.customLogger = customLogger;
-//        this.messageManager = messageManager;
-//        this.configManager = configManager;
-//        this.decentHologramsHook = decentHologramsHook;
-//        this.fancyHologramsHook = fancyHologramsHook;
-//    }
 
     private HologramHandler initialiseHologramHandler() {
         HologramHandler hologramHandler;
 
         try {
-            String packageName = InternalsManager.class.getPackage().getName() + ".hologram";
+            String packageName = InternalsManager.class.getPackage().getName() + ".spawning";
             String providerName = getHoloProviderName();
 
             if (configManager.isDebugMode()) Utils.consoleMsg(ChatColor.BLUE + providerName);
@@ -85,29 +76,31 @@ public class InternalsManager {
         return false;
     }
 
-    private SelectorDataHandler initialiseSelectorDataHandler() {
-        SelectorDataHandler selectorDataHandler;
+    private HoloDataHandler initialiseDataHandler() {
+        HoloDataHandler dataHandler;
 
         try {
             String packageName = InternalsManager.class.getPackage().getName() + ".data";
             String providerName = getDataProviderName();
 
             if (configManager.isDebugMode()) Utils.consoleMsg(ChatColor.BLUE + providerName);
-            selectorDataHandler = (SelectorDataHandler) Class.forName(packageName + "." + providerName).newInstance();
+            dataHandler = (HoloDataHandler) Class.forName(packageName + "." + providerName).newInstance();
 
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
                  ClassCastException | IllegalArgumentException ex) {
             //TODO:
 //            customLogger.logToFile(ex, messageManager.get(Message.UNSUPPORTSELECTOR));
-            selectorDataHandler = new SelectorDataHandler_Unsupported();
+            dataHandler = new HoloDataHandler_Priority();
         }
 
-        return selectorDataHandler;
+        return dataHandler;
     }
 
     private String getDataProviderName() {
         int majorVersion = Utils.getMajorVersion();
 
-        return (majorVersion >= 14) ? "SelectorDataHandler_1_14" : "SelectorData_Unsupported";
+        if (configManager.isPrioritySystem()) return "HologramHandler_Priority";
+
+        return (majorVersion >= 14) ? "HoloDataHandler_1_14" : "HoloDataHandler_Priority";
     }
 }

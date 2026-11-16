@@ -2,7 +2,8 @@ package me.soapiee.deathholos.commands.adminCmds;
 
 import me.soapiee.deathholos.DeathHolos;
 import me.soapiee.deathholos.commands.SubCmd;
-import me.soapiee.deathholos.internals.hologram.HologramHandler;
+import me.soapiee.deathholos.internals.data.HoloDataHandler;
+import me.soapiee.deathholos.internals.spawning.HologramHandler;
 import me.soapiee.deathholos.managers.ConfigManager;
 import me.soapiee.deathholos.managers.HologramManager;
 import me.soapiee.deathholos.managers.MessageManager;
@@ -19,6 +20,7 @@ public abstract class AbstractAdminSub implements SubCmd {
     protected final HologramHandler hologramHandler;
     protected final ConfigManager configManager;
     protected final HologramManager hologramManager;
+    protected final HoloDataHandler holoDataHandler;
 
     protected final String PERMISSION;
     protected final int MIN_ARGS;
@@ -30,6 +32,7 @@ public abstract class AbstractAdminSub implements SubCmd {
         hologramHandler = main.getInternalsManager().getHologramHandler();
         configManager = main.getConfigManager();
         hologramManager = main.getHoloManager();
+        holoDataHandler = main.getInternalsManager().getHoloDataHandler();
 
         this.PERMISSION = PERMISSION;
         this.MIN_ARGS = MIN_ARGS;

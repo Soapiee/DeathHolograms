@@ -21,6 +21,7 @@ public class SelectorHologramManager extends HologramManager {
         load(Bukkit.getConsoleSender());
     }
 
+    @Override
     public void reload(CommandSender sender) {
         groups.clear();
         clearAllHolos();
@@ -28,12 +29,18 @@ public class SelectorHologramManager extends HologramManager {
         load(sender);
     }
 
+    @Override
     protected void loadDefaultGroup(CommandSender sender) {
         HologramGroup defaultGroup = groups.getOrDefault(configManager.getDefaultHolo(), null);
-        setDefaultGroup(defaultGroup);
+        defaultGroup.setAsDefault();
+
+        holoDataHandler.setDefaultGroup(defaultGroup);
+
+        if (configManager.isDebugMode())
+            customLogger.logToPlayer(sender, null, messageManager.getWithPlaceholder(Message.DEFAULTGROUP, defaultGroup.getName(), (sender instanceof ConsoleCommandSender)));
     }
 
-    protected void loadGroups(CommandSender sender) {
+    @Override protected void loadGroups(CommandSender sender) {
         Set<String> keys = configManager.getGroupKeys();
 
         if (keys != null)
@@ -57,11 +64,11 @@ public class SelectorHologramManager extends HologramManager {
             }
     }
 
-    public HologramGroup getGroup(String groupName) {
+    @Override public HologramGroup getGroup(String groupName) {
         return groups.get(groupName);
     }
 
-    public Collection<HologramGroup> getGroups() {
+    @Override public Collection<HologramGroup> getGroups() {
         return groups.values();
     }
 }

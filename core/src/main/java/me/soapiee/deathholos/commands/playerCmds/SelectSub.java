@@ -28,14 +28,15 @@ public class SelectSub extends AbstractPlayerSub {
             return;
         }
 
-        Player player = (Player) sender;
+        if (!checkRequirements(sender, args, label)) return;
 
+        Player player = (Player) sender;
         HologramGroup group = validateGroup(player, args[1]);
         if (group == null) return;
 
         if (!hasAccess(player, group)) return;
 
-        selectorCache.addPlayer(player.getUniqueId(), group);
+        holoDataHandler.updatePlayer(player.getUniqueId(), group);
         sendMessage(sender, messageManager.getWithPlaceholder(Message.SUCCESSHOLOSELECTED, group.getName(), false));
     }
 
@@ -48,6 +49,8 @@ public class SelectSub extends AbstractPlayerSub {
     }
 
     private boolean hasAccess(Player player, HologramGroup group) {
+        if (group.isDefault()) return true;
+
         if (!player.hasPermission(group.getPermission())){
             sendMessage(player, Utils.addColour(messageManager.get(Message.NOPERMHOLOSELECTED)));
             return false;

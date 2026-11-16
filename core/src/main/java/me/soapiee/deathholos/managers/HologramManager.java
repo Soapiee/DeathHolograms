@@ -1,8 +1,8 @@
 package me.soapiee.deathholos.managers;
 
-import lombok.Getter;
 import me.soapiee.deathholos.DeathHolos;
-import me.soapiee.deathholos.internals.hologram.HologramHandler;
+import me.soapiee.deathholos.internals.data.HoloDataHandler;
+import me.soapiee.deathholos.internals.spawning.HologramHandler;
 import me.soapiee.deathholos.logic.DespawnTask;
 import me.soapiee.deathholos.logic.GroupFactory;
 import me.soapiee.deathholos.logic.Hologram;
@@ -22,8 +22,8 @@ public abstract class HologramManager {
     private final HologramHandler hologramHandler;
     protected final ConfigManager configManager;
     protected final GroupFactory groupFactory;
+    protected final HoloDataHandler holoDataHandler;
 
-    @Getter protected HologramGroup defaultGroup = null;
     protected final Map<String, DespawnTask> activeHolos = new HashMap<>();
 
     public HologramManager (DeathHolos main, GroupFactory groupFactory){
@@ -33,20 +33,16 @@ public abstract class HologramManager {
         hologramHandler = main.getInternalsManager().getHologramHandler();
         configManager = main.getConfigManager();
         this.groupFactory = groupFactory;
+        holoDataHandler = main.getInternalsManager().getHoloDataHandler();
     }
 
-    public abstract void reload(CommandSender sender) ;
+    public abstract void reload(CommandSender sender);
+    protected abstract void loadGroups(CommandSender sender);
+    protected abstract void loadDefaultGroup(CommandSender sender);
 
     protected void load(CommandSender sender) {
         loadGroups(sender);
         loadDefaultGroup(sender);
-    }
-
-    protected abstract void loadGroups(CommandSender sender);
-    protected abstract void loadDefaultGroup(CommandSender sender);
-
-    protected void setDefaultGroup(HologramGroup group){
-        defaultGroup = group;
     }
 
     public HologramGroup getGroup (int priority) { return null; }

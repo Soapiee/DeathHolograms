@@ -1,4 +1,4 @@
-package me.soapiee.deathholos.internals.hologram;
+package me.soapiee.deathholos.internals.spawning;
 
 import de.oliver.fancyholograms.api.FancyHologramsPlugin;
 import de.oliver.fancyholograms.api.HologramManager;

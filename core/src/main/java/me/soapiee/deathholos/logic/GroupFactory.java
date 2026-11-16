@@ -82,7 +82,7 @@ public class GroupFactory {
     }
 
     private String validatePermission(String permissionInput, String groupName) {
-        if (permissionInput == null) return "deathholos.group." + groupName;
+        if (permissionInput == null || permissionInput.isEmpty()) return "deathholos.group." + groupName;
 
         //Check input contains only letters
         if (permissionInput.matches(".+[0-9].+")) return null;

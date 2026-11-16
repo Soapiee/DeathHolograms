@@ -1,4 +1,4 @@
-package me.soapiee.deathholos.internals.hologram;
+package me.soapiee.deathholos.internals.spawning;
 
 import me.soapiee.deathholos.logic.Hologram;
 import org.bukkit.Location;

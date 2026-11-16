@@ -35,7 +35,13 @@ public class PriorityHologramManager extends HologramManager {
             if (priority > i) i = priority;
         }
 
-        setDefaultGroup(groups.get(i));
+        HologramGroup defaultGroup = groups.get(i);
+        defaultGroup.setAsDefault();
+
+        holoDataHandler.setDefaultGroup(defaultGroup);
+
+        if (configManager.isDebugMode())
+            customLogger.logToPlayer(sender, null, messageManager.getWithPlaceholder(Message.DEFAULTGROUP, defaultGroup.getName(), (sender instanceof ConsoleCommandSender)));
     }
 
     protected void loadGroups(CommandSender sender) {

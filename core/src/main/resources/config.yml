@@ -26,6 +26,8 @@ settings:
   #          -> Using the command /dh select [deathhologram_id]
   #          -> A player can only select holograms that they have permissions for.
   #
+  # To update this setting when the server is online, you must restart it. Reloading the plugin will not make a difference
+  #
   # Default: priority
   hologram_spawning_system: priority
 
@@ -34,6 +36,9 @@ settings:
   #
   # Set to "null" for no default hologram. This will mean no deathhologram
   # will be spawned on a players death, if they only have access to the "default" hologram.
+  #
+  # To update this setting when the server is online, you must restart it. Reloading the plugin will not make a difference
+  #
   default_hologram: "rainbow"
 
   # How long the hologram should last for (in seconds)
