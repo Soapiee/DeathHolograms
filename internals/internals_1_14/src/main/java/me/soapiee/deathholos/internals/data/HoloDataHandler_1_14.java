@@ -22,7 +22,8 @@ public class HoloDataHandler_1_14 extends HoloDataHandler {
         HologramGroup group = hologramManager.getGroup(rawCache);
         if (!hasAccess(uuid, group)) group = getFallbackGroup(uuid);
 
-        if (group == null) group = defaultGroup;
+        //TODO: May not be necessary
+        if (group == null) updatePlayer(uuid, null);
 
         updatePlayer(uuid, group);
     }
@@ -42,7 +43,8 @@ public class HoloDataHandler_1_14 extends HoloDataHandler {
 
     @Override
     protected HologramGroup getFallbackGroup(UUID uuid) {
-        HologramGroup group = defaultGroup;
+//        HologramGroup group = defaultGroup;
+        HologramGroup group = null;
 
         for (HologramGroup holoGroup : hologramManager.getGroups()) {
             if (!hasAccess(uuid, holoGroup)) continue;

@@ -1,7 +1,5 @@
 package me.soapiee.deathholos.internals.data;
 
-import lombok.Getter;
-import lombok.Setter;
 import me.soapiee.deathholos.DeathHolos;
 import me.soapiee.deathholos.logic.HologramGroup;
 import me.soapiee.deathholos.managers.HologramManager;
@@ -18,7 +16,7 @@ public abstract class HoloDataHandler implements DataInterface {
     protected CustomLogger customLogger;
     protected boolean debugMode;
     protected HologramManager hologramManager;
-    @Getter @Setter protected HologramGroup defaultGroup = null;
+//    @Getter @Setter protected HologramGroup defaultGroup = null;
 
     protected final Map<UUID, HologramGroup> cachedGroup = new HashMap<>();
 
@@ -59,7 +57,7 @@ public abstract class HoloDataHandler implements DataInterface {
 
     protected boolean hasAccess(UUID uuid, HologramGroup group) {
         if (group == null) return true;
-        if (group.isDefault()) return true;
+//        if (group.isDefault()) return true;
 
         Player player = Bukkit.getPlayer(uuid);
         if (player == null) return false;

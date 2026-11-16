@@ -29,18 +29,20 @@ public class SelectorHologramManager extends HologramManager {
         load(sender);
     }
 
+    //TODO:
+//    @Override
+//    protected void loadDefaultGroup(CommandSender sender) {
+//        HologramGroup defaultGroup = groups.getOrDefault(configManager.getDefaultHolo(), null);
+//        defaultGroup.setAsDefault();
+//
+//        holoDataHandler.setDefaultGroup(defaultGroup);
+//
+//        if (configManager.isDebugMode())
+//            customLogger.logToPlayer(sender, null, messageManager.getWithPlaceholder(Message.DEFAULTGROUP, defaultGroup.getName(), (sender instanceof ConsoleCommandSender)));
+//    }
+
     @Override
-    protected void loadDefaultGroup(CommandSender sender) {
-        HologramGroup defaultGroup = groups.getOrDefault(configManager.getDefaultHolo(), null);
-        defaultGroup.setAsDefault();
-
-        holoDataHandler.setDefaultGroup(defaultGroup);
-
-        if (configManager.isDebugMode())
-            customLogger.logToPlayer(sender, null, messageManager.getWithPlaceholder(Message.DEFAULTGROUP, defaultGroup.getName(), (sender instanceof ConsoleCommandSender)));
-    }
-
-    @Override protected void loadGroups(CommandSender sender) {
+    protected void loadGroups(CommandSender sender) {
         Set<String> keys = configManager.getGroupKeys();
 
         if (keys != null)

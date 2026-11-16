@@ -23,15 +23,15 @@ public enum Message {
     GROUPSOUNDERROR("invalid_group_sound", "&cInvalid sound for hologram group &e%group_identifier%"),
     GROUPDESIGNERROR("invalid_group_design", "&cInvalid design for hologram group &e%group_identifier%"),
     GROUPCREATED("group_created", "&aGroup &e%group_identifier% &awas successfully created"),
-    DEFAULTGROUP("default_group_created", "&e%group_identifier% &awas set as the default hologram"),
+//    DEFAULTGROUP("default_group_created", "&e%group_identifier% &awas set as the default hologram"),
     LEGACYHOLOGRAMS("legacy_holograms_enabled", "&aYour version is below 1.19.4 and no hologram dependency was found, so the legacy hologram system has been enabled"),
     DEATHCAUSEERROR("death_cause_error", "&cThere was an error with the players cause of death. Send the log to the developer"),
     SUCCESSHOLOSELECTED("hologram_selected_success", "&aYou successfully changed your death hologram to &e%group_identifier%"),
     NOPERMHOLOSELECTED("holo_selected_no_perm", "&cYou do not have permission to use this death hologram"),
     VIEWHOLO("holo_view", "&eYou are using the &a%group_identifier% &edeath hologram "),
     VIEWHOLOOTHER("holo_view_other", "&e%player_name% is using the &a%group_identifier% &edeath hologram "),
-    ERRORVIEWHOLO("holo_view_error", "&cYou have no active death hologram or you're using the default one"),
-    ERRORVIEWHOLOOTHER("holo_view_error_other", "&cThe player has no active death hologram or is using the default one"),
+    ERRORVIEWHOLO("holo_view_error", "&cYou have no active death hologram. Use &e/dh select [hologram] &cto choose one"),
+    ERRORVIEWHOLOOTHER("holo_view_error_other", "&cThe player has no active death hologram"),
     //    OFFLINEVIEWHOLO("death", "&cThe player must be online"),
     PLAYERHELP("player_help", "#17d5eb--------- Player Help ---------"
         + "\n#17d5ebKey: < > = Optional | [ ] = Required"

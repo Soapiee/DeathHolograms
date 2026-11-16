@@ -1,5 +1,6 @@
 package me.soapiee.deathholos.managers;
 
+import lombok.Getter;
 import me.soapiee.deathholos.DeathHolos;
 import me.soapiee.deathholos.logic.GroupFactory;
 import me.soapiee.deathholos.logic.HologramGroup;
@@ -12,6 +13,8 @@ import org.bukkit.command.ConsoleCommandSender;
 import java.util.*;
 
 public class PriorityHologramManager extends HologramManager {
+
+    @Getter private int lowestPriority;
 
     // HoloGroups stored via priority
     private final Map<Integer, HologramGroup> groups = new HashMap<>();
@@ -26,23 +29,25 @@ public class PriorityHologramManager extends HologramManager {
         clearAllHolos();
         activeHolos.clear();
         load(sender);
+        lowestPriority = Collections.min(groups.keySet());
     }
 
-    protected void loadDefaultGroup(CommandSender sender) {
-        int i = 0;
-
-        for (int priority : groups.keySet()) {
-            if (priority > i) i = priority;
-        }
-
-        HologramGroup defaultGroup = groups.get(i);
-        defaultGroup.setAsDefault();
-
-        holoDataHandler.setDefaultGroup(defaultGroup);
-
-        if (configManager.isDebugMode())
-            customLogger.logToPlayer(sender, null, messageManager.getWithPlaceholder(Message.DEFAULTGROUP, defaultGroup.getName(), (sender instanceof ConsoleCommandSender)));
-    }
+    //TODO:
+//    protected void loadDefaultGroup(CommandSender sender) {
+//        int i = 0;
+//
+//        for (int priority : groups.keySet()) {
+//            if (priority > i) i = priority;
+//        }
+//
+//        HologramGroup defaultGroup = groups.get(i);
+//        defaultGroup.setAsDefault();
+//
+//        holoDataHandler.setDefaultGroup(defaultGroup);
+//
+//        if (configManager.isDebugMode())
+//            customLogger.logToPlayer(sender, null, messageManager.getWithPlaceholder(Message.DEFAULTGROUP, defaultGroup.getName(), (sender instanceof ConsoleCommandSender)));
+//    }
 
     protected void loadGroups(CommandSender sender) {
         Set<String> keys = configManager.getGroupKeys();

@@ -49,7 +49,8 @@ public class SelectSub extends AbstractPlayerSub {
     }
 
     private boolean hasAccess(Player player, HologramGroup group) {
-        if (group.isDefault()) return true;
+        //TODO:
+//        if (group.isDefault()) return true;
 
         if (!player.hasPermission(group.getPermission())){
             sendMessage(player, Utils.addColour(messageManager.get(Message.NOPERMHOLOSELECTED)));

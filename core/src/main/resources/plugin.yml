@@ -33,3 +33,5 @@ permissions:
     default: op
   deathholos.player:
     default: true
+    children:
+      deathholos.player.others: true

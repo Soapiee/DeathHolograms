@@ -1,6 +1,7 @@
 package me.soapiee.deathholos.internals.data;
 
 import me.soapiee.deathholos.logic.HologramGroup;
+import me.soapiee.deathholos.managers.PriorityHologramManager;
 
 import java.util.UUID;
 
@@ -12,6 +13,7 @@ public class HoloDataHandler_Priority extends HoloDataHandler {
 
     @Override
     public void setUpPlayer(UUID uuid) {
+        //TODO:
 //        HologramGroup group = defaultGroup;
 //        int lowestPriority = group.getPriority();
 //
@@ -37,8 +39,10 @@ public class HoloDataHandler_Priority extends HoloDataHandler {
 
     @Override
     protected HologramGroup getFallbackGroup(UUID uuid) {
-        HologramGroup group = defaultGroup;
-        int lowestPriority = group.getPriority();
+        //TODO:
+//        HologramGroup  group = defaultGroup;
+        HologramGroup group = null;
+        int lowestPriority = ((PriorityHologramManager) hologramManager).getLowestPriority();
 
         for (int i = 0; i < lowestPriority; i++) {
             HologramGroup holoGroup = hologramManager.getGroup(i);
