@@ -18,7 +18,7 @@ settings:
   # Default: lang_en
   language: lang_en
 
-  # Which spawning system do you want the plugin to use?
+  # How do you want the plugin to decide which death hologram to spawn for a player, when they have permissions for multiple?
   # Priority -> If a player has multiple hologram permissions, the one with the highest priority will be used as their death-hologram.
   #          -> Each hologram group (see bottom of this file), must have a priority set for it.
   #
@@ -30,16 +30,6 @@ settings:
   #
   # Default: priority
   hologram_spawning_system: priority
-
-  # Define which hologram should be the default one
-  # The name must match one that is in the "hologram_groups" list at the bottom of this file
-  #
-  # Set to "null" for no default hologram. This will mean no deathhologram
-  # will be spawned on a players death, if they only have access to the "default" hologram.
-  #
-  # To update this setting when the server is online, you must restart it. Reloading the plugin will not make a difference
-  #
-  default_hologram: "rainbow"
 
   # How long the hologram should last for (in seconds)
   # Default: 20
@@ -83,18 +73,17 @@ settings:
   #
   # Any PlaceholderAPI placeholder - https://wiki.placeholderapi.com/users/placeholder-list/minecraft/
 
-  # If a player doesn't have a deathholos.group.{group} permission, the default hologram will be used.
-  # If a default hologram isn't set, the FIRST hologram in the list below, will be set as the default hologram.
+  # If a player doesn't have a deathholos.group.{group} permission, no hologram will spawn for them.
   # Give the permission "deathholos.silentdeath" to a player, for no hologram to be spawned on their death.
 
 hologram_groups:
   rainbow:
     priority: 10
+    permission: deathholos.group.rainbow
     design:
-      - "&a------"
-      - "%player% died to %killer%%cause%"
-      - "example line 2"
-      - "&a-----"
+      - "%RainbowColor_-------------%"
+      - "%RainbowColor_%player% died here%"
+      - "%RainbowColor_-------------%"
   donator:
     priority: 1
     permission: deathholos.group.donator

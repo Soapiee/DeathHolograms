@@ -1,7 +1,7 @@
 package me.soapiee.deathholos.managers;
 
 import me.soapiee.deathholos.DeathHolos;
-import me.soapiee.deathholos.internals.data.HoloDataHandler;
+import me.soapiee.deathholos.internals.data.DataHandler;
 import me.soapiee.deathholos.internals.spawning.HologramHandler;
 import me.soapiee.deathholos.logic.DespawnTask;
 import me.soapiee.deathholos.logic.GroupFactory;
@@ -22,7 +22,7 @@ public abstract class HologramManager {
     private final HologramHandler hologramHandler;
     protected final ConfigManager configManager;
     protected final GroupFactory groupFactory;
-    protected final HoloDataHandler holoDataHandler;
+    protected final DataHandler dataHandler;
 
     protected final Map<String, DespawnTask> activeHolos = new HashMap<>();
 
@@ -33,12 +33,13 @@ public abstract class HologramManager {
         hologramHandler = main.getInternalsManager().getHologramHandler();
         configManager = main.getConfigManager();
         this.groupFactory = groupFactory;
-        holoDataHandler = main.getInternalsManager().getHoloDataHandler();
+        dataHandler = main.getInternalsManager().getDataHandler();
     }
 
     public abstract void reload(CommandSender sender);
     protected abstract void loadGroups(CommandSender sender);
-//    protected abstract void loadDefaultGroup(CommandSender sender);
+    public abstract HologramGroup getGroup (String holoName);
+    public abstract Collection<HologramGroup> getGroups();
 
     protected void load(CommandSender sender) {
         loadGroups(sender);
@@ -48,8 +49,6 @@ public abstract class HologramManager {
 
     public HologramGroup getGroup (int priority) { return null; }
 
-    public abstract HologramGroup getGroup (String holoName);
-
     public void registerHolo(Hologram holo) {
         DespawnTask despawnTask = new DespawnTask(main, holo);
         activeHolos.put(holo.getKeyID(), despawnTask);
@@ -58,8 +57,6 @@ public abstract class HologramManager {
     public void unregister(String keyID) {
         activeHolos.remove(keyID);
     }
-
-    public abstract Collection<HologramGroup> getGroups();
 
     public boolean exists(String keyID) {
         return activeHolos.containsKey(keyID);

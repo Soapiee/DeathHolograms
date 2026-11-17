@@ -14,6 +14,7 @@ import java.util.*;
 
 public class PriorityHologramManager extends HologramManager {
 
+    @Getter private int highestPriority;
     @Getter private int lowestPriority;
 
     // HoloGroups stored via priority
@@ -22,6 +23,8 @@ public class PriorityHologramManager extends HologramManager {
     public PriorityHologramManager(DeathHolos main, GroupFactory groupFactory) {
         super(main, groupFactory);
         load(Bukkit.getConsoleSender());
+        highestPriority = Collections.min(groups.keySet());
+        lowestPriority = Collections.max(groups.keySet());
     }
 
     public void reload(CommandSender sender) {
@@ -29,25 +32,9 @@ public class PriorityHologramManager extends HologramManager {
         clearAllHolos();
         activeHolos.clear();
         load(sender);
+        highestPriority = Collections.min(groups.keySet());
         lowestPriority = Collections.min(groups.keySet());
     }
-
-    //TODO:
-//    protected void loadDefaultGroup(CommandSender sender) {
-//        int i = 0;
-//
-//        for (int priority : groups.keySet()) {
-//            if (priority > i) i = priority;
-//        }
-//
-//        HologramGroup defaultGroup = groups.get(i);
-//        defaultGroup.setAsDefault();
-//
-//        holoDataHandler.setDefaultGroup(defaultGroup);
-//
-//        if (configManager.isDebugMode())
-//            customLogger.logToPlayer(sender, null, messageManager.getWithPlaceholder(Message.DEFAULTGROUP, defaultGroup.getName(), (sender instanceof ConsoleCommandSender)));
-//    }
 
     protected void loadGroups(CommandSender sender) {
         Set<String> keys = configManager.getGroupKeys();
@@ -79,6 +66,7 @@ public class PriorityHologramManager extends HologramManager {
         return groups.get(priority);
     }
 
+    @Override
     public HologramGroup getGroup(String name) {
         for (HologramGroup group : groups.values()) {
             if (group.getName().equalsIgnoreCase(name)) return group;
@@ -87,6 +75,7 @@ public class PriorityHologramManager extends HologramManager {
         return null;
     }
 
+    @Override
     public Collection<HologramGroup> getGroups() {
         return groups.values();
     }

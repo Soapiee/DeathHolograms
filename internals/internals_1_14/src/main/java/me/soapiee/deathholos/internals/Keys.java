@@ -5,5 +5,4 @@ import org.bukkit.NamespacedKey;
 
 public class Keys {
     public static final NamespacedKey HOLOGRAMKEY = new NamespacedKey(DeathHolos.getPlugin(DeathHolos.class), "Hologram");
-    public static final NamespacedKey CACHEKEY = new NamespacedKey(DeathHolos.getPlugin(DeathHolos.class), "Cache");
 }

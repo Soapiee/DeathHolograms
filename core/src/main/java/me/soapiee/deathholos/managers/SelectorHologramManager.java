@@ -29,18 +29,6 @@ public class SelectorHologramManager extends HologramManager {
         load(sender);
     }
 
-    //TODO:
-//    @Override
-//    protected void loadDefaultGroup(CommandSender sender) {
-//        HologramGroup defaultGroup = groups.getOrDefault(configManager.getDefaultHolo(), null);
-//        defaultGroup.setAsDefault();
-//
-//        holoDataHandler.setDefaultGroup(defaultGroup);
-//
-//        if (configManager.isDebugMode())
-//            customLogger.logToPlayer(sender, null, messageManager.getWithPlaceholder(Message.DEFAULTGROUP, defaultGroup.getName(), (sender instanceof ConsoleCommandSender)));
-//    }
-
     @Override
     protected void loadGroups(CommandSender sender) {
         Set<String> keys = configManager.getGroupKeys();
@@ -66,11 +54,13 @@ public class SelectorHologramManager extends HologramManager {
             }
     }
 
-    @Override public HologramGroup getGroup(String groupName) {
+    @Override
+    public HologramGroup getGroup(String groupName) {
         return groups.get(groupName);
     }
 
-    @Override public Collection<HologramGroup> getGroups() {
+    @Override
+    public Collection<HologramGroup> getGroups() {
         return groups.values();
     }
 }

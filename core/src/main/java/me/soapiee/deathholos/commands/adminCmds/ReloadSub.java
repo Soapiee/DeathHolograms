@@ -37,7 +37,7 @@ public class ReloadSub extends AbstractAdminSub {
         main.getConfigManager().reload();
         if (!messageManager.reload(sender)) errors = true;
         hologramManager.reload(sender);
-        holoDataHandler.reload();
+        dataHandler.reload();
 
         if (errors) reloadOutcome = Message.RELOADERROR;
 

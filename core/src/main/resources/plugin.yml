@@ -9,14 +9,14 @@ softdepend: [ "PlaceholderAPI", "DecentHolograms", "FancyHolograms" ]
 api-version: 1.13
 
 commands:
-  adeathholos:
+  adeathholograms:
     description: 'DeathHolos admin commands'
-    aliases: [ "adh", "admindh", "ADH" ]
+    aliases: [ "adh", "admindh", "ADH", "adeathholos" ]
     usage: 'adh help'
     permission: deathholos.admin
-  deathholos:
+  deathholograms:
     description: 'DeathHolos admin commands'
-    aliases: [ "dh", "DH" ]
+    aliases: [ "dh", "DH", "deathholos", "deathh", "deathholo" ]
     usage: 'dh help'
     permission: deathholos.player
 

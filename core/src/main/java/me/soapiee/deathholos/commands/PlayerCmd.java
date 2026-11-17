@@ -3,7 +3,6 @@ package me.soapiee.deathholos.commands;
 import me.soapiee.deathholos.DeathHolos;
 import me.soapiee.deathholos.commands.playerCmds.SelectSub;
 import me.soapiee.deathholos.commands.playerCmds.ViewSub;
-import me.soapiee.deathholos.internals.data.HoloDataHandler;
 import me.soapiee.deathholos.managers.HologramManager;
 import me.soapiee.deathholos.managers.MessageManager;
 import me.soapiee.deathholos.utils.Message;
@@ -24,7 +23,7 @@ public class PlayerCmd implements CommandExecutor, TabCompleter {
     private final MessageManager messageManager;
     private final HologramManager hologramManager;
 
-//    private final String PERMISSION = "deathholos.player";
+    //    private final String PERMISSION = "deathholos.player";
     private final Map<String, SubCmd> subCommands = new HashMap<>();
 
     public PlayerCmd(DeathHolos main) {
@@ -42,11 +41,9 @@ public class PlayerCmd implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (sender instanceof CommandBlock) return true;
-//        if (!hasPermission(sender)) return true;
 
         if (args.length == 0) {
-            //TODO:
-            sendMessage(sender, messageManager.getWithPlaceholder(Message.PLAYERHELP, "dh", (sender instanceof ConsoleCommandSender)));
+            sendMessage(sender, messageManager.getWithPlaceholder(Message.PLAYERHELP, "deathholos", (sender instanceof ConsoleCommandSender)));
             return true;
         }
 
@@ -75,12 +72,14 @@ public class PlayerCmd implements CommandExecutor, TabCompleter {
             case 1:
                 results.add("help");
                 results.add("select");
-//                results.add("view");
+                results.add("view");
                 break;
 
             case 2:
                 if (args[0].equalsIgnoreCase("select")) {
-                    hologramManager.getGroups().forEach(group -> results.add(group.getName()));
+                    hologramManager.getGroups().forEach(group -> {
+                        if (sender.hasPermission(group.getPermission())) results.add(group.getName());
+                    });
                     break;
                 }
 

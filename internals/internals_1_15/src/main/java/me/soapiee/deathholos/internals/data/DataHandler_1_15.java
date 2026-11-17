@@ -8,15 +8,18 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
-public class HoloDataHandler_1_14 extends HoloDataHandler {
+public class DataHandler_1_15 extends DataHandler {
 
-    public HoloDataHandler_1_14() {
+    protected final Map<UUID, HologramGroup> cachedGroup = new HashMap<>();
+
+    public DataHandler_1_15() {
     }
 
-    @Override
-    public void setUpPlayer(UUID uuid) {
+    private void setUpPlayer(UUID uuid) {
         String rawCache = readCache(uuid);
 
         HologramGroup group = hologramManager.getGroup(rawCache);
@@ -26,6 +29,23 @@ public class HoloDataHandler_1_14 extends HoloDataHandler {
         if (group == null) updatePlayer(uuid, null);
 
         updatePlayer(uuid, group);
+    }
+
+    @Override
+    public HologramGroup getPlayer(UUID uuid) {
+        if (!cachedGroup.containsKey(uuid)) {
+            setUpPlayer(uuid);
+
+            return cachedGroup.get(uuid);
+        }
+
+        HologramGroup group = cachedGroup.get(uuid);
+        if (group != null && hasAccess(uuid, group)) return group;
+
+        group = getFallbackGroup(uuid);
+        updatePlayer(uuid, group);
+
+        return getFallbackGroup(uuid);
     }
 
     @Override
@@ -43,7 +63,6 @@ public class HoloDataHandler_1_14 extends HoloDataHandler {
 
     @Override
     protected HologramGroup getFallbackGroup(UUID uuid) {
-//        HologramGroup group = defaultGroup;
         HologramGroup group = null;
 
         for (HologramGroup holoGroup : hologramManager.getGroups()) {
@@ -54,6 +73,16 @@ public class HoloDataHandler_1_14 extends HoloDataHandler {
         }
 
         return group;
+    }
+
+    @Override
+    public void updatePlayer(UUID uuid, HologramGroup hologramGroup) {
+        cachedGroup.put(uuid, hologramGroup);
+    }
+
+    @Override
+    public void reload() {
+        cachedGroup.clear();
     }
 
     private String readCache(UUID uuid) {

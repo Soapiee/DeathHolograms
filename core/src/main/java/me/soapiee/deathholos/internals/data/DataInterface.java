@@ -6,10 +6,7 @@ import java.util.UUID;
 
 public interface DataInterface {
 
-    //TODO:
-//    HologramGroup getDefaultGroup();
-//    void setDefaultGroup(HologramGroup group);
-
+    void reload();
     HologramGroup getPlayer(UUID uuid);
     void updatePlayer(UUID uuid, HologramGroup hologramGroup);
 

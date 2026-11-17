@@ -2,7 +2,7 @@ package me.soapiee.deathholos.listeners;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import me.soapiee.deathholos.DeathHolos;
-import me.soapiee.deathholos.internals.data.HoloDataHandler;
+import me.soapiee.deathholos.internals.data.DataHandler;
 import me.soapiee.deathholos.internals.spawning.HologramHandler;
 import me.soapiee.deathholos.logic.Hologram;
 import me.soapiee.deathholos.logic.HologramGroup;
@@ -28,7 +28,7 @@ public class DeathListener implements Listener {
     private final ConfigManager configManager;
     private final HologramHandler hologramHandler;
     private final HologramManager hologramManager;
-    private final HoloDataHandler holoDataHandler;
+    private final DataHandler dataHandler;
     private final boolean placeholderAPIEnabled;
 
     public DeathListener(DeathHolos main) {
@@ -36,7 +36,7 @@ public class DeathListener implements Listener {
         hologramHandler = main.getInternalsManager().getHologramHandler();
         configManager = main.getConfigManager();
         hologramManager = main.getHoloManager();
-        holoDataHandler = main.getInternalsManager().getHoloDataHandler();
+        dataHandler = main.getInternalsManager().getDataHandler();
         placeholderAPIEnabled = main.isPlaceholderAPIHooked();
     }
 
@@ -97,7 +97,7 @@ public class DeathListener implements Listener {
     }
 
     private void handleKillerDeath(Player whoDied, Entity killer, String keyID) {
-        HologramGroup group = holoDataHandler.getPlayer(whoDied.getUniqueId());
+        HologramGroup group = dataHandler.getPlayer(whoDied.getUniqueId());
         if (group == null) return;
 
         Hologram holo = new Hologram(keyID, getLocation(whoDied.getLocation()), getText(group.getText(), whoDied, killer), group);
@@ -108,7 +108,7 @@ public class DeathListener implements Listener {
     private void handleEnvironmentDeath(Player whoDied, String keyID) {
         EntityDamageEvent.DamageCause cause = whoDied.getLastDamageCause().getCause();
 
-        HologramGroup group = holoDataHandler.getPlayer(whoDied.getUniqueId());
+        HologramGroup group = dataHandler.getPlayer(whoDied.getUniqueId());
         if (group == null) return;
 
         Hologram holo = new Hologram(keyID, getLocation(whoDied.getLocation()), getText(group.getText(), whoDied, cause), group);

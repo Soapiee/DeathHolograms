@@ -4,7 +4,6 @@ import lombok.Getter;
 import me.soapiee.deathholos.DeathHolos;
 import me.soapiee.deathholos.logic.HologramGroup;
 import me.soapiee.deathholos.utils.Message;
-import me.soapiee.deathholos.utils.Utils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
@@ -23,8 +22,13 @@ public class SelectSub extends AbstractPlayerSub {
     // /dh select [holo_name]
     @Override
     public void execute(CommandSender sender, String label, String[] args) {
+//        if (configManager.isPrioritySystem()) {
+//            sendMessage(sender, messageManager.get(Message.MUSTBESELECTORSYSTEM));
+//            return;
+//        }
+
         if (sender instanceof ConsoleCommandSender) {
-            sendMessage(sender, Utils.addColour(messageManager.get(Message.MUSTBEPLAYERERROR)));
+            sendMessage(sender, messageManager.get(Message.MUSTBEPLAYERERROR));
             return;
         }
 
@@ -36,7 +40,7 @@ public class SelectSub extends AbstractPlayerSub {
 
         if (!hasAccess(player, group)) return;
 
-        holoDataHandler.updatePlayer(player.getUniqueId(), group);
+        dataHandler.updatePlayer(player.getUniqueId(), group);
         sendMessage(sender, messageManager.getWithPlaceholder(Message.SUCCESSHOLOSELECTED, group.getName(), false));
     }
 
@@ -49,11 +53,8 @@ public class SelectSub extends AbstractPlayerSub {
     }
 
     private boolean hasAccess(Player player, HologramGroup group) {
-        //TODO:
-//        if (group.isDefault()) return true;
-
-        if (!player.hasPermission(group.getPermission())){
-            sendMessage(player, Utils.addColour(messageManager.get(Message.NOPERMHOLOSELECTED)));
+        if (!player.hasPermission(group.getPermission())) {
+            sendMessage(player, messageManager.get(Message.NOPERMHOLOSELECTED));
             return false;
         }
 

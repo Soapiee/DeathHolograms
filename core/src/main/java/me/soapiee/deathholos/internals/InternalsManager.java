@@ -2,8 +2,8 @@ package me.soapiee.deathholos.internals;
 
 import lombok.Getter;
 import me.soapiee.deathholos.DeathHolos;
-import me.soapiee.deathholos.internals.data.HoloDataHandler;
-import me.soapiee.deathholos.internals.data.HoloDataHandler_Priority;
+import me.soapiee.deathholos.internals.data.DataHandler;
+import me.soapiee.deathholos.internals.data.DataHandler_Priority;
 import me.soapiee.deathholos.internals.spawning.HologramHandler;
 import me.soapiee.deathholos.internals.spawning.HologramHandler_Legacy;
 import me.soapiee.deathholos.managers.ConfigManager;
@@ -16,7 +16,7 @@ import org.bukkit.ChatColor;
 public class InternalsManager {
 
     @Getter private final HologramHandler hologramHandler;
-    @Getter private final HoloDataHandler holoDataHandler;
+    @Getter private final DataHandler dataHandler;
 
     private final CustomLogger customLogger;
     private final MessageManager messageManager;
@@ -32,7 +32,7 @@ public class InternalsManager {
         configManager = main.getConfigManager();
 
         hologramHandler = initialiseHologramHandler();
-        holoDataHandler = initialiseDataHandler();
+        dataHandler = initialiseDataHandler();
     }
 
     private HologramHandler initialiseHologramHandler() {
@@ -76,21 +76,21 @@ public class InternalsManager {
         return false;
     }
 
-    private HoloDataHandler initialiseDataHandler() {
-        HoloDataHandler dataHandler;
+    private DataHandler initialiseDataHandler() {
+        DataHandler dataHandler;
 
         try {
             String packageName = InternalsManager.class.getPackage().getName() + ".data";
             String providerName = getDataProviderName();
 
             if (configManager.isDebugMode()) Utils.consoleMsg(ChatColor.BLUE + providerName);
-            dataHandler = (HoloDataHandler) Class.forName(packageName + "." + providerName).newInstance();
+            dataHandler = (DataHandler) Class.forName(packageName + "." + providerName).newInstance();
 
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
                  ClassCastException | IllegalArgumentException ex) {
             //TODO:
 //            customLogger.logToFile(ex, messageManager.get(Message.UNSUPPORTSELECTOR));
-            dataHandler = new HoloDataHandler_Priority();
+            dataHandler = new DataHandler_Priority();
         }
 
         return dataHandler;
@@ -99,8 +99,8 @@ public class InternalsManager {
     private String getDataProviderName() {
         int majorVersion = Utils.getMajorVersion();
 
-        if (configManager.isPrioritySystem()) return "HologramHandler_Priority";
+        if (configManager.isPrioritySystem()) return "DataHandler_Priority";
 
-        return (majorVersion >= 14) ? "HoloDataHandler_1_14" : "HoloDataHandler_Priority";
+        return (majorVersion >= 15) ? "DataHandler_1_15" : "DataHandler_Priority";
     }
 }

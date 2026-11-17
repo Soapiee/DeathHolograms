@@ -87,6 +87,10 @@
             </dependency>
             <dependency>
                 <groupId>me.soapiee</groupId>
+                <artifactId>deathholos-internals_1_15</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>me.soapiee</groupId>
                 <artifactId>deathholos-internals_1_19_4</artifactId>
             </dependency>
         </dependencies>

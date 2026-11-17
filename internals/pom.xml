@@ -15,6 +15,7 @@
 
     <modules>
         <module>internals_1_14</module>
+        <module>internals_1_15</module>
         <module>internals_1_19_4</module>
     </modules>
 </project>
