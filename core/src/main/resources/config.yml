@@ -23,7 +23,7 @@ settings:
   #          -> Each hologram group (see bottom of this file), must have a priority set for it.
   #
   # Selector -> The player must select which hologram they want as their death-hologram.
-  #          -> Using the command /dh select [deathhologram_id]
+  #          -> Using the command /dh select [hologram]
   #          -> A player can only select holograms that they have permissions for.
   #
   # To update this setting when the server is online, you must restart it. Reloading the plugin will not make a difference
@@ -77,19 +77,32 @@ settings:
   # Give the permission "deathholos.silentdeath" to a player, for no hologram to be spawned on their death.
 
 hologram_groups:
-  rainbow:
-    priority: 10
-    permission: deathholos.group.rainbow
-    design:
-      - "%RainbowColor_-------------%"
-      - "%RainbowColor_%player% died here%"
-      - "%RainbowColor_-------------%"
   donator:
     priority: 1
     permission: deathholos.group.donator
     sound: ENTITY_SHULKER_SHOOT
     design:
       - "&a★ ★ ★ ★ ★"
+      - " "
       - "%player% died to %killer%%cause%"
       - " "
       - "&a★ ★ ★ ★ ★"
+  kdr:
+    priority: 2
+    permission: deathholos.group.kdr
+    design:
+      - "&e%player% died"
+      - "&7KDR -> &a%statistic_player_kills%&7/&c%statistic_deaths%"
+  colour:
+    priority: 3
+    design:
+      - "#ff8e1c%killer%%cause%"
+      - "#db162akilled"
+      - "#6632ab%player% at this location"
+  rainbow:
+    priority: 4
+    permission: deathholos.group.rainbow
+    design:
+      - "%RainbowColor_-------------%"
+      - "%RainbowColor_%player% died here%"
+      - "%RainbowColor_-------------%"
