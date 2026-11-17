@@ -93,9 +93,13 @@ public class MessageManager {
                 || messageEnum == Message.CMDHOLOCAUSE || messageEnum == Message.CMDHOLOKILLER
                 || messageEnum == Message.CAMPFIRE || messageEnum == Message.DEATHCAUSEERROR
                 || messageEnum == Message.HOOKEDPLACEHOLDERAPI || messageEnum == Message.HOOKEDDECENTHOLOGRAMS
-                || messageEnum == Message.NOPERMISSION
-                || messageEnum == Message.ADMINHELP
-//                || messageEnum == Message.PLAYERHELP
+                || messageEnum == Message.HOOKEDFANCYHOLOGRAMS
+                || messageEnum == Message.GROUPPRIORITYERROR || messageEnum == Message.GROUPPRIORITYDUPE
+                || messageEnum == Message.GROUPIDDUPE || messageEnum == Message.GROUPPERMISSIONERROR
+                || messageEnum == Message.GROUPSOUNDERROR || messageEnum == Message.GROUPDESIGNERROR
+                || messageEnum == Message.GROUPCREATED
+                || messageEnum == Message.NOPERMISSION || messageEnum == Message.MUSTBEPLAYERERROR
+                || messageEnum == Message.ADMINHELP || messageEnum == Message.PLAYERHELP
                 || messageEnum == Message.LANGUAGEFIELDERROR || messageEnum == Message.INVALIDLANGUAGE
                 || messageEnum == Message.LOGGERFILEERROR || messageEnum == Message.LOGGERLOGSUCCESS
                 || messageEnum == Message.LOGGERLOGERROR) return "";

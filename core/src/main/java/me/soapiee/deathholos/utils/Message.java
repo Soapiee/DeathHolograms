@@ -16,6 +16,7 @@ public enum Message {
     LOGGERFILEERROR("logger_file_error", "&cThe logger.log file could not be created"),
     LOGGERLOGSUCCESS("logger_log_success", "&cAn error was added to the logger.log file"),
     LOGGERLOGERROR("logger_log_error", "&cA new error log failed to be saved"),
+    FORCEDPRIORITYSYS("selector_system_error", "&cThe Selector spawning system couldn't be enabled. Please contact the developer"),
     INVALIDHOLOGROUP("invalid_hologram", "&cA hologram with that identifier does not exist"),
     GROUPPRIORITYERROR("invalid_group_priority", "&cInvalid priority for hologram group &e%group_identifier%"),
     GROUPPRIORITYDUPE("duplicate_group_priority", "&cThe priority set for hologram group &e%group_identifier% already exists"),
@@ -26,11 +27,11 @@ public enum Message {
     GROUPCREATED("group_created", "&aGroup &e%group_identifier% &awas successfully created"),
     LEGACYHOLOGRAMS("legacy_holograms_enabled", "&aYour version is below 1.19.4 and no hologram dependency was found, so the legacy hologram system has been enabled"),
     DEATHCAUSEERROR("death_cause_error", "&cThere was an error with the players cause of death. Send the log to the developer"),
-    MUSTBESELECTORSYSTEM("dsf", "&cThe server doesn't have the death hologram selector system enabled"),
+    MUSTBESELECTORSYSTEM("selector_disabled", "&cThe server doesn't have the death hologram selector system enabled"),
     SUCCESSHOLOSELECTED("hologram_selected_success", "&aYou successfully changed your death hologram to &e%group_identifier%"),
     NOPERMHOLOSELECTED("holo_selected_no_perm", "&cYou do not have permission to use this death hologram"),
-    VIEWHOLO("holo_view", "&eYou are using the &a%group_identifier% &edeath hologram "),
-    VIEWHOLOOTHER("holo_view_other", "&e%player_name% is using the &a%group_identifier% &edeath hologram "),
+    VIEWHOLO("holo_view", "&eYou are using the &a%group_identifier% &edeath hologram"),
+    VIEWHOLOOTHER("holo_view_other", "&e%player_name% is using the &a%group_identifier% &edeath hologram"),
     ERRORVIEWHOLO("holo_view_error", "&cYou have no active death hologram. Use &e/dh select [hologram] &cto choose one"),
     ERRORVIEWHOLOOTHER("holo_view_error_other", "&cThe player has no active death hologram"),
     PLAYERHELP("player_help", "#17d5eb--------- Player Help ---------"
@@ -90,6 +91,7 @@ public enum Message {
     WORLD_BORDER("death_cause_world_border", "the world border"),
     //                    --->    1.21 MINECRAFT DEATH CAUSES    <---,
     CAMPFIRE("death_cause_campfire", "fire");
+    // Last checked MC: 26.3    ---  Date: 17/11/2026
 
     public final String path;
     private final String defaultText;

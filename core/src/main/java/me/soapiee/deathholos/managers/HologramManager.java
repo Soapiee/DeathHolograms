@@ -43,8 +43,6 @@ public abstract class HologramManager {
 
     protected void load(CommandSender sender) {
         loadGroups(sender);
-        //TODO:
-//        loadDefaultGroup(sender);
     }
 
     public HologramGroup getGroup (int priority) { return null; }

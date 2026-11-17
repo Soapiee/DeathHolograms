@@ -56,7 +56,6 @@ public class DataHandler_1_15 extends DataHandler {
         try {
             writeCache(uuid, group);
         } catch (Exception e) {
-            //TODO:
             customLogger.logToFile(e, "Cannot find player to save cache to");
         }
     }

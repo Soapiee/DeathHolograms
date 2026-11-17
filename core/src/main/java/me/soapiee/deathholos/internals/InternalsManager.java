@@ -88,8 +88,7 @@ public class InternalsManager {
 
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
                  ClassCastException | IllegalArgumentException ex) {
-            //TODO:
-//            customLogger.logToFile(ex, messageManager.get(Message.UNSUPPORTSELECTOR));
+            customLogger.logToFile(ex, messageManager.get(Message.FORCEDPRIORITYSYS));
             dataHandler = new DataHandler_Priority();
         }
 
