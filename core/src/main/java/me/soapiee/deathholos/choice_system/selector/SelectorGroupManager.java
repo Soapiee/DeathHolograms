@@ -1,6 +1,7 @@
-package me.soapiee.deathholos.managers;
+package me.soapiee.deathholos.choice_system.selector;
 
 import me.soapiee.deathholos.DeathHolos;
+import me.soapiee.deathholos.choice_system.GroupManager;
 import me.soapiee.deathholos.logic.GroupFactory;
 import me.soapiee.deathholos.logic.HologramGroup;
 import me.soapiee.deathholos.utils.ConfigPath;
@@ -11,26 +12,23 @@ import org.bukkit.command.ConsoleCommandSender;
 
 import java.util.*;
 
-public class SelectorHologramManager extends HologramManager {
+public class SelectorGroupManager extends GroupManager {
 
     // HoloGroups stored via config string
     private final Map<String, HologramGroup> groups = new HashMap<>();
 
-    public SelectorHologramManager(DeathHolos main, GroupFactory groupFactory) {
+    public SelectorGroupManager(DeathHolos main, GroupFactory groupFactory) {
         super(main, groupFactory);
-        load(Bukkit.getConsoleSender());
+        loadGroups(Bukkit.getConsoleSender());
     }
 
     @Override
     public void reload(CommandSender sender) {
         groups.clear();
-        clearAllHolos();
-        activeHolos.clear();
-        load(sender);
+        loadGroups(sender);
     }
 
-    @Override
-    protected void loadGroups(CommandSender sender) {
+    private void loadGroups(CommandSender sender) {
         Set<String> keys = configManager.getGroupKeys();
 
         if (keys != null)

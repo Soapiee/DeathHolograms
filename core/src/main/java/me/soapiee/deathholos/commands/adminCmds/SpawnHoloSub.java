@@ -43,7 +43,7 @@ public class SpawnHoloSub extends AbstractAdminSub {
     }
 
     private HologramGroup validateGroup(CommandSender sender, String groupName) {
-        HologramGroup group = hologramManager.getGroup(groupName);
+        HologramGroup group = groupManager.getGroup(groupName);
 
         if (group == null) sendMessage(sender, messageManager.get(Message.INVALIDHOLOGROUP));
 

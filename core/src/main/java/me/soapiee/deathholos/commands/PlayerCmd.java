@@ -1,9 +1,11 @@
 package me.soapiee.deathholos.commands;
 
 import me.soapiee.deathholos.DeathHolos;
+import me.soapiee.deathholos.choice_system.ChoiceManager;
+import me.soapiee.deathholos.utils.Choices;
+import me.soapiee.deathholos.choice_system.GroupManager;
 import me.soapiee.deathholos.commands.playerCmds.SelectSub;
 import me.soapiee.deathholos.commands.playerCmds.ViewSub;
-import me.soapiee.deathholos.managers.HologramManager;
 import me.soapiee.deathholos.managers.MessageManager;
 import me.soapiee.deathholos.utils.Message;
 import me.soapiee.deathholos.utils.Utils;
@@ -21,17 +23,20 @@ import java.util.stream.Collectors;
 public class PlayerCmd implements CommandExecutor, TabCompleter {
 
     private final MessageManager messageManager;
-    private final HologramManager hologramManager;
+    private final Choices choice;
+    private final GroupManager groupManager;
 
     //    private final String PERMISSION = "deathholos.player";
     private final Map<String, SubCmd> subCommands = new HashMap<>();
 
     public PlayerCmd(DeathHolos main) {
         messageManager = main.getMessageManager();
-        hologramManager = main.getHoloManager();
+        ChoiceManager choiceManager = main.getChoiceManager();
+        choice = choiceManager.getChoice();
+        groupManager = choiceManager.getGroupManager();
 
         register(new ViewSub(main));
-        if (!main.getConfigManager().isPrioritySystem()) register(new SelectSub(main));
+        if (choice == Choices.SELECTOR) register(new SelectSub(main));
     }
 
     private void register(SubCmd cmd) {
@@ -71,13 +76,13 @@ public class PlayerCmd implements CommandExecutor, TabCompleter {
         switch (args.length) {
             case 1:
                 results.add("help");
-                results.add("select");
                 results.add("view");
+                if (choice == Choices.SELECTOR) results.add("select");
                 break;
 
             case 2:
-                if (args[0].equalsIgnoreCase("select")) {
-                    hologramManager.getGroups().forEach(group -> {
+                if (choice == Choices.SELECTOR && args[0].equalsIgnoreCase("select")) {
+                    groupManager.getGroups().forEach(group -> {
                         if (sender.hasPermission(group.getPermission())) results.add(group.getName());
                     });
                     break;

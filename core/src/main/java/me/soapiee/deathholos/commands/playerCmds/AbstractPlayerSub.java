@@ -1,11 +1,10 @@
 package me.soapiee.deathholos.commands.playerCmds;
 
 import me.soapiee.deathholos.DeathHolos;
+import me.soapiee.deathholos.choice_system.ChoiceManager;
+import me.soapiee.deathholos.choice_system.DataManager;
+import me.soapiee.deathholos.choice_system.GroupManager;
 import me.soapiee.deathholos.commands.SubCmd;
-import me.soapiee.deathholos.internals.data.DataHandler;
-import me.soapiee.deathholos.internals.spawning.HologramHandler;
-import me.soapiee.deathholos.managers.ConfigManager;
-import me.soapiee.deathholos.managers.HologramManager;
 import me.soapiee.deathholos.managers.MessageManager;
 import me.soapiee.deathholos.utils.Message;
 import me.soapiee.deathholos.utils.Utils;
@@ -17,10 +16,8 @@ public abstract class AbstractPlayerSub implements SubCmd {
 
     protected final DeathHolos main;
     protected final MessageManager messageManager;
-    protected final HologramHandler hologramHandler;
-    protected final ConfigManager configManager;
-    protected final HologramManager hologramManager;
-    protected final DataHandler dataHandler;
+    protected final GroupManager groupManager;
+    protected final DataManager dataManager;
 
     protected final String PERMISSION;
     protected final int MIN_ARGS;
@@ -29,10 +26,9 @@ public abstract class AbstractPlayerSub implements SubCmd {
     public AbstractPlayerSub(DeathHolos main, String PERMISSION, int MIN_ARGS, int MAX_ARGS) {
         this.main = main;
         messageManager = main.getMessageManager();
-        hologramHandler = main.getInternalsManager().getHologramHandler();
-        configManager = main.getConfigManager();
-        hologramManager = main.getHoloManager();
-        dataHandler = main.getInternalsManager().getDataHandler();
+        ChoiceManager choiceManager = main.getChoiceManager();
+        groupManager = choiceManager.getGroupManager();
+        dataManager = choiceManager.getDataManager();
 
         this.PERMISSION = PERMISSION;
         this.MIN_ARGS = MIN_ARGS;

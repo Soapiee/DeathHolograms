@@ -40,12 +40,12 @@ public class SelectSub extends AbstractPlayerSub {
 
         if (!hasAccess(player, group)) return;
 
-        dataHandler.updatePlayer(player.getUniqueId(), group);
+        dataManager.updatePlayer(player.getUniqueId(), group);
         sendMessage(sender, messageManager.getWithPlaceholder(Message.SUCCESSHOLOSELECTED, group.getName(), false));
     }
 
     private HologramGroup validateGroup(CommandSender sender, String groupName) {
-        HologramGroup group = hologramManager.getGroup(groupName);
+        HologramGroup group = groupManager.getGroup(groupName);
 
         if (group == null) sendMessage(sender, messageManager.get(Message.INVALIDHOLOGROUP));
 

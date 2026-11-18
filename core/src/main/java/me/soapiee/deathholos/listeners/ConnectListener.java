@@ -1,7 +1,7 @@
 package me.soapiee.deathholos.listeners;
 
 import me.soapiee.deathholos.DeathHolos;
-import me.soapiee.deathholos.internals.data.DataHandler;
+import me.soapiee.deathholos.choice_system.DataManager;
 import me.soapiee.deathholos.managers.ConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -14,19 +14,19 @@ public class ConnectListener implements Listener {
 
     private final DeathHolos main;
     private final ConfigManager configManager;
-    private final DataHandler dataHandler;
+    private final DataManager dataManager;
 
     public ConnectListener(DeathHolos main) {
         this.main = main;
         configManager = main.getConfigManager();
-        dataHandler = main.getInternalsManager().getDataHandler();
+        dataManager = main.getChoiceManager().getDataManager();
     }
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        dataHandler.getPlayer(player.getUniqueId());
+        dataManager.getPlayer(player.getUniqueId());
 
         Bukkit.getScheduler().runTaskLater(main, () -> {
             if (player.hasPermission("deathholos.admin.updatenotif")) updateNotif(player);
@@ -37,7 +37,7 @@ public class ConnectListener implements Listener {
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
-        dataHandler.savePlayer(player.getUniqueId());
+        dataManager.savePlayer(player.getUniqueId());
     }
 
     private void updateNotif(Player player) {

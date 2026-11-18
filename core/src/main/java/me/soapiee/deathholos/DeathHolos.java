@@ -1,14 +1,19 @@
 package me.soapiee.deathholos;
 
 import lombok.Getter;
+import me.soapiee.deathholos.choice_system.ChoiceManager;
+import me.soapiee.deathholos.utils.Choices;
+import me.soapiee.deathholos.choice_system.DataManager;
+import me.soapiee.deathholos.managers.HologramManager;
 import me.soapiee.deathholos.commands.AdminCmd;
 import me.soapiee.deathholos.commands.PlayerCmd;
 import me.soapiee.deathholos.internals.InternalsManager;
-import me.soapiee.deathholos.internals.data.DataHandler;
+import me.soapiee.deathholos.internals.spawning.HologramHandler;
 import me.soapiee.deathholos.listeners.ConnectListener;
 import me.soapiee.deathholos.listeners.DeathListener;
-import me.soapiee.deathholos.logic.GroupFactory;
-import me.soapiee.deathholos.managers.*;
+import me.soapiee.deathholos.managers.ConfigManager;
+import me.soapiee.deathholos.managers.MessageManager;
+import me.soapiee.deathholos.managers.UpdateManager;
 import me.soapiee.deathholos.utils.CustomLogger;
 import me.soapiee.deathholos.utils.Message;
 import me.soapiee.deathholos.utils.Utils;
@@ -23,7 +28,9 @@ public final class DeathHolos extends JavaPlugin {
     @Getter private CustomLogger customLogger;
     @Getter private InternalsManager internalsManager;
     @Getter private ConfigManager configManager;
-    @Getter private HologramManager holoManager;
+    @Getter private ChoiceManager choiceManager;
+    @Getter private HologramManager hologramManager;
+    @Getter private HologramHandler hologramHandler;
     @Getter private UpdateManager updateManager;
 
     @Getter private boolean placeholderAPIHooked;
@@ -41,17 +48,17 @@ public final class DeathHolos extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        holoManager.clearAllHolos();
+        hologramManager.clearAllHolos(hologramHandler);
 
-        if (!configManager.isPrioritySystem()) {
-            DataHandler dataHandler = internalsManager.getDataHandler();
-            savePlayerData(dataHandler);
+        if (choiceManager.getChoice() == Choices.SELECTOR) {
+            DataManager dataManager = choiceManager.getDataManager();
+            savePlayerData(dataManager);
         }
     }
 
-    private void savePlayerData(DataHandler dataHandler) {
+    private void savePlayerData(DataManager dataManager) {
         for (Player player : Bukkit.getOnlinePlayers()) {
-            dataHandler.savePlayer(player.getUniqueId());
+            dataManager.savePlayer(player.getUniqueId());
         }
     }
 
@@ -90,23 +97,10 @@ public final class DeathHolos extends JavaPlugin {
     private void registerManagers() {
         configManager = new ConfigManager(this);
         registerHooks();
+        hologramManager = new HologramManager(this);
         internalsManager = new InternalsManager(this);
-        GroupFactory groupFactory = new GroupFactory(this);
-        holoManager = initialiseHologramManager(groupFactory);
-        internalsManager.getDataHandler().injectManagers(customLogger, holoManager, configManager.isDebugMode());
-    }
-
-    private HologramManager initialiseHologramManager(GroupFactory groupFactory) {
-        HologramManager manager;
-
-        if (Utils.getMajorVersion() < 15) {
-            manager = new PriorityHologramManager(this, groupFactory);
-            if (!configManager.isPrioritySystem()) configManager.setPrioritySystem(true);
-        }
-        else if (configManager.isPrioritySystem()) manager = new PriorityHologramManager(this, groupFactory);
-        else manager = new SelectorHologramManager(this, groupFactory);
-
-        return manager;
+        hologramHandler = internalsManager.initialiseHologramHandler();
+        choiceManager = new ChoiceManager(this, configManager.getChoiceSystem());
     }
 
     private void registerListeners() {

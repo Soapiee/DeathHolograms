@@ -2,12 +2,12 @@ package me.soapiee.deathholos.listeners;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import me.soapiee.deathholos.DeathHolos;
-import me.soapiee.deathholos.internals.data.DataHandler;
+import me.soapiee.deathholos.choice_system.DataManager;
+import me.soapiee.deathholos.managers.HologramManager;
 import me.soapiee.deathholos.internals.spawning.HologramHandler;
 import me.soapiee.deathholos.logic.Hologram;
 import me.soapiee.deathholos.logic.HologramGroup;
 import me.soapiee.deathholos.managers.ConfigManager;
-import me.soapiee.deathholos.managers.HologramManager;
 import me.soapiee.deathholos.managers.MessageManager;
 import org.bukkit.Location;
 import org.bukkit.entity.*;
@@ -28,15 +28,15 @@ public class DeathListener implements Listener {
     private final ConfigManager configManager;
     private final HologramHandler hologramHandler;
     private final HologramManager hologramManager;
-    private final DataHandler dataHandler;
+    private final DataManager dataManager;
     private final boolean placeholderAPIEnabled;
 
     public DeathListener(DeathHolos main) {
         messageManager = main.getMessageManager();
-        hologramHandler = main.getInternalsManager().getHologramHandler();
+        hologramHandler = main.getHologramHandler();
         configManager = main.getConfigManager();
-        hologramManager = main.getHoloManager();
-        dataHandler = main.getInternalsManager().getDataHandler();
+        hologramManager = main.getHologramManager();
+        dataManager = main.getChoiceManager().getDataManager();
         placeholderAPIEnabled = main.isPlaceholderAPIHooked();
     }
 
@@ -97,7 +97,7 @@ public class DeathListener implements Listener {
     }
 
     private void handleKillerDeath(Player whoDied, Entity killer, String keyID) {
-        HologramGroup group = dataHandler.getPlayer(whoDied.getUniqueId());
+        HologramGroup group = dataManager.getPlayer(whoDied.getUniqueId());
         if (group == null) return;
 
         Hologram holo = new Hologram(keyID, getLocation(whoDied.getLocation()), getText(group.getText(), whoDied, killer), group);
@@ -108,7 +108,7 @@ public class DeathListener implements Listener {
     private void handleEnvironmentDeath(Player whoDied, String keyID) {
         EntityDamageEvent.DamageCause cause = whoDied.getLastDamageCause().getCause();
 
-        HologramGroup group = dataHandler.getPlayer(whoDied.getUniqueId());
+        HologramGroup group = dataManager.getPlayer(whoDied.getUniqueId());
         if (group == null) return;
 
         Hologram holo = new Hologram(keyID, getLocation(whoDied.getLocation()), getText(group.getText(), whoDied, cause), group);

@@ -1,7 +1,8 @@
-package me.soapiee.deathholos.managers;
+package me.soapiee.deathholos.choice_system.priority;
 
 import lombok.Getter;
 import me.soapiee.deathholos.DeathHolos;
+import me.soapiee.deathholos.choice_system.GroupManager;
 import me.soapiee.deathholos.logic.GroupFactory;
 import me.soapiee.deathholos.logic.HologramGroup;
 import me.soapiee.deathholos.utils.ConfigPath;
@@ -12,7 +13,7 @@ import org.bukkit.command.ConsoleCommandSender;
 
 import java.util.*;
 
-public class PriorityHologramManager extends HologramManager {
+public class PriorityGroupManager extends GroupManager {
 
     @Getter private int highestPriority;
     @Getter private int lowestPriority;
@@ -20,23 +21,23 @@ public class PriorityHologramManager extends HologramManager {
     // HoloGroups stored via priority
     private final Map<Integer, HologramGroup> groups = new HashMap<>();
 
-    public PriorityHologramManager(DeathHolos main, GroupFactory groupFactory) {
+    public PriorityGroupManager(DeathHolos main, GroupFactory groupFactory) {
         super(main, groupFactory);
-        load(Bukkit.getConsoleSender());
+        loadGroups(Bukkit.getConsoleSender());
         highestPriority = Collections.min(groups.keySet());
         lowestPriority = Collections.max(groups.keySet());
     }
 
+    @Override
     public void reload(CommandSender sender) {
         groups.clear();
-        clearAllHolos();
-        activeHolos.clear();
-        load(sender);
+        loadGroups(sender);
+
         highestPriority = Collections.min(groups.keySet());
-        lowestPriority = Collections.min(groups.keySet());
+        lowestPriority = Collections.max(groups.keySet());
     }
 
-    protected void loadGroups(CommandSender sender) {
+    private void loadGroups(CommandSender sender) {
         Set<String> keys = configManager.getGroupKeys();
 
         if (keys != null)

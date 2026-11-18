@@ -18,8 +18,8 @@ public class DespawnTask extends BukkitRunnable {
     @Getter private final Hologram holo;
 
     public DespawnTask(DeathHolos main, Hologram holo) {
-        hologramHandler = main.getInternalsManager().getHologramHandler();
-        hologramManager = main.getHoloManager();
+        hologramHandler = main.getHologramHandler();
+        hologramManager = main.getHologramManager();
         configManager = main.getConfigManager();
         this.holo = holo;
         keyID = holo.getKeyID();

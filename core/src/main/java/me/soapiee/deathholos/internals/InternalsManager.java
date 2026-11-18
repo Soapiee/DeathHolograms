@@ -1,7 +1,7 @@
 package me.soapiee.deathholos.internals;
 
-import lombok.Getter;
 import me.soapiee.deathholos.DeathHolos;
+import me.soapiee.deathholos.utils.Choices;
 import me.soapiee.deathholos.internals.data.DataHandler;
 import me.soapiee.deathholos.internals.data.DataHandler_Priority;
 import me.soapiee.deathholos.internals.spawning.HologramHandler;
@@ -15,8 +15,8 @@ import org.bukkit.ChatColor;
 
 public class InternalsManager {
 
-    @Getter private final HologramHandler hologramHandler;
-    @Getter private final DataHandler dataHandler;
+//    @Getter private final HologramHandler hologramHandler;
+//    @Getter private final DataHandler dataHandler;
 
     private final CustomLogger customLogger;
     private final MessageManager messageManager;
@@ -31,11 +31,11 @@ public class InternalsManager {
         fancyHologramsHook = main.isFancyHologramsHooked();
         configManager = main.getConfigManager();
 
-        hologramHandler = initialiseHologramHandler();
-        dataHandler = initialiseDataHandler();
+//        hologramHandler = initialiseHologramHandler();
+//        dataHandler = initialiseDataHandler();
     }
 
-    private HologramHandler initialiseHologramHandler() {
+    public HologramHandler initialiseHologramHandler() {
         HologramHandler hologramHandler;
 
         try {
@@ -76,12 +76,12 @@ public class InternalsManager {
         return false;
     }
 
-    private DataHandler initialiseDataHandler() {
+    public DataHandler initialiseDataHandler(Choices choices) {
         DataHandler dataHandler;
 
         try {
             String packageName = InternalsManager.class.getPackage().getName() + ".data";
-            String providerName = getDataProviderName();
+            String providerName = getDataProviderName(choices);
 
             if (configManager.isDebugMode()) Utils.consoleMsg(ChatColor.BLUE + providerName);
             dataHandler = (DataHandler) Class.forName(packageName + "." + providerName).newInstance();
@@ -95,10 +95,10 @@ public class InternalsManager {
         return dataHandler;
     }
 
-    private String getDataProviderName() {
+    private String getDataProviderName(Choices choice) {
         int majorVersion = Utils.getMajorVersion();
 
-        if (configManager.isPrioritySystem()) return "DataHandler_Priority";
+        if (choice == Choices.PRIORITY) return "DataHandler_Priority";
 
         return (majorVersion >= 15) ? "DataHandler_1_15" : "DataHandler_Priority";
     }

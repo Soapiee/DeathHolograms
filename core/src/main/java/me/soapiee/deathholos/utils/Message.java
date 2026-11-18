@@ -32,7 +32,7 @@ public enum Message {
     NOPERMHOLOSELECTED("holo_selected_no_perm", "&cYou do not have permission to use this death hologram"),
     VIEWHOLO("holo_view", "&eYou are using the &a%group_identifier% &edeath hologram"),
     VIEWHOLOOTHER("holo_view_other", "&e%player_name% is using the &a%group_identifier% &edeath hologram"),
-    ERRORVIEWHOLO("holo_view_error", "&cYou have no active death hologram. Use &e/dh select [hologram] &cto choose one"),
+    ERRORVIEWHOLO("holo_view_error", "&cYou have no active death hologram"),
     ERRORVIEWHOLOOTHER("holo_view_error_other", "&cThe player has no active death hologram"),
     PLAYERHELP("player_help", "#17d5eb--------- Player Help ---------"
             + "\n#17d5ebKey: < > = Optional | [ ] = Required"

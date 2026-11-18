@@ -60,7 +60,7 @@ public class ViewSub extends AbstractPlayerSub {
     }
 
     private HologramGroup getGroup(CommandSender sender, Player target) {
-        HologramGroup group = dataHandler.getPlayer(target.getUniqueId());
+        HologramGroup group = dataManager.getPlayer(target.getUniqueId());
 
         if (group == null) {
             if (sender instanceof Player && (target.getName().equalsIgnoreCase(sender.getName())))
