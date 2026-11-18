@@ -93,9 +93,13 @@ public class MessageManager {
                 || messageEnum == Message.CMDHOLOCAUSE || messageEnum == Message.CMDHOLOKILLER
                 || messageEnum == Message.CAMPFIRE || messageEnum == Message.DEATHCAUSEERROR
                 || messageEnum == Message.HOOKEDPLACEHOLDERAPI || messageEnum == Message.HOOKEDDECENTHOLOGRAMS
-                || messageEnum == Message.NOPERMISSION
-                || messageEnum == Message.ADMINHELP
-//                || messageEnum == Message.PLAYERHELP
+                || messageEnum == Message.HOOKEDFANCYHOLOGRAMS
+                || messageEnum == Message.GROUPPRIORITYERROR || messageEnum == Message.GROUPPRIORITYDUPE
+                || messageEnum == Message.GROUPIDDUPE || messageEnum == Message.GROUPPERMISSIONERROR
+                || messageEnum == Message.GROUPSOUNDERROR || messageEnum == Message.GROUPDESIGNERROR
+                || messageEnum == Message.GROUPCREATED
+                || messageEnum == Message.NOPERMISSION || messageEnum == Message.MUSTBEPLAYERERROR
+                || messageEnum == Message.ADMINHELP || messageEnum == Message.PLAYERHELP
                 || messageEnum == Message.LANGUAGEFIELDERROR || messageEnum == Message.INVALIDLANGUAGE
                 || messageEnum == Message.LOGGERFILEERROR || messageEnum == Message.LOGGERLOGSUCCESS
                 || messageEnum == Message.LOGGERLOGERROR) return "";
@@ -154,6 +158,15 @@ public class MessageManager {
         if (message.contains("%group_identifier%")) message = message.replace("%group_identifier%", string);
         if (message.contains("%cmd_label%")) message = message.replace("%cmd_label%", string);
         if (message.contains("%version%")) message = message.replace("%version%", string);
+
+        return message;
+    }
+
+    public String getWithPlaceholder(Message messageEnum, String playerName, String groupName, boolean isConsole) {
+        String message = isConsole ? getWithoutPrefix(messageEnum) : get(messageEnum);
+
+        if (message.contains("%player_name%")) message = message.replace("%player_name%", playerName);
+        if (message.contains("%group_identifier%")) message = message.replace("%group_identifier%", groupName);
 
         return message;
     }

@@ -1,7 +1,11 @@
 package me.soapiee.deathholos.internals;
 
-import lombok.Getter;
 import me.soapiee.deathholos.DeathHolos;
+import me.soapiee.deathholos.utils.Choices;
+import me.soapiee.deathholos.internals.data.DataHandler;
+import me.soapiee.deathholos.internals.data.DataHandler_Priority;
+import me.soapiee.deathholos.internals.spawning.HologramHandler;
+import me.soapiee.deathholos.internals.spawning.HologramHandler_Legacy;
 import me.soapiee.deathholos.managers.ConfigManager;
 import me.soapiee.deathholos.managers.MessageManager;
 import me.soapiee.deathholos.utils.CustomLogger;
@@ -11,7 +15,8 @@ import org.bukkit.ChatColor;
 
 public class InternalsManager {
 
-    @Getter private final HologramHandler hologramHandler;
+//    @Getter private final HologramHandler hologramHandler;
+//    @Getter private final DataHandler dataHandler;
 
     private final CustomLogger customLogger;
     private final MessageManager messageManager;
@@ -26,24 +31,16 @@ public class InternalsManager {
         fancyHologramsHook = main.isFancyHologramsHooked();
         configManager = main.getConfigManager();
 
-        hologramHandler = initialiseHologramHandler();
+//        hologramHandler = initialiseHologramHandler();
+//        dataHandler = initialiseDataHandler();
     }
 
-    public InternalsManager(HologramHandler hologramHandler, CustomLogger customLogger, MessageManager messageManager, ConfigManager configManager, boolean decentHologramsHook, boolean fancyHologramsHook) {
-        this.hologramHandler = hologramHandler;
-        this.customLogger = customLogger;
-        this.messageManager = messageManager;
-        this.configManager = configManager;
-        this.decentHologramsHook = decentHologramsHook;
-        this.fancyHologramsHook = fancyHologramsHook;
-    }
-
-    private HologramHandler initialiseHologramHandler() {
+    public HologramHandler initialiseHologramHandler() {
         HologramHandler hologramHandler;
 
         try {
-            String packageName = InternalsManager.class.getPackage().getName();
-            String providerName = getProviderName();
+            String packageName = InternalsManager.class.getPackage().getName() + ".spawning";
+            String providerName = getHoloProviderName();
 
             if (configManager.isDebugMode()) Utils.consoleMsg(ChatColor.BLUE + providerName);
             hologramHandler = (HologramHandler) Class.forName(packageName + "." + providerName).newInstance();
@@ -57,7 +54,7 @@ public class InternalsManager {
         return hologramHandler;
     }
 
-    private String getProviderName() {
+    private String getHoloProviderName() {
         int majorVersion = Utils.getMajorVersion();
         int minorVersion = Utils.getMinorVersion();
 
@@ -77,5 +74,32 @@ public class InternalsManager {
         }
 
         return false;
+    }
+
+    public DataHandler initialiseDataHandler(Choices choices) {
+        DataHandler dataHandler;
+
+        try {
+            String packageName = InternalsManager.class.getPackage().getName() + ".data";
+            String providerName = getDataProviderName(choices);
+
+            if (configManager.isDebugMode()) Utils.consoleMsg(ChatColor.BLUE + providerName);
+            dataHandler = (DataHandler) Class.forName(packageName + "." + providerName).newInstance();
+
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
+                 ClassCastException | IllegalArgumentException ex) {
+            customLogger.logToFile(ex, messageManager.get(Message.FORCEDPRIORITYSYS));
+            dataHandler = new DataHandler_Priority();
+        }
+
+        return dataHandler;
+    }
+
+    private String getDataProviderName(Choices choice) {
+        int majorVersion = Utils.getMajorVersion();
+
+        if (choice == Choices.PRIORITY) return "DataHandler_Priority";
+
+        return (majorVersion >= 15) ? "DataHandler_1_15" : "DataHandler_Priority";
     }
 }

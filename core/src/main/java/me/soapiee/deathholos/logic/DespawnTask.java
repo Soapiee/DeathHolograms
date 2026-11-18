@@ -2,7 +2,7 @@ package me.soapiee.deathholos.logic;
 
 import lombok.Getter;
 import me.soapiee.deathholos.DeathHolos;
-import me.soapiee.deathholos.internals.HologramHandler;
+import me.soapiee.deathholos.internals.spawning.HologramHandler;
 import me.soapiee.deathholos.managers.ConfigManager;
 import me.soapiee.deathholos.managers.HologramManager;
 import me.soapiee.deathholos.utils.Utils;
@@ -18,8 +18,8 @@ public class DespawnTask extends BukkitRunnable {
     @Getter private final Hologram holo;
 
     public DespawnTask(DeathHolos main, Hologram holo) {
-        hologramHandler = main.getInternalsManager().getHologramHandler();
-        hologramManager = main.getHoloManager();
+        hologramHandler = main.getHologramHandler();
+        hologramManager = main.getHologramManager();
         configManager = main.getConfigManager();
         this.holo = holo;
         keyID = holo.getKeyID();

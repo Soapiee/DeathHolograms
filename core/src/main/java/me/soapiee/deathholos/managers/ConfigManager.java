@@ -2,7 +2,9 @@ package me.soapiee.deathholos.managers;
 
 import lombok.Getter;
 import me.soapiee.deathholos.DeathHolos;
+import me.soapiee.deathholos.utils.Choices;
 import me.soapiee.deathholos.utils.ConfigPath;
+import me.soapiee.deathholos.utils.Utils;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.List;
@@ -21,11 +23,13 @@ public class ConfigManager {
     @Getter private int maxHolos;
     @Getter private boolean prioritiseHook;
     @Getter private Set<String> groupKeys;
+    @Getter private final Choices choiceSystem;
 
     public ConfigManager(DeathHolos main) {
         this.main = main;
 
         load();
+        choiceSystem = getChoice();
     }
 
     private void load() {
@@ -53,6 +57,10 @@ public class ConfigManager {
         return config.getInt(rawPath.getPath(), (int) rawPath.getDefaultValue());
     }
 
+    private String getString(ConfigPath rawPath) {
+        return config.getString(rawPath.getPath(), (String) rawPath.getDefaultValue());
+    }
+
     private double getDouble(ConfigPath rawPath) {
         return config.getDouble(rawPath.getPath(), (double) rawPath.getDefaultValue());
     }
@@ -69,6 +77,22 @@ public class ConfigManager {
         if (!config.isSet(path)) return null;
         if (!config.isList(path)) return null;
         return config.getStringList(path);
+    }
+
+    private Choices getChoice() {
+        String configInput = getString(ConfigPath.SPAWN_SYSTEM);
+        Choices choice;
+
+        try {
+            choice = Choices.valueOf(configInput.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            choice = Choices.PRIORITY;
+        }
+
+        int serverVersion = Utils.getMajorVersion();
+        if (choice == Choices.SELECTOR && serverVersion < 15)  choice = Choices.PRIORITY;
+
+        return choice;
     }
 
 }

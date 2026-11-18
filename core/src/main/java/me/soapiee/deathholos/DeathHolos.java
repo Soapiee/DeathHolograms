@@ -1,13 +1,17 @@
 package me.soapiee.deathholos;
 
 import lombok.Getter;
+import me.soapiee.deathholos.choice_system.ChoiceManager;
+import me.soapiee.deathholos.utils.Choices;
+import me.soapiee.deathholos.choice_system.DataManager;
+import me.soapiee.deathholos.managers.HologramManager;
 import me.soapiee.deathholos.commands.AdminCmd;
+import me.soapiee.deathholos.commands.PlayerCmd;
 import me.soapiee.deathholos.internals.InternalsManager;
+import me.soapiee.deathholos.internals.spawning.HologramHandler;
 import me.soapiee.deathholos.listeners.ConnectListener;
 import me.soapiee.deathholos.listeners.DeathListener;
-import me.soapiee.deathholos.logic.GroupFactory;
 import me.soapiee.deathholos.managers.ConfigManager;
-import me.soapiee.deathholos.managers.HologramManager;
 import me.soapiee.deathholos.managers.MessageManager;
 import me.soapiee.deathholos.managers.UpdateManager;
 import me.soapiee.deathholos.utils.CustomLogger;
@@ -15,6 +19,7 @@ import me.soapiee.deathholos.utils.Message;
 import me.soapiee.deathholos.utils.Utils;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class DeathHolos extends JavaPlugin {
@@ -23,38 +28,45 @@ public final class DeathHolos extends JavaPlugin {
     @Getter private CustomLogger customLogger;
     @Getter private InternalsManager internalsManager;
     @Getter private ConfigManager configManager;
-    @Getter private HologramManager holoManager;
+    @Getter private ChoiceManager choiceManager;
+    @Getter private HologramManager hologramManager;
+    @Getter private HologramHandler hologramHandler;
+    @Getter private UpdateManager updateManager;
+
     @Getter private boolean placeholderAPIHooked;
     @Getter private boolean decentHologramsHooked;
     @Getter private boolean fancyHologramsHooked;
-    @Getter private UpdateManager updateManager;
 
     @Override
     public void onEnable() {
-        saveDefaultConfig();
-        messageManager = new MessageManager(this);
-        customLogger = new CustomLogger(this);
-        new Metrics(this, 30432);
-
+        registerUtils();
         registerManagers();
         registerListeners();
         registerCommands();
-
-        updateManager = new UpdateManager(this, 133766);
-        updateManager.updateAlert(Bukkit.getConsoleSender());
+        registerUpdates();
     }
 
     @Override
     public void onDisable() {
-        holoManager.clearAllHolos();
+        hologramManager.clearAllHolos(hologramHandler);
+
+        if (choiceManager.getChoice() == Choices.SELECTOR) {
+            DataManager dataManager = choiceManager.getDataManager();
+            savePlayerData(dataManager);
+        }
     }
 
-    private void registerManagers() {
-        configManager = new ConfigManager(this);
-        registerHooks();
-        internalsManager = new InternalsManager(this);
-        GroupFactory groupFactory = new GroupFactory(this);
-        holoManager = new HologramManager(this, groupFactory);
+    private void savePlayerData(DataManager dataManager) {
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            dataManager.savePlayer(player.getUniqueId());
+        }
+    }
+
+    private void registerUtils() {
+        saveDefaultConfig();
+        messageManager = new MessageManager(this);
+        customLogger = new CustomLogger(this);
+        new Metrics(this, 30432);
     }
 
     private void registerHooks() {
@@ -82,14 +94,27 @@ public final class DeathHolos extends JavaPlugin {
         }
     }
 
+    private void registerManagers() {
+        configManager = new ConfigManager(this);
+        registerHooks();
+        hologramManager = new HologramManager(this);
+        internalsManager = new InternalsManager(this);
+        hologramHandler = internalsManager.initialiseHologramHandler();
+        choiceManager = new ChoiceManager(this, configManager.getChoiceSystem());
+    }
+
     private void registerListeners() {
         getServer().getPluginManager().registerEvents(new ConnectListener(this), this);
         getServer().getPluginManager().registerEvents(new DeathListener(this), this);
     }
 
     private void registerCommands() {
-        getCommand("adeathholos").setExecutor(new AdminCmd(this));
-        // TODO:
-//        getCommand("deathholos").setExecutor(new PlayerCmd(this));
+        getCommand("adeathholograms").setExecutor(new AdminCmd(this));
+        getCommand("deathholograms").setExecutor(new PlayerCmd(this));
+    }
+
+    private void registerUpdates() {
+        updateManager = new UpdateManager(this, 133766);
+        updateManager.updateAlert(Bukkit.getConsoleSender());
     }
 }

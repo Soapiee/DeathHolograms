@@ -27,6 +27,7 @@ public class GroupFactory {
                                 String inputPermission,
                                 List<String> inputList,
                                 String inputSound) {
+
         int priority = validatePriority(sender, inputPriority, name);
         if (priority <= -1) return null;
 
@@ -45,6 +46,27 @@ public class GroupFactory {
         return new HologramGroup(name, priority, permission, text, sound);
     }
 
+    public HologramGroup create(CommandSender sender,
+                                String name,
+                                String inputPermission,
+                                List<String> inputList,
+                                String inputSound) {
+
+        String permission = validatePermission(inputPermission, name);
+        if (permission == null) {
+            customLogger.logToPlayer(sender, null, messageManager.getWithPlaceholder(Message.GROUPPERMISSIONERROR, name, (sender instanceof ConsoleCommandSender)));
+            return null;
+        }
+
+        List<String> text = validateText(sender, inputList, name);
+        if (text == null) return null;
+
+//        Particle particle = validateParticle(sender, inputParticle, name);
+        Sound sound = validateSound(sender, inputSound, name);
+
+        return new HologramGroup(name, permission, text, sound);
+    }
+
     private int validatePriority(CommandSender sender, String priorityInput, String groupName) {
         int priority = -1;
 
@@ -60,7 +82,7 @@ public class GroupFactory {
     }
 
     private String validatePermission(String permissionInput, String groupName) {
-        if (permissionInput == null) return "deathholos.group." + groupName;
+        if (permissionInput == null || permissionInput.isEmpty()) return "deathholos.group." + groupName;
 
         //Check input contains only letters
         if (permissionInput.matches(".+[0-9].+")) return null;

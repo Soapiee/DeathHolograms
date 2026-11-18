@@ -1,10 +1,11 @@
 package me.soapiee.deathholos.commands;
 
 import me.soapiee.deathholos.DeathHolos;
+import me.soapiee.deathholos.choice_system.ChoiceManager;
+import me.soapiee.deathholos.choice_system.GroupManager;
 import me.soapiee.deathholos.commands.adminCmds.ReloadSub;
 import me.soapiee.deathholos.commands.adminCmds.SpawnHoloSub;
 import me.soapiee.deathholos.commands.adminCmds.VersionSub;
-import me.soapiee.deathholos.managers.HologramManager;
 import me.soapiee.deathholos.managers.MessageManager;
 import me.soapiee.deathholos.utils.Message;
 import me.soapiee.deathholos.utils.Utils;
@@ -22,14 +23,15 @@ import java.util.stream.Collectors;
 public class AdminCmd implements CommandExecutor, TabCompleter {
 
     private final MessageManager messageManager;
-    private final HologramManager hologramManager;
+    private final GroupManager groupManager;
 
     private final String PERMISSION = "deathholos.admin";
     private final Map<String, SubCmd> subCommands = new HashMap<>();
 
     public AdminCmd(DeathHolos main) {
         messageManager = main.getMessageManager();
-        hologramManager = main.getHoloManager();
+        ChoiceManager choiceManager = main.getChoiceManager();
+        groupManager = choiceManager.getGroupManager();
 
         register(new ReloadSub(main));
         register(new SpawnHoloSub(main));
@@ -96,7 +98,7 @@ public class AdminCmd implements CommandExecutor, TabCompleter {
                 if (args[0].equalsIgnoreCase("reload")) break;
 
                 if (args[0].equalsIgnoreCase("spawn")) {
-                    hologramManager.getGroups().forEach(group -> results.add(group.getName()));
+                    groupManager.getGroups().forEach(group -> results.add(group.getName()));
                     break;
                 }
 

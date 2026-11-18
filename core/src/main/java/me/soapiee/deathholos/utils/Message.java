@@ -5,6 +5,8 @@ public enum Message {
     //                    --->    GENERAL MESSAGES    <---
     PREFIX("prefix", "#17d5eb&l[DH]&r"), // Replace to "" if you want no prefix
     MUSTBEPLAYERERROR("must_be_player", "&cYou must be a player to use this command"),
+    PLAYERNOTFOUND("player_not_found", "&cThe player must be online"),
+    //    OFFLINEVIEWHOLO("death", "&cThe player must be online"),
     NOPERMISSION("no_permission", "&cYou do not have permission to use this command"),
     LANGUAGEFIELDERROR("language_field_error", "&cCould not add new fields to the language file"),
     INVALIDLANGUAGE("invalid_language", "&cAn invalid language has been configured. Defaulting to \"lang_en\""),
@@ -14,15 +16,27 @@ public enum Message {
     LOGGERFILEERROR("logger_file_error", "&cThe logger.log file could not be created"),
     LOGGERLOGSUCCESS("logger_log_success", "&cAn error was added to the logger.log file"),
     LOGGERLOGERROR("logger_log_error", "&cA new error log failed to be saved"),
+    FORCEDPRIORITYSYS("selector_system_error", "&cThe Selector spawning system couldn't be enabled. Please contact the developer"),
     INVALIDHOLOGROUP("invalid_hologram", "&cA hologram with that identifier does not exist"),
     GROUPPRIORITYERROR("invalid_group_priority", "&cInvalid priority for hologram group &e%group_identifier%"),
     GROUPPRIORITYDUPE("duplicate_group_priority", "&cThe priority set for hologram group &e%group_identifier% already exists"),
+    GROUPIDDUPE("duplicate_group_id", "&cThe name set for hologram group &e%group_identifier% already exists"),
     GROUPPERMISSIONERROR("invalid_group_permission", "&cInvalid permission for hologram group &e%group_identifier%"),
     GROUPSOUNDERROR("invalid_group_sound", "&cInvalid sound for hologram group &e%group_identifier%"),
     GROUPDESIGNERROR("invalid_group_design", "&cInvalid design for hologram group &e%group_identifier%"),
     GROUPCREATED("group_created", "&aGroup &e%group_identifier% &awas successfully created"),
     LEGACYHOLOGRAMS("legacy_holograms_enabled", "&aYour version is below 1.19.4 and no hologram dependency was found, so the legacy hologram system has been enabled"),
     DEATHCAUSEERROR("death_cause_error", "&cThere was an error with the players cause of death. Send the log to the developer"),
+    MUSTBESELECTORSYSTEM("selector_disabled", "&cThe server doesn't have the death hologram selector system enabled"),
+    SUCCESSHOLOSELECTED("hologram_selected_success", "&aYou successfully changed your death hologram to &e%group_identifier%"),
+    NOPERMHOLOSELECTED("holo_selected_no_perm", "&cYou do not have permission to use this death hologram"),
+    VIEWHOLO("holo_view", "&eYou are using the &a%group_identifier% &edeath hologram"),
+    VIEWHOLOOTHER("holo_view_other", "&e%player_name% is using the &a%group_identifier% &edeath hologram"),
+    ERRORVIEWHOLO("holo_view_error", "&cYou have no active death hologram"),
+    ERRORVIEWHOLOOTHER("holo_view_error_other", "&cThe player has no active death hologram"),
+    PLAYERHELP("player_help", "#17d5eb--------- Player Help ---------"
+            + "\n#17d5ebKey: < > = Optional | [ ] = Required"
+            + "\n#17d5eb/%cmd_label% view <player> &7- Returns which death hologram is active"),
 
     //                    --->    ADMIN MESSAGES    <---
     UPDATEAVAILABLE("update_available", "&aThere is an update available for DeathHolos"),
@@ -77,6 +91,7 @@ public enum Message {
     WORLD_BORDER("death_cause_world_border", "the world border"),
     //                    --->    1.21 MINECRAFT DEATH CAUSES    <---,
     CAMPFIRE("death_cause_campfire", "fire");
+    // Last checked MC: 26.3    ---  Date: 17/11/2026
 
     public final String path;
     private final String defaultText;

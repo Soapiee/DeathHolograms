@@ -1,10 +1,13 @@
 package me.soapiee.deathholos.commands.adminCmds;
 
 import me.soapiee.deathholos.DeathHolos;
-import me.soapiee.deathholos.commands.SubCmd;
-import me.soapiee.deathholos.internals.HologramHandler;
-import me.soapiee.deathholos.managers.ConfigManager;
+import me.soapiee.deathholos.choice_system.ChoiceManager;
+import me.soapiee.deathholos.choice_system.DataManager;
+import me.soapiee.deathholos.choice_system.GroupManager;
 import me.soapiee.deathholos.managers.HologramManager;
+import me.soapiee.deathholos.commands.SubCmd;
+import me.soapiee.deathholos.internals.spawning.HologramHandler;
+import me.soapiee.deathholos.managers.ConfigManager;
 import me.soapiee.deathholos.managers.MessageManager;
 import me.soapiee.deathholos.utils.Message;
 import me.soapiee.deathholos.utils.Utils;
@@ -19,6 +22,8 @@ public abstract class AbstractAdminSub implements SubCmd {
     protected final HologramHandler hologramHandler;
     protected final ConfigManager configManager;
     protected final HologramManager hologramManager;
+    protected final GroupManager groupManager;
+    protected final DataManager dataManager;
 
     protected final String PERMISSION;
     protected final int MIN_ARGS;
@@ -27,16 +32,20 @@ public abstract class AbstractAdminSub implements SubCmd {
     public AbstractAdminSub(DeathHolos main, String PERMISSION, int MIN_ARGS, int MAX_ARGS) {
         this.main = main;
         messageManager = main.getMessageManager();
-        hologramHandler = main.getInternalsManager().getHologramHandler();
         configManager = main.getConfigManager();
-        hologramManager = main.getHoloManager();
+        hologramManager = main.getHologramManager();
+        ChoiceManager choiceManager = main.getChoiceManager();
+        dataManager = choiceManager.getDataManager();
+        groupManager = choiceManager.getGroupManager();
+        hologramHandler = main.getHologramHandler();
+
 
         this.PERMISSION = PERMISSION;
         this.MIN_ARGS = MIN_ARGS;
         this.MAX_ARGS = MAX_ARGS;
     }
 
-    public boolean checkRequirements(CommandSender sender, String[] args, String label) {
+    @Override public boolean checkRequirements(CommandSender sender, String[] args, String label) {
         if (!checkPermission(sender, PERMISSION)) {
             sendMessage(sender, messageManager.get(Message.NOPERMISSION));
             return false;
@@ -50,7 +59,7 @@ public abstract class AbstractAdminSub implements SubCmd {
         return true;
     }
 
-    protected boolean checkPermission(CommandSender sender, String permission){
+    protected boolean checkPermission(CommandSender sender, String permission) {
         if (permission == null) return true;
         if (!(sender instanceof Player)) return true;
 
@@ -58,14 +67,14 @@ public abstract class AbstractAdminSub implements SubCmd {
         return player.hasPermission(permission);
     }
 
-    private boolean checkArgs(String[] args){
+    private boolean checkArgs(String[] args) {
         if (MIN_ARGS == -1 && MAX_ARGS == -1) return true;
 
         if (args.length < MIN_ARGS) return false;
         return !(args.length > MAX_ARGS);
     }
 
-    protected void sendMessage(CommandSender sender, String message){
+    protected void sendMessage(CommandSender sender, String message) {
         if (message == null) return;
 
         if (sender instanceof Player) sender.sendMessage(Utils.addColour(message));

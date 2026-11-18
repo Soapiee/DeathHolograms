@@ -1,19 +1,24 @@
 name: DeathHolos
 main: me.soapiee.deathholos.DeathHolos
-version: 1.1.5
+version: 1.1.6
 author: Soapiee
 prefix: DeathHolos
 
 dependencies: [ ]
-softdepend: [ "PlaceholderAPI", "DecentHolograms" ]
+softdepend: [ "PlaceholderAPI", "DecentHolograms", "FancyHolograms" ]
 api-version: 1.13
 
 commands:
-  adeathholos:
+  adeathholograms:
     description: 'DeathHolos admin commands'
-    aliases: [ "adh", "admindh" ]
+    aliases: [ "adh", "admindh", "ADH", "adeathholos" ]
     usage: 'adh help'
     permission: deathholos.admin
+  deathholograms:
+    description: 'DeathHolos admin commands'
+    aliases: [ "dh", "DH", "deathholos", "deathh", "deathholo" ]
+    usage: 'dh help'
+    permission: deathholos.player
 
 permissions:
   deathholos.admin:
@@ -26,3 +31,7 @@ permissions:
     default: false
   deathholos.admin.updatenotif:
     default: op
+  deathholos.player:
+    default: true
+    children:
+      deathholos.player.others: true
