@@ -31,7 +31,8 @@ public enum Message {
     MUSTBESELECTORSYSTEM("selector_disabled", "&cThe server doesn't have the death hologram selector system enabled"),
     SUCCESSHOLOSELECTED("hologram_selected_success", "&aYou successfully changed your death hologram to &e%group_identifier%"),
     NOPERMHOLOSELECTED("holo_selected_no_perm", "&cYou do not have permission to use this death hologram"),
-    ACTIVEHOLOSELECTED("holo_selected_already_active", "&e%group_identifier% &cis already active"),
+    ACTIVEHOLOSELECTED("holo_selected_already_active", "&cYour death hologram is already set to &e%group_identifier%"),
+    HOLOOFF("holo_off", "&aYou successfully turned your death hologram off"),
     VIEWHOLO("holo_view", "&eYou are using the &a%group_identifier% &edeath hologram"),
     VIEWHOLOOTHER("holo_view_other", "&e%player_name% is using the &a%group_identifier% &edeath hologram"),
     ERRORVIEWHOLO("holo_view_error", "&cYou have no active death hologram"),
@@ -52,7 +53,7 @@ public enum Message {
     HOLOSPAWNEDMAX("hologram_spawned_max", "&cThe maximum number of holograms for you, has been reached. Please wait"),
     ADMINSUCCESSHOLOSELECTED("hologram_select_success", "&aYou have changed &e%player_name%s &adeath hologram to &e%group_identifier%"),
     ADMINERRORHOLOSELECTED("hologram_select_error", "&e%player_name%&c doesnt have permission for the &e%group_identifier% &cdeath hologram"),
-    ADMINACTIVEHOLOSELECTED("holo_selected_active", "&e%group_identifier% &cis already active for &e%player_name%"),
+    ADMINACTIVEHOLOSELECTED("holo_selected_active", "&cThe &e%group_identifier% &cdeath hologram is already active for &e%player_name%"),
     ADMINHOLOCHANGE("admin_hologram_changed", "&aYour death hologram was changed to &e%group_identifier%"),
     ADMINHELP("admin_help", "#17d5eb--------- Admin Help ---------"
                     + "\n#17d5ebKey: < > = Optional | [ ] = Required"
