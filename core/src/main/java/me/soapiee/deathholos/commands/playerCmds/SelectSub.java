@@ -22,11 +22,6 @@ public class SelectSub extends AbstractPlayerSub {
     // /dh select [holo_name]
     @Override
     public void execute(CommandSender sender, String label, String[] args) {
-//        if (configManager.isPrioritySystem()) {
-//            sendMessage(sender, messageManager.get(Message.MUSTBESELECTORSYSTEM));
-//            return;
-//        }
-
         if (sender instanceof ConsoleCommandSender) {
             sendMessage(sender, messageManager.get(Message.MUSTBEPLAYERERROR));
             return;
@@ -35,13 +30,15 @@ public class SelectSub extends AbstractPlayerSub {
         if (!checkRequirements(sender, args, label)) return;
 
         Player player = (Player) sender;
-        HologramGroup group = validateGroup(player, args[1]);
-        if (group == null) return;
+        HologramGroup newGroup = validateGroup(player, args[1]);
+        if (newGroup == null) return;
 
-        if (!hasAccess(player, group)) return;
+        if (groupAlreadyActive(player, newGroup)) return;
 
-        dataManager.updatePlayer(player.getUniqueId(), group);
-        sendMessage(sender, messageManager.getWithPlaceholder(Message.SUCCESSHOLOSELECTED, group.getName(), false));
+        if (!hasAccess(player, newGroup)) return;
+
+        dataManager.updatePlayer(player.getUniqueId(), newGroup);
+        sendMessage(sender, messageManager.getWithPlaceholder(Message.SUCCESSHOLOSELECTED, newGroup.getName(), false));
     }
 
     private HologramGroup validateGroup(CommandSender sender, String groupName) {
@@ -50,6 +47,15 @@ public class SelectSub extends AbstractPlayerSub {
         if (group == null) sendMessage(sender, messageManager.get(Message.INVALIDHOLOGROUP));
 
         return group;
+    }
+
+    private boolean groupAlreadyActive(Player player, HologramGroup newGroup) {
+        HologramGroup currentGroup = dataManager.getPlayer(player.getUniqueId());
+        if (currentGroup == null) return false;
+
+        if (currentGroup == newGroup) sendMessage(player, messageManager.getWithPlaceholder(Message.ACTIVEHOLOSELECTED, newGroup.getName(), false));
+
+        return currentGroup == newGroup;
     }
 
     private boolean hasAccess(Player player, HologramGroup group) {

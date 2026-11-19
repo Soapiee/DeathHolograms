@@ -12,11 +12,11 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SelectSub extends AbstractAdminSub {
+public class AdminSelectSub extends AbstractAdminSub {
 
     @Getter private final String IDENTIFIER = "select";
 
-    public SelectSub(DeathHolos main) {
+    public AdminSelectSub(DeathHolos main) {
         super(main, null, 3, 3);
     }
 
@@ -28,14 +28,16 @@ public class SelectSub extends AbstractAdminSub {
         Player target = getTarget(sender, args[1]);
         if (target == null) return;
 
-        HologramGroup group = validateGroup(target, args[2]);
-        if (group == null) return;
+        HologramGroup newGroup = validateGroup(target, args[2]);
+        if (newGroup == null) return;
 
-        if (!hasAccess(sender, target, group)) return;
+        if (groupAlreadyActive(sender, target, newGroup)) return;
 
-        dataManager.updatePlayer(target.getUniqueId(), group);
-        sendMessage(sender, messageManager.getWithPlaceholder(Message.ADMINSUCCESSHOLOSELECTED, target.getName(), group.getName(), (sender instanceof ConsoleCommandSender)));
-        sendMessage(target, messageManager.getWithPlaceholder(Message.ADMINHOLOCHANGE, group.getName(), false));
+        if (!hasAccess(sender, target, newGroup)) return;
+
+        dataManager.updatePlayer(target.getUniqueId(), newGroup);
+        sendMessage(sender, messageManager.getWithPlaceholder(Message.ADMINSUCCESSHOLOSELECTED, target.getName(), newGroup.getName(), (sender instanceof ConsoleCommandSender)));
+        sendMessage(target, messageManager.getWithPlaceholder(Message.ADMINHOLOCHANGE, newGroup.getName(), false));
     }
 
     private Player getTarget(CommandSender sender, String string) {
@@ -53,6 +55,15 @@ public class SelectSub extends AbstractAdminSub {
         if (group == null) sendMessage(sender, messageManager.get(Message.INVALIDHOLOGROUP));
 
         return group;
+    }
+
+    private boolean groupAlreadyActive(CommandSender sender, Player target, HologramGroup newGroup) {
+        HologramGroup currentGroup = dataManager.getPlayer(target.getUniqueId());
+        if (currentGroup == null) return false;
+
+        if (currentGroup == newGroup) sendMessage(sender, messageManager.getWithPlaceholder(Message.ADMINACTIVEHOLOSELECTED, target.getName(), newGroup.getName(), false));
+
+        return currentGroup == newGroup;
     }
 
     private boolean hasAccess(CommandSender sender, Player target, HologramGroup group) {

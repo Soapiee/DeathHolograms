@@ -3,8 +3,8 @@ package me.soapiee.deathholos.commands;
 import me.soapiee.deathholos.DeathHolos;
 import me.soapiee.deathholos.choice_system.ChoiceManager;
 import me.soapiee.deathholos.choice_system.GroupManager;
+import me.soapiee.deathholos.commands.adminCmds.AdminSelectSub;
 import me.soapiee.deathholos.commands.adminCmds.ReloadSub;
-import me.soapiee.deathholos.commands.adminCmds.SelectSub;
 import me.soapiee.deathholos.commands.adminCmds.SpawnHoloSub;
 import me.soapiee.deathholos.commands.adminCmds.VersionSub;
 import me.soapiee.deathholos.managers.MessageManager;
@@ -41,7 +41,7 @@ public class AdminCmd implements CommandExecutor, TabCompleter {
         register(new ReloadSub(main));
         register(new SpawnHoloSub(main));
         register(new VersionSub(main));
-        if (choice == Choices.SELECTOR) register(new SelectSub(main));
+        if (choice == Choices.SELECTOR) register(new AdminSelectSub(main));
     }
 
     private void register(SubCmd cmd) {
@@ -110,6 +110,7 @@ public class AdminCmd implements CommandExecutor, TabCompleter {
                 }
 
                 if (args[0].equalsIgnoreCase("select")) {
+                    //TODO: Use own playercache
                     Bukkit.getOnlinePlayers().forEach(player -> results.add(player.getName()));
                     break;
                 }
