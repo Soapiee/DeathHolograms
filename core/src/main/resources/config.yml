@@ -18,7 +18,7 @@ settings:
   # Default: lang_en
   language: lang_en
 
-  # How do you want the plugin to decide which death hologram to spawn for a player, when they have permissions for multiple?
+  # How do you want the plugin to decide which death hologram to spawn for5 a player, when they have permissions for multiple?
   # priority -> If a player has multiple hologram permissions, the one with the highest priority will be used as their death-hologram.
   #          -> Each hologram group (see bottom of this file), must have a priority set for it.
   #
