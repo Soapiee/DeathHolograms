@@ -26,7 +26,6 @@ public class PlayerCmd implements CommandExecutor, TabCompleter {
     private final Choices choice;
     private final GroupManager groupManager;
 
-    //    private final String PERMISSION = "deathholos.player";
     private final Map<String, SubCmd> subCommands = new HashMap<>();
 
     public PlayerCmd(DeathHolos main) {

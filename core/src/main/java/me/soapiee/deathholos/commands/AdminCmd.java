@@ -4,11 +4,14 @@ import me.soapiee.deathholos.DeathHolos;
 import me.soapiee.deathholos.choice_system.ChoiceManager;
 import me.soapiee.deathholos.choice_system.GroupManager;
 import me.soapiee.deathholos.commands.adminCmds.ReloadSub;
+import me.soapiee.deathholos.commands.adminCmds.SelectSub;
 import me.soapiee.deathholos.commands.adminCmds.SpawnHoloSub;
 import me.soapiee.deathholos.commands.adminCmds.VersionSub;
 import me.soapiee.deathholos.managers.MessageManager;
+import me.soapiee.deathholos.utils.Choices;
 import me.soapiee.deathholos.utils.Message;
 import me.soapiee.deathholos.utils.Utils;
+import org.bukkit.Bukkit;
 import org.bukkit.block.CommandBlock;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
@@ -24,6 +27,7 @@ public class AdminCmd implements CommandExecutor, TabCompleter {
 
     private final MessageManager messageManager;
     private final GroupManager groupManager;
+    private final Choices choice;
 
     private final String PERMISSION = "deathholos.admin";
     private final Map<String, SubCmd> subCommands = new HashMap<>();
@@ -31,11 +35,13 @@ public class AdminCmd implements CommandExecutor, TabCompleter {
     public AdminCmd(DeathHolos main) {
         messageManager = main.getMessageManager();
         ChoiceManager choiceManager = main.getChoiceManager();
+        choice = choiceManager.getChoice();
         groupManager = choiceManager.getGroupManager();
 
         register(new ReloadSub(main));
         register(new SpawnHoloSub(main));
         register(new VersionSub(main));
+        if (choice == Choices.SELECTOR) register(new SelectSub(main));
     }
 
     private void register(SubCmd cmd) {
@@ -88,6 +94,7 @@ public class AdminCmd implements CommandExecutor, TabCompleter {
                 results.add("help");
                 results.add("spawn");
                 results.add("version");
+                if (choice == Choices.SELECTOR) results.add("select");
 
                 if (sender instanceof Player && sender.hasPermission("deathholos.admin.reload")) {
                     results.add("reload");
@@ -95,10 +102,29 @@ public class AdminCmd implements CommandExecutor, TabCompleter {
                 break;
 
             case 2:
-                if (args[0].equalsIgnoreCase("reload")) break;
+//                if (args[0].equalsIgnoreCase("reload")) break;
 
                 if (args[0].equalsIgnoreCase("spawn")) {
                     groupManager.getGroups().forEach(group -> results.add(group.getName()));
+                    break;
+                }
+
+                if (args[0].equalsIgnoreCase("select")) {
+                    Bukkit.getOnlinePlayers().forEach(player -> results.add(player.getName()));
+                    break;
+                }
+
+                break;
+
+            case 3:
+                if (choice == Choices.SELECTOR && args[0].equalsIgnoreCase("select")) {
+                    Player selectedPlayer = Bukkit.getPlayer(args[1]);
+                    if (selectedPlayer != null) {
+                        groupManager.getGroups().forEach(group -> {
+                            if (selectedPlayer.hasPermission(group.getPermission())) results.add(group.getName());
+                        });
+                    }
+
                     break;
                 }
 
