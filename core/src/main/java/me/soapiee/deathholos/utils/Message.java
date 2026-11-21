@@ -11,6 +11,7 @@ public enum Message {
     LANGUAGEFIELDERROR("language_field_error", "&cCould not add new fields to the language file"),
     INVALIDLANGUAGE("invalid_language", "&cAn invalid language has been configured. Defaulting to \"lang_en\""),
     HOOKEDPLACEHOLDERAPI("hooked_placeholderapi", "&aHooked into PlaceholderAPI"),
+    HOOKEDVAULT("hooked_vault", "&aHooked into Vault"),
     HOOKEDDECENTHOLOGRAMS("hooked_decentholograms", "&aHooked into DecentHolograms"),
     HOOKEDFANCYHOLOGRAMS("hooked_fancyholograms", "&aHooked into FancyHolograms"),
     LOGGERFILEERROR("logger_file_error", "&cThe logger.log file could not be created"),
@@ -30,6 +31,8 @@ public enum Message {
     MUSTBESELECTORSYSTEM("selector_disabled", "&cThe server doesn't have the death hologram selector system enabled"),
     SUCCESSHOLOSELECTED("hologram_selected_success", "&aYou successfully changed your death hologram to &e%group_identifier%"),
     NOPERMHOLOSELECTED("holo_selected_no_perm", "&cYou do not have permission to use this death hologram"),
+    ACTIVEHOLOSELECTED("holo_selected_already_active", "&cYour death hologram is already set to &e%group_identifier%"),
+    HOLOOFF("holo_off", "&aYou successfully turned your death hologram off"),
     VIEWHOLO("holo_view", "&eYou are using the &a%group_identifier% &edeath hologram"),
     VIEWHOLOOTHER("holo_view_other", "&e%player_name% is using the &a%group_identifier% &edeath hologram"),
     ERRORVIEWHOLO("holo_view_error", "&cYou have no active death hologram"),
@@ -48,10 +51,15 @@ public enum Message {
     CMDHOLOKILLER("admin_command_killer", "Notch"),
     HOLOSPAWNED("hologram_spawned", "&aYou spawned a hologram at your location"),
     HOLOSPAWNEDMAX("hologram_spawned_max", "&cThe maximum number of holograms for you, has been reached. Please wait"),
+    ADMINSUCCESSHOLOSELECTED("hologram_select_success", "&aYou have changed &e%player_name%s &adeath hologram to &e%group_identifier%"),
+    ADMINERRORHOLOSELECTED("hologram_select_error", "&e%player_name%&c doesnt have permission for the &e%group_identifier% &cdeath hologram"),
+    ADMINACTIVEHOLOSELECTED("holo_selected_active", "&cThe &e%group_identifier% &cdeath hologram is already active for &e%player_name%"),
+    ADMINHOLOCHANGE("admin_hologram_changed", "&aYour death hologram was changed to &e%group_identifier%"),
     ADMINHELP("admin_help", "#17d5eb--------- Admin Help ---------"
                     + "\n#17d5ebKey: < > = Optional | [ ] = Required"
                     + "\n#17d5eb/%cmd_label% reload &7- Reloads the plugin"
-                    + "\n#17d5eb/%cmd_label% spawn <group id> &7- Spawns a hologram at your location, of the specified hologram ID/priority"),
+                    + "\n#17d5eb/%cmd_label% spawn <group id> &7- Spawns a hologram at your location, of the specified hologram ID/priority"
+                    + "\n#17d5eb/%cmd_label% select <player> <group id> &7- Changes a players active death hologram"),
 
     //                    --->    1.16 MINECRAFT DEATH CAUSES    <---
     BLOCK_EXPLOSION("death_cause_block_explosion", "explosions"),

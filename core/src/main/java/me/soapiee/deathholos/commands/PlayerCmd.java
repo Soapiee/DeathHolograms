@@ -2,6 +2,7 @@ package me.soapiee.deathholos.commands;
 
 import me.soapiee.deathholos.DeathHolos;
 import me.soapiee.deathholos.choice_system.ChoiceManager;
+import me.soapiee.deathholos.commands.playerCmds.OffSub;
 import me.soapiee.deathholos.utils.Choices;
 import me.soapiee.deathholos.choice_system.GroupManager;
 import me.soapiee.deathholos.commands.playerCmds.SelectSub;
@@ -26,7 +27,6 @@ public class PlayerCmd implements CommandExecutor, TabCompleter {
     private final Choices choice;
     private final GroupManager groupManager;
 
-    //    private final String PERMISSION = "deathholos.player";
     private final Map<String, SubCmd> subCommands = new HashMap<>();
 
     public PlayerCmd(DeathHolos main) {
@@ -36,6 +36,7 @@ public class PlayerCmd implements CommandExecutor, TabCompleter {
         groupManager = choiceManager.getGroupManager();
 
         register(new ViewSub(main));
+        register(new OffSub(main));
         if (choice == Choices.SELECTOR) register(new SelectSub(main));
     }
 
@@ -77,6 +78,7 @@ public class PlayerCmd implements CommandExecutor, TabCompleter {
             case 1:
                 results.add("help");
                 results.add("view");
+                results.add("off");
                 if (choice == Choices.SELECTOR) results.add("select");
                 break;
 

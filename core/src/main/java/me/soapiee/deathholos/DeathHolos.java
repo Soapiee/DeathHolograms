@@ -2,18 +2,20 @@ package me.soapiee.deathholos;
 
 import lombok.Getter;
 import me.soapiee.deathholos.choice_system.ChoiceManager;
-import me.soapiee.deathholos.utils.Choices;
 import me.soapiee.deathholos.choice_system.DataManager;
-import me.soapiee.deathholos.managers.HologramManager;
 import me.soapiee.deathholos.commands.AdminCmd;
 import me.soapiee.deathholos.commands.PlayerCmd;
+import me.soapiee.deathholos.hooks.PlaceHolderAPIHook;
+import me.soapiee.deathholos.hooks.VaultHook;
 import me.soapiee.deathholos.internals.InternalsManager;
 import me.soapiee.deathholos.internals.spawning.HologramHandler;
 import me.soapiee.deathholos.listeners.ConnectListener;
 import me.soapiee.deathholos.listeners.DeathListener;
 import me.soapiee.deathholos.managers.ConfigManager;
+import me.soapiee.deathholos.managers.HologramManager;
 import me.soapiee.deathholos.managers.MessageManager;
 import me.soapiee.deathholos.managers.UpdateManager;
+import me.soapiee.deathholos.utils.Choices;
 import me.soapiee.deathholos.utils.CustomLogger;
 import me.soapiee.deathholos.utils.Message;
 import me.soapiee.deathholos.utils.Utils;
@@ -33,6 +35,7 @@ public final class DeathHolos extends JavaPlugin {
     @Getter private HologramHandler hologramHandler;
     @Getter private UpdateManager updateManager;
 
+    @Getter private VaultHook vaultHook;
     @Getter private boolean placeholderAPIHooked;
     @Getter private boolean decentHologramsHooked;
     @Getter private boolean fancyHologramsHooked;
@@ -41,6 +44,7 @@ public final class DeathHolos extends JavaPlugin {
     public void onEnable() {
         registerUtils();
         registerManagers();
+        registerHooks();
         registerListeners();
         registerCommands();
         registerUpdates();
@@ -69,14 +73,7 @@ public final class DeathHolos extends JavaPlugin {
         new Metrics(this, 30432);
     }
 
-    private void registerHooks() {
-        placeholderAPIHooked = false;
-        if (getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
-            if (!getServer().getPluginManager().getPlugin("PlaceholderAPI").isEnabled()) return;
-            placeholderAPIHooked = true;
-            if (configManager.isDebugMode()) Utils.consoleMsg(messageManager.get(Message.HOOKEDPLACEHOLDERAPI));
-        }
-
+    private void registerHologramHooks() {
         decentHologramsHooked = false;
         if (getServer().getPluginManager().getPlugin("DecentHolograms") != null) {
             if (!getServer().getPluginManager().getPlugin("DecentHolograms").isEnabled()) return;
@@ -94,9 +91,26 @@ public final class DeathHolos extends JavaPlugin {
         }
     }
 
+    private void registerHooks() {
+        placeholderAPIHooked = false;
+        if (getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            if (!getServer().getPluginManager().getPlugin("PlaceholderAPI").isEnabled()) return;
+            new PlaceHolderAPIHook(this).register();
+            placeholderAPIHooked = true;
+            if (configManager.isDebugMode()) Utils.consoleMsg(messageManager.get(Message.HOOKEDPLACEHOLDERAPI));
+        }
+
+        vaultHook = null;
+        if (getServer().getPluginManager().getPlugin("Vault") != null) {
+            if (!getServer().getPluginManager().getPlugin("Vault").isEnabled()) return;
+            vaultHook = new VaultHook(this);
+            if (configManager.isDebugMode()) Utils.consoleMsg(messageManager.get(Message.HOOKEDVAULT));
+        }
+    }
+
     private void registerManagers() {
         configManager = new ConfigManager(this);
-        registerHooks();
+        registerHologramHooks();
         hologramManager = new HologramManager(this);
         internalsManager = new InternalsManager(this);
         hologramHandler = internalsManager.initialiseHologramHandler();
